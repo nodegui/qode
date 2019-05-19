@@ -25,11 +25,11 @@ steps:
   condition: startsWith(variables['Tag.Name'], 'v')
   inputs:
     gitHubConnection: GitHub Yue
-    repositoryName: yue/yode
+    repositoryName: yue/qode
     action: Edit
     tagSource: auto
     tag: $(Tag.Name)
-    title: Yode $(Tag.name)
+    title: qode $(Tag.name)
     releaseNotesSource: input
     releaseNotes: (placeholder)
     assets: 'out/Release/*.zip'

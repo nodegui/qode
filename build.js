@@ -30,14 +30,14 @@ execSync('git submodule update --init --recursive', {stdio: null})
 execSync(`python configure --openssl-no-asm --dest-cpu=${target_arch}`, {cwd: 'node'})
 
 // Update the build configuration.
-execSync(`python node/tools/gyp/gyp_main.py yode.gyp -f ninja -Dhost_arch=x64 -Dtarget_arch=${target_arch} -Icommon.gypi --depth .`)
+execSync(`python node/tools/gyp/gyp_main.py qode.gyp -f ninja -Dhost_arch=x64 -Dtarget_arch=${target_arch} -Icommon.gypi --depth .`)
 
 // Build.
 const epath = `${path.join('deps', 'ninja')}${path.delimiter}${process.env.PATH}`
-execSync(`ninja -C out/Release yode`, {env: {PATH: epath}})
+execSync(`ninja -C out/Release qode`, {env: {PATH: epath}})
 
 if (process.platform === 'linux')
-  execSync('strip out/Release/yode')
+  execSync('strip out/Release/qode')
 
 // Remove old zip.
 const files = fs.readdirSync('out/Release')
@@ -49,8 +49,8 @@ for (let f of files) {
 // Create zip.
 const yazl = require('./deps/yazl')
 const zip = new yazl.ZipFile()
-const distname = `yode-${version}-${process.platform}-${target_arch}.zip`
-const filename = process.platform == 'win32' ? 'yode.exe' : 'yode'
+const distname = `qode-${version}-${process.platform}-${target_arch}.zip`
+const filename = process.platform == 'win32' ? 'qode.exe' : 'qode'
 zip.addFile('node/LICENSE', 'LICENSE')
 zip.addFile(`out/Release/${filename}`, filename)
 zip.outputStream.pipe(fs.createWriteStream(`out/Release/${distname}`))

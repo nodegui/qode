@@ -17,9 +17,9 @@ const path = require('path')
 const fs = require('fs')
 
 describe('property', function() {
-  describe('process.versions.yode', function() {
+  describe('process.versions.qode', function() {
     it('should be defined', function() {
-      assert.equal(typeof process.versions.yode, 'string')
+      assert.equal(typeof process.versions.qode, 'string')
     })
   })
 })
@@ -36,7 +36,7 @@ describe('node', function() {
   })
 
   it('fork should work', function(done) {
-    const p = path.join(require('os').tmpdir(), 'yode-fork.js')
+    const p = path.join(require('os').tmpdir(), 'qode-fork.js')
     fs.writeFileSync(p, "process.send('ok')")
     after(function() {
       fs.unlinkSync(p)
@@ -56,7 +56,7 @@ describe('node', function() {
   })
 
   it('process can quit', function(done) {
-    const p = path.join(require('os').tmpdir(), 'yode-exit.js')
+    const p = path.join(require('os').tmpdir(), 'qode-exit.js')
     fs.writeFileSync(p, "process.exit(123)")
     after(function() {
       fs.unlinkSync(p)

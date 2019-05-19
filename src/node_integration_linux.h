@@ -7,7 +7,7 @@
 
 #include "src/node_integration.h"
 
-namespace yode {
+namespace qode {
 
 class NodeIntegrationLinux : public NodeIntegration {
  public:
@@ -27,6 +27,6 @@ class NodeIntegrationLinux : public NodeIntegration {
   DISALLOW_COPY_AND_ASSIGN(NodeIntegrationLinux);
 };
 
-}  // namespace yode
+}  // namespace qode
 
 #endif  // SRC_NODE_INTEGRATION_LINUX_H_

@@ -11,7 +11,7 @@
 #include "node/src/node.h"
 #include "node/src/util.h"
 
-namespace yode {
+namespace qode {
 
 class NodeIntegration {
  public:
@@ -74,6 +74,6 @@ class NodeIntegration {
   DISALLOW_COPY_AND_ASSIGN(NodeIntegration);
 };
 
-}  // namespace yode
+}  // namespace qode
 
 #endif  // SRC_NODE_INTEGRATION_H_

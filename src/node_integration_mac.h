@@ -7,7 +7,7 @@
 
 #include "src/node_integration.h"
 
-namespace yode {
+namespace qode {
 
 class NodeIntegrationMac : public NodeIntegration {
  public:
@@ -24,6 +24,6 @@ class NodeIntegrationMac : public NodeIntegration {
   DISALLOW_COPY_AND_ASSIGN(NodeIntegrationMac);
 };
 
-}  // namespace yode
+}  // namespace qode
 
 #endif  // SRC_NODE_INTEGRATION_MAC_H_

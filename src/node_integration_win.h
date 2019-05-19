@@ -10,7 +10,7 @@
 
 #include "src/node_integration.h"
 
-namespace yode {
+namespace qode {
 
 class NodeIntegrationWin : public NodeIntegration {
  public:
@@ -35,6 +35,6 @@ class NodeIntegrationWin : public NodeIntegration {
   DISALLOW_COPY_AND_ASSIGN(NodeIntegrationWin);
 };
 
-}  // namespace yode
+}  // namespace qode
 
 #endif  // SRC_NODE_INTEGRATION_WIN_H_

@@ -1,11 +1,11 @@
 // Copyright 2017 Cheng Zhao. All rights reserved.
 // Use of this source code is governed by the MIT license.
 
-#include "src/yode.h"
+#include "src/qode.h"
 
 #include "node/src/env-inl.h"
 
-namespace yode {
+namespace qode {
 
 void Init(node::Environment* env) {
 #if _DEBUG
@@ -22,4 +22,4 @@ void RunLoop(node::Environment* env) {
   }
 }
 
-}  // namespace yode
+}  // namespace qode

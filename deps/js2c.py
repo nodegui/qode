@@ -168,7 +168,7 @@ TEMPLATE = """
 #include "node/src/env-inl.h"
 #include "node/src/node.h"
 
-namespace yode {{
+namespace qode {{
 
 {definitions}
 
@@ -180,7 +180,7 @@ void DefineJavaScript(node::Environment* env, v8::Local<v8::Object> target) {{
   {initializers}
 }}
 
-}}  // namespace yode
+}}  // namespace qode
 """
 
 ONE_BYTE_STRING = """

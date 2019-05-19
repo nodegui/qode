@@ -12,7 +12,7 @@
 #include "node/src/node.h"
 #include "node/src/node_internals.h"
 
-namespace yode {
+namespace qode {
 
 NodeIntegration::NodeIntegration()
     : uv_loop_(uv_default_loop()),
@@ -133,4 +133,4 @@ void NodeIntegration::OnCallNextTick(uv_async_t* handle) {
       node::InternalCallbackScope::kAllowEmptyResource);
 }
 
-}  // namespace yode
+}  // namespace qode

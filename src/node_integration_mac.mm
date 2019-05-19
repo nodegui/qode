@@ -12,7 +12,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-namespace yode {
+namespace qode {
 
 NodeIntegrationMac::NodeIntegrationMac() {
   // Get notified when libuv's watcher queue changes.
@@ -64,4 +64,4 @@ NodeIntegration* NodeIntegration::Create() {
   return new NodeIntegrationMac();
 }
 
-}  // namespace yode
+}  // namespace qode

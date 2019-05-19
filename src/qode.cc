@@ -1,7 +1,7 @@
 // Copyright 2017 Cheng Zhao. All rights reserved.
 // Use of this source code is governed by the MIT license.
 
-#include "src/yode.h"
+#include "src/qode.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -9,7 +9,7 @@
 #include "node/src/env-inl.h"
 #include "src/node_integration.h"
 
-namespace yode {
+namespace qode {
 
 // Generated from js files.
 v8::Local<v8::String> MainSource(node::Environment* env);
@@ -61,7 +61,7 @@ void Bootstrap(const v8::FunctionCallbackInfo<v8::Value>& args) {
   bootstrap->Call(env->context(), exports, 1, &native_module).IsEmpty();
 }
 
-// Inject yode's version to process.versions.
+// Inject qode's version to process.versions.
 bool InitWrapper(node::Environment* env) {
   // Initialize GUI after Node gets initialized.
   v8::HandleScope handle_scope(env->isolate());
@@ -73,9 +73,9 @@ bool InitWrapper(node::Environment* env) {
   // versions = process.versions
   v8::Local<v8::Value> versions = env->process_object()->Get(
       env->context(), ToV8(env, "versions")).ToLocalChecked();
-  // versions.yode = 0.4.2
+  // versions.qode = 0.4.2
   versions.As<v8::Object>()->Set(
-      env->context(), ToV8(env, "yode"), ToV8(env, "0.4.2")).ToChecked();
+      env->context(), ToV8(env, "qode"), ToV8(env, "0.4.2")).ToChecked();
   return true;
 }
 
@@ -96,7 +96,7 @@ bool RunLoopWrapper(node::Environment* env) {
 }  // namespace
 
 int Start(int argc, char* argv[]) {
-  const char* run_as_node = getenv("YODE_RUN_AS_NODE");
+  const char* run_as_node = getenv("qode_RUN_AS_NODE");
   if (!run_as_node || strcmp(run_as_node, "1")) {
     // Prepare node integration.
     g_node_integration.reset(NodeIntegration::Create());
@@ -117,4 +117,4 @@ int Start(int argc, char* argv[]) {
   return code;
 }
 
-}  // namespace yode
+}  // namespace qode

@@ -13,7 +13,7 @@ extern "C" IMAGE_DOS_HEADER __ImageBase;
 // Only use in cc files, not in h files.
 #define CURRENT_MODULE() reinterpret_cast<HMODULE>(&__ImageBase)
 
-namespace yode {
+namespace qode {
 
 NodeIntegrationWin::NodeIntegrationWin() {
   // Create a message only window to capture timer events.
@@ -28,10 +28,10 @@ NodeIntegrationWin::NodeIntegrationWin() {
   wcex.hCursor       = NULL;
   wcex.hbrBackground = NULL;
   wcex.lpszMenuName  = NULL;
-  wcex.lpszClassName = L"YodeMessageClass";
+  wcex.lpszClassName = L"qodeMessageClass";
   wcex.hIconSm       = NULL;
   ::RegisterClassExW(&wcex);
-  message_window_ = ::CreateWindowW(L"YodeMessageClass" , L"TimerWindow",
+  message_window_ = ::CreateWindowW(L"qodeMessageClass" , L"TimerWindow",
                                     0, 10, 10, 10, 10, HWND_MESSAGE, 0,
                                     CURRENT_MODULE(), this);
 
@@ -121,4 +121,4 @@ NodeIntegration* NodeIntegration::Create() {
   return new NodeIntegrationWin();
 }
 
-}  // namespace yode
+}  // namespace qode

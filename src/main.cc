@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-#include "src/yode.h"
+#include "src/qode.h"
 
 #if defined(WIN32)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -51,5 +51,5 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 int main(int argc, char* argv[]) {
 #endif
 
-  return yode::Start(argc, argv);
+  return qode::Start(argc, argv);
 }

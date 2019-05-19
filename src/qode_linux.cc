@@ -1,21 +1,20 @@
 // Copyright 2017 Cheng Zhao. All rights reserved.
 // Use of this source code is governed by the MIT license.
 
-#include "src/yode.h"
+#include "src/qode.h"
 
-#import <Cocoa/Cocoa.h>
+#include <gtk/gtk.h>
 
 #include "node/src/env-inl.h"
 
-namespace yode {
+namespace qode {
 
 void Init(node::Environment* env) {
-  [NSApplication sharedApplication];
-  [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+  gtk_init(nullptr, nullptr);
 }
 
 void RunLoop(node::Environment* env) {
-  [NSApp run];  // block until quit
+  gtk_main();  // block until quit
 }
 
-}  // namespace yode
+}  // namespace qode

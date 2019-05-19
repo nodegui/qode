@@ -7,7 +7,7 @@
 #include <gtk/gtk.h>
 #include <sys/epoll.h>
 
-namespace yode {
+namespace qode {
 
 namespace {
 
@@ -72,4 +72,4 @@ NodeIntegration* NodeIntegration::Create() {
   return new NodeIntegrationLinux();
 }
 
-}  // namespace yode
+}  // namespace qode

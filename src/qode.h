@@ -1,8 +1,8 @@
 // Copyright 2017 Cheng Zhao. All rights reserved.
 // Use of this source code is governed by the MIT license.
 
-#ifndef SRC_YODE_H_
-#define SRC_YODE_H_
+#ifndef SRC_qode_H_
+#define SRC_qode_H_
 
 #include <memory>
 
@@ -10,7 +10,7 @@ namespace node {
 class Environment;
 }
 
-namespace yode {
+namespace qode {
 
 // Initialize Node and enter GUI message loop.
 int Start(int argc, char* argv[]);
@@ -21,6 +21,6 @@ void Init(node::Environment* env);
 // Run the GUI message loop for once, implemented by different platforms.
 void RunLoop(node::Environment* env);
 
-}  // namespace yode
+}  // namespace qode
 
-#endif  // SRC_YODE_H_
+#endif  // SRC_qode_H_

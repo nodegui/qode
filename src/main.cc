@@ -1,5 +1,4 @@
-// Copyright 2017 Cheng Zhao. All rights reserved.
-// Use of this source code is governed by the MIT license.
+// Copyright 2017 Atul R. All rights reserved.
 
 #if defined(WIN32)
 #include <windows.h>

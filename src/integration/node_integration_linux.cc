@@ -2,7 +2,7 @@
 // Copyright 2017 Cheng Zhao. All rights reserved.
 // Use of this source code is governed by the MIT license.
 
-#include "src/node_integration_linux.h"
+#include "src/integration/node_integration_linux.h"
 
 #include <gtk/gtk.h>
 #include <sys/epoll.h>
@@ -35,7 +35,7 @@ NodeIntegrationLinux::NodeIntegrationLinux() : epoll_(epoll_create(1)) {
 
   // Get notified when libuv's watcher queue changes.
   uv_loop_->data = this;
-  uv_loop_->on_watcher_queue_updated = OnWatcherQueueChanged;
+  uv_loop_->qode_on_watcher_queue_updated = OnWatcherQueueChanged;
 }
 
 NodeIntegrationLinux::~NodeIntegrationLinux() {

@@ -5,27 +5,17 @@
             'type': 'executable',
             'sources': [
                 'src/main.cc',
-                # 'src/node_integration.cc',
-                # 'src/node_integration.h',
-                # 'src/node_integration_linux.cc',
-                # 'src/node_integration_linux.h',
-                # 'src/node_integration_mac.h',
-                # 'src/node_integration_mac.mm',
-                # 'src/node_integration_win.cc',
-                # 'src/node_integration_win.h',
                 'src/qode.cc',
-                'src/qode.h',
-                # 'src/qode_linux.cc',
-                # 'src/qode_mac.mm',
-                # 'src/qode_win.cc',
+                'src/integration/node_integration.cc',
+                'src/integration/node_integration_linux.cc',
+                'src/integration/node_integration_mac.mm',
+                'src/integration/node_integration_win.cc',
                 '<(SHARED_INTERMEDIATE_DIR)/qode_javascript.cc',
             ],
             'include_dirs': [
                 '.',
-                'node/deps/cares/include',  # for ares.h
                 'node/deps/uv/include',  # for uv.h
-                'node/src',  # for node things
-                'node/deps/v8/include/**'
+                'node/src',  # for node things,
             ],
             'defines': [
                 'NODE_WANT_INTERNALS=1',
@@ -43,8 +33,8 @@
             'conditions': [
                 ['OS=="mac"', {
                     'link_settings': {
-                        'libraries': [
-                            '$(SDKROOT)/System/Library/Frameworks/AppKit.framework',
+                        'libraries': [ #qt stuff
+                            '-Wl,-rpath,<!(echo $QN_QT_HOME_DIR)/lib/'
                         ],
                     },
                     'xcode_settings': {
@@ -59,6 +49,16 @@
                             '-Wl,-force_load,<(PRODUCT_DIR)/libnode.a',
                         ],
                     },
+                    'include_dirs': [ #qt-stuff
+                        # install qt via homebrew only
+                        '<!(echo $QN_QT_HOME_DIR)/include',
+                        '<!(echo $QN_QT_HOME_DIR)/include/QtCore',
+                        '<!(echo $QN_QT_HOME_DIR)/include/QtWidgets',
+                    ],
+                    'libraries':[ #qt-stuff
+                        '<!(echo $QN_QT_HOME_DIR)/lib/QtCore.framework/QtCore',
+                        '<!(echo $QN_QT_HOME_DIR)/lib/QtWidgets.framework/QtWidgets',
+                    ]
                 }],
                 ['OS=="win"', {
                     'sources': [

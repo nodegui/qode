@@ -8,10 +8,16 @@
 #include <functional>
 
 #include "node/deps/uv/include/uv.h"
-#include "node/src/node.h"
+#include "node/src/node_main_instance.h"
 #include "node/src/util.h"
 
 namespace qode {
+  
+#define DISALLOW_ASSIGN(TypeName) TypeName& operator=(const TypeName&) = delete
+#define DISALLOW_COPY_AND_ASSIGN(TypeName) \
+  TypeName(const TypeName&) = delete;      \
+  DISALLOW_ASSIGN(TypeName)
+
 
 class NodeIntegration {
  public:
@@ -71,7 +77,7 @@ class NodeIntegration {
   // Semaphore to wait for main loop in the embed thread.
   uv_sem_t embed_sem_;
 
-  // DISALLOW_COPY_AND_ASSIGN(NodeIntegration);
+  DISALLOW_COPY_AND_ASSIGN(NodeIntegration);
 };
 
 }  // namespace qode

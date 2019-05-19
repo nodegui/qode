@@ -2,7 +2,7 @@
 // Copyright 2017 Cheng Zhao. All rights reserved.
 // Use of this source code is governed by the MIT license.
 
-#include "src/node_integration_win.h"
+#include "src/integration/node_integration_win.h"
 
 #include "node/deps/uv/src/uv-common.h"
 
@@ -28,10 +28,10 @@ NodeIntegrationWin::NodeIntegrationWin() {
   wcex.hCursor       = NULL;
   wcex.hbrBackground = NULL;
   wcex.lpszMenuName  = NULL;
-  wcex.lpszClassName = L"qodeMessageClass";
+  wcex.lpszClassName = L"YodeMessageClass";
   wcex.hIconSm       = NULL;
   ::RegisterClassExW(&wcex);
-  message_window_ = ::CreateWindowW(L"qodeMessageClass" , L"TimerWindow",
+  message_window_ = ::CreateWindowW(L"YodeMessageClass" , L"TimerWindow",
                                     0, 10, 10, 10, 10, HWND_MESSAGE, 0,
                                     CURRENT_MODULE(), this);
 

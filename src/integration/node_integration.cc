@@ -2,7 +2,7 @@
 // Copyright 2017 Cheng Zhao. All rights reserved.
 // Use of this source code is governed by the MIT license.
 
-#include "src/node_integration.h"
+#include "src/integration/node_integration.h"
 
 #include <string>
 #include <vector>

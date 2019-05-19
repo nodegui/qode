@@ -8,7 +8,6 @@
     'library%': 'static_library',
     'python': 'python',
     'coverage': 'false',
-    'llvm_version': '3.3',
     'arm_float_abi': 'default',
     'arm_fpu': 'vfp',
     'arm_thumb': 0,
@@ -60,15 +59,19 @@
     'v8_random_seed': 0,
     'v8_trace_maps': 0,
     'v8_typed_array_max_size_in_heap': 0,
-    'v8_use_snapshot': 'true',
-    'icu_data_file': 'icudt62l.dat',
-    'icu_data_in': '../../deps/icu-small/source/data/in/icudt62l.dat',
+    'icu_data_file': 'icudt64l.dat',
     'icu_endianness': 'l',
     'icu_gyp_path': 'node/tools/icu/icu-generic.gyp',
     'icu_locales': 'en,root',
     'icu_path': '../../deps/icu-small',
     'icu_small': 'true',
-    'icu_ver_major': '62',
+    'icu_data_in': '../../deps/icu-small/source/data/in/icudt64l.dat',
+    'icu_ver_major': '64',
+    'llvm_version': '0',
+    'node_no_browser_globals': 'false',
+    'node_report': 'false',
+    'openssl_is_fips': 'false',
+    'v8_use_snapshot': 1,
   },
   'target_defaults': {
     'includes': [
@@ -78,7 +81,7 @@
       'node/deps/v8/include',
     ],
     'target_conditions': [
-      ['_target_name=="node_lib" and OS=="win"', {
+      ['_target_name=="libnode" and OS=="win"', {
         # Force loading all objects of node, otherwise some built-in modules
         # won't load.
         'sources': [
@@ -93,7 +96,7 @@
           'U_STATIC_IMPLEMENTATION=1',
         ],
       }],
-      ['_target_name in ["node_lib", "genrb", "genccode"] or _target_name.startswith("icu")', {
+      ['_target_name in ["libnode", "genrb", "genccode"] or _target_name.startswith("icu")', {
         # Somehow Node's gyp files are not adding the include dirs.
         'include_dirs': [
           'node/deps/icu-small/source/common',
@@ -101,7 +104,7 @@
           'node/deps/icu-small/source/tools/toolutil',
         ],
       }],
-      ['_target_name in ["libuv", "http_parser", "openssl", "openssl-cli", "cares", "node_lib", "nghttp2", "zlib", "mksnapshot", "genrb", "genccode"] or _target_name.startswith("v8") or _target_name.startswith("icu")', {
+      ['_target_name in ["libuv", "http_parser", "openssl", "openssl-cli", "cares", "libnode", "nghttp2", "zlib", "mksnapshot", "genrb", "genccode"] or _target_name.startswith("v8") or _target_name.startswith("icu")', {
         # Suppress all the warnings in Node.
         'msvs_settings': {
           'VCCLCompilerTool': {

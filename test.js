@@ -17,9 +17,9 @@ const path = require('path')
 const fs = require('fs')
 
 describe('property', function() {
-  describe('process.versions.qode', function() {
+  describe('process.versions.node', function() {
     it('should be defined', function() {
-      assert.equal(typeof process.versions.qode, 'string')
+      assert.equal(typeof process.versions.node, 'string')
     })
   })
 })

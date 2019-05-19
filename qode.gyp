@@ -10,7 +10,6 @@
                 'src/integration/node_integration_linux.cc',
                 'src/integration/node_integration_mac.mm',
                 'src/integration/node_integration_win.cc',
-                '<(SHARED_INTERMEDIATE_DIR)/qode_javascript.cc',
             ],
             'include_dirs': [
                 '.',
@@ -24,7 +23,6 @@
                 'NODE_SHARED_MODE',
             ],
             'dependencies': [
-                'qode_js2c#host',
                 'node/node.gyp:libnode',
                 'node/tools/v8_gypfiles/v8.gyp:v8',
                 'node/tools/icu/icu-generic.gyp:icui18n',
@@ -98,33 +96,6 @@
                         '-Wl,--no-whole-archive',
                     ],
                 }],
-            ],
-        },
-        {
-            'target_name': 'qode_js2c',
-            'type': 'none',
-            'toolsets': ['host'],
-            'actions': [
-                {
-                    'action_name': 'qode_js2c',
-                    'process_outputs_as_sources': 1,
-                    'inputs': [
-                        'deps/js2c.py',
-                        'src/asar_archive.js',
-                        'src/asar_monkey_patch.js',
-                        'src/bootstrap.js',
-                        'src/pickle.js',
-                    ],
-                    'outputs': [
-                        '<(SHARED_INTERMEDIATE_DIR)/qode_javascript.cc',
-                    ],
-                    'action': [
-                        'python',
-                        'deps/js2c.py',
-                        '<@(_outputs)',
-                        '<@(_inputs)',
-                    ],
-                },
             ],
         },
     ],

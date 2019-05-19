@@ -1,11 +1,10 @@
 // Copyright 2017 Atul R. All rights reserved.
 
-#include "src/qode.h"
+#include "qode.h"
 #include "src/integration/node_integration.h"
 #include "node/src/env-inl.h"
 #include <string.h>
 #include <stdlib.h>
-#include <QApplication>
 
 namespace qode {
   static int qode_argc = 0;
@@ -25,8 +24,7 @@ namespace qode {
       g_node_integration->UvRunOnce();
       g_first_runloop = false;
     }
-    QApplication* app = new QApplication(qode_argc, qode_argv);
-    app->exec();
+    qtAppInstance->exec();
     // No need to keep uv loop alive.
     g_node_integration->ReleaseHandleRef();
     // Enter uv loop to handle unfinished uv tasks.
@@ -37,6 +35,9 @@ namespace qode {
   int Start(int argc, char* argv[]) {
     qode_argc = argc;
     qode_argv = argv;
+
+    qtAppInstance = new QApplication(qode_argc, qode_argv);
+    qtAppInstance->processEvents(); // Just run it once.
     // Prepare node integration.
     g_node_integration.reset(NodeIntegration::Create());
     g_node_integration->Init();

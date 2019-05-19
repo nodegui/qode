@@ -5,9 +5,10 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <iostream>
 
 #include "node/src/env-inl.h"
-#include "src/node_integration.h"
+// #include "src/node_integration.h"
 
 namespace qode {
 
@@ -109,6 +110,28 @@ void DefineJavaScript(node::Environment* env, v8::Local<v8::Object> target);
  
 // }
 
+bool InitWrapper(node::Environment* env) {
+  return true;
+}
+
+bool RunLoopWrapper(node::Environment* env) {
+  // Run uv loop for once before entering GUI message loop.
+  // if (g_first_runloop) {
+  //   g_node_integration->UvRunOnce();
+  //   g_first_runloop = false;
+  // }
+  // // Run GUI message loop.
+  // RunLoop(env);
+  // // No need to keep uv loop alive.
+  // g_node_integration->ReleaseHandleRef();
+  // // Enter uv loop to handle unfinished uv tasks.
+  // return uv_run(env->event_loop(), UV_RUN_DEFAULT);
+
+  uv_loop_t* primary_uv_loop = uv_default_loop();
+  uv_run(primary_uv_loop, UV_RUN_NOWAIT);
+  return false;
+}
+
 
 int Start(int argc, char* argv[]) {
   // const char* run_as_node = getenv("qode_RUN_AS_NODE");
@@ -124,6 +147,8 @@ int Start(int argc, char* argv[]) {
 
   // Always enable GC this app is almost always running on desktop.
   // v8::V8::SetFlagsFromString("--expose_gc", 11);
+
+  node::InjectQode(&InitWrapper, &RunLoopWrapper);
 
   // Start node and enter message loop.
   int code = node::Start(argc, argv);

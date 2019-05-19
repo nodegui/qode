@@ -37,7 +37,6 @@
                 'qode_js2c#host',
                 'node/node.gyp:libnode',
                 'node/tools/v8_gypfiles/v8.gyp:v8',
-                # 'node/tools/v8_gypfiles/v8.gyp:v8_libplatform',
                 'node/tools/icu/icu-generic.gyp:icui18n',
                 'node/tools/icu/icu-generic.gyp:icuuc',
             ],

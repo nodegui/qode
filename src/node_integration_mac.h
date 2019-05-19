@@ -21,7 +21,7 @@ class NodeIntegrationMac : public NodeIntegration {
   // Called when uv's watcher queue changes.
   static void OnWatcherQueueChanged(uv_loop_t* loop);
 
-  DISALLOW_COPY_AND_ASSIGN(NodeIntegrationMac);
+  // DISALLOW_COPY_AND_ASSIGN(NodeIntegrationMac);
 };
 
 }  // namespace qode

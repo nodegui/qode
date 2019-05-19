@@ -41,7 +41,8 @@
     'node_use_openssl': 'true',
     'node_use_perfctr': 'false',
     'node_use_v8_platform': 'true',
-    'node_use_bundled_v8': 'false',
+    'node_use_bundled_v8': 'true',
+    'node_code_cache_path': 'true',
     'node_enable_d8': 'false',
     'node_use_large_pages': 'false',
     'node_debug_lib': 'false',
@@ -78,7 +79,7 @@
       'deps/filename_rules.gypi',
     ],
     'include_dirs': [
-      'node/deps/v8/include',
+      '../../deps/v8/include',
     ],
     'target_conditions': [
       ['_target_name=="libnode" and OS=="win"', {

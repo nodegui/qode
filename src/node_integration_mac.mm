@@ -17,7 +17,7 @@ namespace qode {
 NodeIntegrationMac::NodeIntegrationMac() {
   // Get notified when libuv's watcher queue changes.
   uv_loop_->data = this;
-  uv_loop_->on_watcher_queue_updated = OnWatcherQueueChanged;
+  // uv_loop_->on_watcher_queue_updated = OnWatcherQueueChanged;
 }
 
 NodeIntegrationMac::~NodeIntegrationMac() {
@@ -52,12 +52,12 @@ void NodeIntegrationMac::PostTask(const std::function<void()>& task) {
 }
 
 // static
-void NodeIntegrationMac::OnWatcherQueueChanged(uv_loop_t* loop) {
-  // We need to break the io polling in the kqueue thread when loop's watcher
-  // queue changes, otherwise new events cannot be notified.
-  auto* self = static_cast<NodeIntegrationMac*>(loop->data);
-  self->WakeupEmbedThread();
-}
+// void NodeIntegrationMac::OnWatcherQueueChanged(uv_loop_t* loop) {
+//   // We need to break the io polling in the kqueue thread when loop's watcher
+//   // queue changes, otherwise new events cannot be notified.
+//   auto* self = static_cast<NodeIntegrationMac*>(loop->data);
+//   self->WakeupEmbedThread();
+// }
 
 // static
 NodeIntegration* NodeIntegration::Create() {

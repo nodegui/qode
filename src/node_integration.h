@@ -71,7 +71,7 @@ class NodeIntegration {
   // Semaphore to wait for main loop in the embed thread.
   uv_sem_t embed_sem_;
 
-  DISALLOW_COPY_AND_ASSIGN(NodeIntegration);
+  // DISALLOW_COPY_AND_ASSIGN(NodeIntegration);
 };
 
 }  // namespace qode

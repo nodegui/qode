@@ -24,8 +24,8 @@ steps:
   displayName: Create GitHub Release
   condition: startsWith(variables['Tag.Name'], 'v')
   inputs:
-    gitHubConnection: GitHub Yue
-    repositoryName: yue/qode
+    gitHubConnection: GithubQode
+    repositoryName: master-atul/qode
     action: Edit
     tagSource: auto
     tag: $(Tag.Name)

@@ -1,4 +1,5 @@
 {
+    "includes":['./qt.gypi'],
     'targets': [
         {
             'target_name': 'qode',
@@ -30,11 +31,6 @@
             ],
             'conditions': [
                 ['OS=="mac"', {
-                    'link_settings': {
-                        'libraries': [ #qt stuff
-                            '-Wl,-rpath,<!(echo $QN_QT_HOME_DIR)/lib/'
-                        ],
-                    },
                     'xcode_settings': {
                         # Generates symbols and strip the binary.
                         'DEBUG_INFORMATION_FORMAT': 'dwarf-with-dsym',
@@ -47,16 +43,6 @@
                             '-Wl,-force_load,<(PRODUCT_DIR)/libnode.a',
                         ],
                     },
-                    'include_dirs': [ #qt-stuff
-                        # install qt via homebrew only
-                        '<!(echo $QN_QT_HOME_DIR)/include',
-                        '<!(echo $QN_QT_HOME_DIR)/include/QtCore',
-                        '<!(echo $QN_QT_HOME_DIR)/include/QtWidgets',
-                    ],
-                    'libraries':[ #qt-stuff
-                        '<!(echo $QN_QT_HOME_DIR)/lib/QtCore.framework/QtCore',
-                        '<!(echo $QN_QT_HOME_DIR)/lib/QtWidgets.framework/QtWidgets',
-                    ]
                 }],
                 ['OS=="win"', {
                     'sources': [

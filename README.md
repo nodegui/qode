@@ -22,6 +22,11 @@ it is designed to be used together with [the Yue library](http://libyue.com).
   subsystem, so unlike Node.js there is no console attached and REPL won't
   work.
 
+
+## For linux 
+
+Make sure you add LD_LIBRARY_PATH to the path to qt and then run the built executable
+
 ## Usage
 
 The prebuilt binaries can be found in the Releases page, modules installed by

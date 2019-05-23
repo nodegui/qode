@@ -25,6 +25,7 @@ it is designed to be used together with [the Yue library](http://libyue.com).
 
 ## For linux 
 
+And make sure you have installed gtk3 headers also for time being.
 Make sure you add LD_LIBRARY_PATH to the path to qt and then run the built executable
 
 ## Usage

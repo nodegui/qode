@@ -12,7 +12,10 @@ const execSync = (command, options = {}) => {
 //-------------------------------------------
 // Specify target_arch.
 let target_arch = "x64";
-let host_arch = "x64";
+const host_arch = "x64";
+const qt_install_dir =
+  process.env.QT_INSTALL_DIR || "/usr/local/Cellar/qt/5.12.3";
+
 if (process.argv.length > 2) {
   target_arch = process.argv[2];
 }
@@ -26,7 +29,7 @@ execSync(`python configure --dest-cpu=${target_arch}`, { cwd: "node" });
 
 // Update the build configuration.
 execSync(
-  `python node/tools/gyp/gyp_main.py qode.gyp -f ninja -Dhost_arch=${host_arch} -Dtarget_arch=${target_arch} -Iconfig/node_overrides.gypi --depth .`
+  `python node/tools/gyp/gyp_main.py qode.gyp -f ninja -Dhost_arch=${host_arch} -Dtarget_arch=${target_arch} -Dqt_home_dir=${qt_install_dir} -Iconfig/node_overrides.gypi --depth .`
 );
 
 // Build.

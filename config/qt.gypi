@@ -1,7 +1,7 @@
 {
     'includes': [],
     'variables': {
-        'qt_home_dir': '/usr/local/Cellar/qt/5.12.1/',
+        'qt_home_dir%': '/usr/local/Cellar/qt/5.12.1/',
     },
     'target_defaults': {
         "cflags!": ["-fno-exceptions"],

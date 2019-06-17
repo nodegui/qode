@@ -1,151 +1,152 @@
 {
-  'includes': [
-    'node/common.gypi',
-  ],
-  'variables': {
-    # Reflects node's config.gypi.
-    'component%': 'static_library',
-    'library%': 'static_library',
-    'python': 'python',
-    'coverage': 'false',
-    'arm_float_abi': 'default',
-    'arm_fpu': 'vfp',
-    'arm_thumb': 0,
-    'arm_version': 'default',
-    'build_v8_with_gn': 'false',
-    'debug_nghttp2': 'false',
-    'enable_lto': 'false',
-    'enable_pgo_generate': 'false',
-    'enable_pgo_use': 'false',
-    'force_dynamic_crt': 0,
-    'host_arch': 'x64',
-    'openssl_fips': '',
-    'openssl_no_asm': 1,
-    'OPENSSL_PRODUCT': 'libopenssl.a',
-    'node_release_urlbase': '',
-    'node_byteorder': '<!(node -e "console.log(require(\'os\').endianness() === \'BE\' ? \'big\' : \'little\')")',
-    'node_target_type': 'static_library',
-    'node_install_npm': 'false',
-    'node_prefix': '',
-    'node_shared': 'false',
-    'node_shared_cares': 'false',
-    'node_shared_http_parser': 'false',
-    'node_shared_libuv': 'false',
-    'node_shared_openssl': 'false',
-    'node_shared_v8': 'false',
-    'node_shared_zlib': 'false',
-    'node_tag': '',
-    'node_use_dtrace': 'false',
-    'node_use_etw': 'false',
-    'node_use_mdb': 'false',
-    'node_use_openssl': 'true',
-    'node_use_perfctr': 'false',
-    'node_use_v8_platform': 'true',
-    'node_use_bundled_v8': 'true',
-    'node_code_cache_path': 'true',
-    'node_enable_d8': 'false',
-    'node_use_large_pages': 'false',
-    'node_debug_lib': 'false',
-    'node_with_ltcg': 'false',
-    'uv_library': 'static_library',
-    'uv_parent_path': 'node/deps/uv',
-    'uv_use_dtrace': 'false',
-    'V8_BASE': '',
-    'v8_enable_gdbjit': 0,
-    'v8_enable_i18n_support': 1,
-    'v8_enable_inspector': 1,
-    'v8_no_strict_aliasing': 1,
-    'v8_optimized_debug': 0,
-    'v8_promise_internal_field_count': 1,
-    'v8_random_seed': 0,
-    'v8_trace_maps': 0,
-    'v8_typed_array_max_size_in_heap': 0,
-    'icu_data_file': 'icudt64l.dat',
-    'icu_endianness': 'l',
-    'icu_gyp_path': 'node/tools/icu/icu-generic.gyp',
-    'icu_locales': 'en,root',
-    'icu_path': '../../deps/icu-small',
-    'icu_small': 'true',
-    'icu_data_in': '../../deps/icu-small/source/data/in/icudt64l.dat',
-    'icu_ver_major': '64',
-    'llvm_version': '0',
-    'node_no_browser_globals': 'false',
-    'node_report': 'false',
-    'openssl_is_fips': 'false',
-    'v8_use_snapshot': 1,
-  },
-  'target_defaults': {
     'includes': [
-      'deps/filename_rules.gypi',
+        'node/common.gypi',
     ],
-    'include_dirs': [
-      '../../deps/v8/include',
-    ],
-    'target_conditions': [
-      ['_target_name=="libnode" and OS=="win"', {
-        # Force loading all objects of node, otherwise some built-in modules
-        # won't load.
-        'sources': [
-          'deps/node.def',
+    'variables': {
+        # Reflects node's config.gypi.
+        'component%': 'static_library',
+        'library%': 'static_library',
+        'python': 'python',
+        'coverage': 'false',
+        'arm_float_abi': 'default',
+        'arm_fpu': 'vfp',
+        'arm_thumb': 0,
+        'arm_version': 'default',
+        'build_v8_with_gn': 'false',
+        'debug_nghttp2': 'false',
+        'enable_lto': 'false',
+        'enable_pgo_generate': 'false',
+        'enable_pgo_use': 'false',
+        'force_dynamic_crt': 0,
+        'host_arch': 'x64',
+        'openssl_fips': '',
+        'openssl_no_asm': 1,
+        'OPENSSL_PRODUCT': 'libopenssl.a',
+        'node_release_urlbase': '',
+        'node_byteorder': '<!(node -e "console.log(require(\'os\').endianness() === \'BE\' ? \'big\' : \'little\')")',
+        'node_target_type': 'static_library',
+        'node_install_npm': 'false',
+        'node_prefix': '',
+        'node_shared': 'false',
+        'node_shared_cares': 'false',
+        'node_shared_http_parser': 'false',
+        'node_shared_libuv': 'false',
+        'node_shared_openssl': 'false',
+        'node_shared_v8': 'false',
+        'node_shared_zlib': 'false',
+        'node_tag': '',
+        'node_use_dtrace': 'false',
+        'node_use_etw': 'false',
+        'node_use_mdb': 'false',
+        'node_use_openssl': 'true',
+        'node_use_perfctr': 'false',
+        'node_use_v8_platform': 'true',
+        'node_use_bundled_v8': 'true',
+        'node_code_cache_path': 'true',
+        'node_enable_d8': 'false',
+        'node_use_large_pages': 'false',
+        'node_debug_lib': 'false',
+        'node_with_ltcg': 'false',
+        'uv_library': 'static_library',
+        'uv_parent_path': 'node/deps/uv',
+        'uv_use_dtrace': 'false',
+        'V8_BASE': '',
+        'v8_enable_gdbjit': 0,
+        'v8_enable_i18n_support': 1,
+        'v8_enable_inspector': 1,
+        'v8_no_strict_aliasing': 1,
+        'v8_optimized_debug': 0,
+        'v8_promise_internal_field_count': 1,
+        'v8_random_seed': 0,
+        'v8_trace_maps': 0,
+        'v8_typed_array_max_size_in_heap': 0,
+        'icu_data_file': 'icudt64l.dat',
+        'icu_endianness': 'l',
+        'icu_gyp_path': 'node/tools/icu/icu-generic.gyp',
+        'icu_locales': 'en,root',
+        'icu_path': 'node/deps/icu-small',
+        'icu_small': 'true',
+        # will be substitued inside thr node files
+        'icu_data_in': '../../deps/icu-small/source/data/in/icudt64l.dat',
+        'icu_ver_major': '64',
+        'llvm_version': '0',
+        'node_no_browser_globals': 'false',
+        'node_report': 'false',
+        'openssl_is_fips': 'false',
+        'v8_use_snapshot': 1,
+    },
+    'target_defaults': {
+        'includes': [
+            'deps/filename_rules.gypi',
         ],
-        'defines': [
-          # We want to export Node's symbols but do not wish to change its
-          # vc runtime settings.
-          'NODE_SHARED_MODE',
-          # ICU is built as static library and this has to be defined for its
-          # users on Windows.
-          'U_STATIC_IMPLEMENTATION=1',
-        ],
-      }],
-      ['_target_name in ["libnode", "genrb", "genccode"] or _target_name.startswith("icu")', {
-        # Somehow Node's gyp files are not adding the include dirs.
         'include_dirs': [
-          'node/deps/icu-small/source/common',
-          'node/deps/icu-small/source/i18n',
-          'node/deps/icu-small/source/tools/toolutil',
+            'node/deps/v8/include',
         ],
-      }],
-      ['_target_name in ["libuv", "http_parser", "openssl", "openssl-cli", "cares", "libnode", "nghttp2", "zlib", "mksnapshot", "genrb", "genccode"] or _target_name.startswith("v8") or _target_name.startswith("icu")', {
-        # Suppress all the warnings in Node.
-        'msvs_settings': {
-          'VCCLCompilerTool': {
-            'WarningLevel': 0,
-          },
-        },
-        'msvs_disabled_warnings': [
-          4251,
-          4244,
+        'target_conditions': [
+            ['_target_name=="libnode" and OS=="win"', {
+                # Force loading all objects of node, otherwise some built-in modules
+                # won't load.
+                'sources': [
+                    'deps/node.def',
+                ],
+                'defines': [
+                    # We want to export Node's symbols but do not wish to change its
+                    # vc runtime settings.
+                    'NODE_SHARED_MODE',
+                    # ICU is built as static library and this has to be defined for its
+                    # users on Windows.
+                    'U_STATIC_IMPLEMENTATION=1',
+                ],
+            }],
+            ['_target_name in ["libnode", "genrb", "genccode"] or _target_name.startswith("icu")', {
+                # Somehow Node's gyp files are not adding the include dirs.
+                'include_dirs': [
+                    'node/deps/icu-small/source/common',
+                    'node/deps/icu-small/source/i18n',
+                    'node/deps/icu-small/source/tools/toolutil',
+                ],
+            }],
+            ['_target_name in ["libuv", "http_parser", "openssl", "openssl-cli", "cares", "libnode", "nghttp2", "zlib", "mksnapshot", "genrb", "genccode"] or _target_name.startswith("v8") or _target_name.startswith("icu")', {
+                # Suppress all the warnings in Node.
+                'msvs_settings': {
+                    'VCCLCompilerTool': {
+                        'WarningLevel': 0,
+                    },
+                },
+                'msvs_disabled_warnings': [
+                    4251,
+                    4244,
+                ],
+                'xcode_settings': {
+                    'WARNING_CFLAGS': [
+                        '-Wno-deprecated-declarations',
+                        '-Wno-undefined-var-template',
+                        '-Wno-switch',
+                        '-Wno-unused-function',
+                        '-Wno-sign-compare',
+                        '-Wno-implicit-function-declaration',
+                    ],
+                    'WARNING_CFLAGS!': [
+                        '-W',
+                        '-Wall',
+                    ],
+                },
+                'cflags': [
+                    '-Wno-deprecated-declarations',
+                    '-Wno-switch',
+                    '-Wno-unused-function',
+                    '-Wno-sign-compare',
+                    '-Wno-unused-but-set-variable',
+                    '-Wno-maybe-uninitialized',
+                ],
+                'cflags_c': [
+                    '-Wno-implicit-function-declaration',
+                ],
+                'cflags!': [
+                    '-Wall',
+                    '-Wextra',
+                ],
+            }],
         ],
-        'xcode_settings': {
-          'WARNING_CFLAGS': [
-            '-Wno-deprecated-declarations',
-            '-Wno-undefined-var-template',
-            '-Wno-switch',
-            '-Wno-unused-function',
-            '-Wno-sign-compare',
-            '-Wno-implicit-function-declaration',
-          ],
-          'WARNING_CFLAGS!': [
-            '-W',
-            '-Wall',
-          ],
-        },
-        'cflags': [
-          '-Wno-deprecated-declarations',
-          '-Wno-switch',
-          '-Wno-unused-function',
-          '-Wno-sign-compare',
-          '-Wno-unused-but-set-variable',
-          '-Wno-maybe-uninitialized',
-        ],
-        'cflags_c': [
-          '-Wno-implicit-function-declaration',
-        ],
-        'cflags!': [
-          '-Wall',
-          '-Wextra',
-        ],
-      }],
-    ],
-  },
+    },
 }

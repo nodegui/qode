@@ -1,7 +1,8 @@
 {
     'includes': [],
     'variables': {
-        'qt_home_dir': '/home/strange/Tools/Qt/5.12.3/gcc_64' ,# '<!(echo $QN_QT_HOME_DIR)',
+        # '<!(echo $QN_QT_HOME_DIR)',
+        'qt_home_dir': '/usr/local/Cellar/qt/5.12.1/',
     },
     'target_defaults': {
         "cflags!": ["-fno-exceptions"],

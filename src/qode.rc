@@ -57,7 +57,7 @@ BEGIN
             VALUE "ProductVersion", NODE_EXE_VERSION
             VALUE "OriginalFilename", "qode.exe"
             VALUE "InternalName", "qode"
-            VALUE "LegalCopyright", "Copyright Cheng Zhao. MIT license."
+            VALUE "LegalCopyright", "Copyright Atul R. MIT license."
         END
     END
     BLOCK "VarFileInfo"

@@ -1,5 +1,7 @@
 {
-    "includes":['./qt.gypi'],
+    "includes": [
+        './config/qt.gypi'
+    ],
     'targets': [
         {
             'target_name': 'qode',
@@ -47,7 +49,7 @@
                 ['OS=="win"', {
                     'sources': [
                         'src/qode.rc',
-                        'deps/node.def',
+                        'config/node.def',
                     ],
                     'msvs_settings': {
                         'VCManifestTool': {

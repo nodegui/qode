@@ -37,7 +37,7 @@ const epath = `${path.join("bin", "ninja")}${path.delimiter}${
   process.env.PATH
 }`;
 
-execSync(`ninja -j16 -C out/Release qode`, { env: { PATH: epath } });
+execSync(`ninja -j8 -C out/Release qode`, { env: { PATH: epath } });
 
 if (process.platform === "linux") {
   execSync("strip out/Release/qode");

@@ -1,8 +1,24 @@
-# trigger:
-# - refs/heads/*
-# - refs/pull/*/merge
-# - refs/tags/*
+trigger:
+  - releases/*
 
+jobs:
+  - job: macos_build
+    displayName: "Build for macOS"
+    pool:
+      vmImage: "macOS-10.14"
+    strategy:
+      matrix:
+        x64:
+          TARGET_ARCH: x64
+    variables:
+      qt5_install_dir: /usr/local/Cellar/qt/5.12.3
+      qt5_brew_formula: https://raw.githubusercontent.com/Homebrew/homebrew-core/65a45a9e61f15046a256cdba6a008f38f79570c9/Formula/qt.rb
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: 12.x
+      - script: curl -O $(qt5_brew_formula) && brew install ./qt.rb
+      - script: QT_INSTALL_DIR=$(qt5_install_dir) node build.js
 # jobs:
 # - job: windows_build
 #   displayName: 'Build for Windows'
@@ -51,21 +67,3 @@
 #   - script: xvfb-run out/Release/qode test.js
 #     displayName: Run tests
 
-jobs:
-  - job: macos_build
-    displayName: "Build for macOS"
-    pool:
-      vmImage: "macOS-10.14"
-    strategy:
-      matrix:
-        x64:
-          TARGET_ARCH: x64
-    variables:
-      qt5_install_dir: /usr/local/Cellar/qt/5.12.3
-      qt5_brew_formula: https://raw.githubusercontent.com/Homebrew/homebrew-core/65a45a9e61f15046a256cdba6a008f38f79570c9/Formula/qt.rb
-    steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: 12.x
-      - script: curl -O $(qt5_brew_formula) && brew install ./qt.rb
-      - script: QT_INSTALL_DIR=$(qt5_install_dir) node build.js

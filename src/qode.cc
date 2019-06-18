@@ -33,6 +33,20 @@ namespace qode {
       ToV8String(env, "qode"),
       ToV8String(env, qodeVersion)
     ).ToChecked();
+
+    versions.As<v8::Object>()->Set(
+      env->context(),
+      ToV8String(env, "qt(compiled)"),
+      ToV8String(env, QT_VERSION_STR)
+    ).ToChecked();
+
+    
+    versions.As<v8::Object>()->Set(
+      env->context(),
+      ToV8String(env, "qt(runtime)"),
+      ToV8String(env, qVersion())
+    ).ToChecked();
+
     return true;
   }
 

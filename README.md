@@ -25,6 +25,57 @@ it is designed to be used together with [the Yue library](http://libyue.com).
 
 ## For linux 
 
+### Cloning this repo:
+
+- Do a git clone this repo
+
+### Install GTK headers:
+
+-  sudo apt install libgtk-3-dev                         
+
+### Installing QT:
+
+- Download qt from: https://www.qt.io/offline-installers (Preferably 5.12.x version)
+- chmod a+x qt-opensource-linux-x64-5.12.4.run 
+- ./qt-opensource-linux-x64-5.12.4.run 
+- Click Next -> I accept checkbox and then Skip.
+- Make sure you note down the install path. Also make sure there are no spaces in the path.
+- From the list to choose components: 
+        - Check Desktop gcc 64bit
+        - Qt Creator (Optional)
+- Choose LGPL license and install.
+
+### Building Qode:
+
+- `QT_INSTALL_DIR=<path_to_qt_install_dir>/5.12.4/gcc_64 node build.js`
+
+
+### Common errors:
+
+1. if you get an error similar to: 
+
+    ```
+    ../../src/qode.h:5:10: fatal error: QApplication: No such file or directory
+    #include <QApplication>
+            ^~~~~~~~~~~~~~
+    ```
+    Make sure you have installed QT5 and have specified the correct path in QT_INSTALL_DIR as mentioned above 
+
+2. if you get an error similar to:
+    ```
+     fatal error: gtk/gtk.h: No such file or directory
+     #include <gtk/gtk.h>
+    ```
+    Make sure you have installed gtk headers as mentioned above.
+
+3. If you get an error similar to:
+    ./qode: error while loading shared libraries: libQt5Core.so.5: cannot open shared object file: No such file or directory. 
+
+    Check the shared libraries used by qode by running `ldd ./qode`. Then you can provide the path where qode could find the libraries like this:
+
+    ```LD_LIBRARY_PATH=<path_to_qt5_installation>/5.12.4/gcc_64/lib/:$LD_LIBRARY_PATH ./qode```
+
+
 And make sure you have installed gtk3 headers also for time being.
 Make sure you add LD_LIBRARY_PATH to the path to qt and then run the built executable
 

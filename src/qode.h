@@ -5,6 +5,6 @@
 #include <QApplication>
 
 namespace qode {
-    static QApplication* qtAppInstance;
+    extern QApplication* qtAppInstance;
     int Start(int argc, char* argv[]);
 }  // namespace qode

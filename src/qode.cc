@@ -9,6 +9,7 @@
 std::string qodeVersion = "1.0.0-alpha";
 
 namespace qode {
+  QApplication* qtAppInstance = nullptr;
   static int qode_argc = 0;
   static char** qode_argv = nullptr;
   // The global instance of NodeIntegration.

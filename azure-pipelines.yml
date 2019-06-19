@@ -32,6 +32,7 @@ jobs:
     - script: |
         docker build -t qode-linux ./deploy/linux
         docker run --rm qode-linux:latest tar -cC /usr/local/qt5/ . | tar -xC ~
+        ls ~
     
 # jobs:
 # - job: windows_build

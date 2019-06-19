@@ -30,7 +30,7 @@ jobs:
           TARGET_ARCH: x64
     steps:
     - script: |
-        docker build -t qode-linux -f ./deploy/linux/Dockerfile .
+        docker build -t qode-linux .
         docker run --rm qode-linux:latest tar -cC /usr/local/qt5/ . | tar -xC ~
         ls ~
     

@@ -32,9 +32,9 @@ jobs:
     - script: |
         ls
         pwd
-        docker build -t qode-linux .
-        docker run --rm qode-linux:latest tar -cC /usr/local/qt5/ . | tar -xC ~
-        ls ~
+        # docker build -t qode-linux .
+        # docker run --rm qode-linux:latest tar -cC /usr/local/qt5/ . | tar -xC ~
+        # ls ~
     
 # jobs:
 # - job: windows_build

@@ -20,5 +20,5 @@ RUN mkdir ~/qode
 WORKDIR /root/qode
 ADD . /root/qode
 
-RUN QT_INSTALL_DIR=/usr/local/qt5 node build.js
+# RUN QT_INSTALL_DIR=/usr/local/qt5 node build.js
 

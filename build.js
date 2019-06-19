@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
 const path = require("path");
+
+//==================================
+//    HELPER UTILITIES
+//==================================
 // Wrapper of execSync that prints output.
 const execSync = (command, options = {}) => {
   if (options.stdio === undefined) options.stdio = "inherit";
@@ -9,21 +13,34 @@ const execSync = (command, options = {}) => {
   return require("child_process").execSync(command, options);
 };
 
-//-------------------------------------------
+const checkEnvExists = (envVarName, defaultValue) => {
+  const value = process.env[envVarName];
+  if (!value) {
+    console.warn(
+      `Env variable: ${envVarName} not specified, using default: ${defaultValue}`
+    );
+    return defaultValue;
+  }
+  console.log(`Env variable: ${envVarName}, value: ${value}`);
+  return value;
+};
+
+//==================================
+//    BUILD PROCESS
+//==================================
 // Specify target_arch.
-let target_arch = "x64";
-const host_arch = "x64";
-const qt_install_dir =
-  process.env.QT_INSTALL_DIR || "/usr/local/Cellar/qt/5.12.3";
+const target_arch = checkEnvExists("TARGET_ARCH", "x64");
+const host_arch = checkEnvExists("HOST_ARCH", "x64");
+const qt_install_dir = checkEnvExists(
+  "QT_INSTALL_DIR",
+  "/usr/local/Cellar/qt/5.12.3"
+);
 
-if (process.argv.length > 2) {
-  target_arch = process.argv[2];
+if (!process.env.IS_DOCKER) {
+  // Sync submodule.
+  execSync("git submodule sync --recursive", { stdio: null });
+  execSync("git submodule update --init --recursive", { stdio: null });
 }
-
-// Sync submodule.
-execSync("git submodule sync --recursive", { stdio: null });
-execSync("git submodule update --init --recursive", { stdio: null });
-
 // Generate some dynamic gyp files.
 execSync(`python configure --dest-cpu=${target_arch}`, { cwd: "node" });
 

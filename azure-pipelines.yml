@@ -2,23 +2,42 @@ trigger:
   - releases/*
 
 jobs:
-  - job: macos_build
-    displayName: "Build for macOS"
+  # - job: macos_build
+  #   displayName: "Build for macOS"
+  #   pool:
+  #     vmImage: "macOS-10.14"
+  #   strategy:
+  #     matrix:
+  #       x64:
+  #         TARGET_ARCH: x64
+  #   variables:
+  #     qt5_install_dir: /usr/local/Cellar/qt/5.12.3
+  #     qt5_brew_formula: https://raw.githubusercontent.com/Homebrew/homebrew-core/65a45a9e61f15046a256cdba6a008f38f79570c9/Formula/qt.rb
+  #   steps:
+  #     - task: NodeTool@0
+  #       inputs:
+  #         versionSpec: 12.x
+  #     - script: curl -O $(qt5_brew_formula) && brew install ./qt.rb
+  #     - script: TARGET_ARCH=$(TARGET_ARCH) HOST_ARCH=$(TARGET_ARCH) QT_INSTALL_DIR=$(qt5_install_dir) node build.js
+
+  - job: linux_build
+    displayName: 'Build for Linux'
     pool:
-      vmImage: "macOS-10.14"
+      vmImage: 'ubuntu-16.04'
     strategy:
       matrix:
         x64:
           TARGET_ARCH: x64
-    variables:
-      qt5_install_dir: /usr/local/Cellar/qt/5.12.3
-      qt5_brew_formula: https://raw.githubusercontent.com/Homebrew/homebrew-core/65a45a9e61f15046a256cdba6a008f38f79570c9/Formula/qt.rb
     steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: 12.x
-      - script: curl -O $(qt5_brew_formula) && brew install ./qt.rb
-      - script: QT_INSTALL_DIR=$(qt5_install_dir) node build.js
+    - task: Docker@2
+      displayName: Build Qode
+      inputs:
+        dockerFile: './deploy/linux/Dockerfile'
+        tags: | 
+         qode-build
+    - script: |
+        docker run --rm qode-build:latest tar -cC /usr/local/qt5/ . | tar -xC ~
+    
 # jobs:
 # - job: windows_build
 #   displayName: 'Build for Windows'

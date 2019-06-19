@@ -17,8 +17,9 @@ ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
 # BUILD QODE
 # ==========
 RUN mkdir ~/qode
-WORKDIR /root/qode
 ADD . /root/qode
+
+WORKDIR /root/qode
 
 RUN QT_INSTALL_DIR=/usr/local/qt5 node build.js
 

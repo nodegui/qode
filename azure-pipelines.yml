@@ -29,14 +29,9 @@ jobs:
         x64:
           TARGET_ARCH: x64
     steps:
-    - task: Docker@2
-      displayName: Build Qode
-      inputs:
-        dockerFile: './deploy/linux/Dockerfile'
-        tags: | 
-         qode-build
     - script: |
-        docker run --rm qode-build:latest tar -cC /usr/local/qt5/ . | tar -xC ~
+        docker build -t qode-linux ./deploy/linux
+        docker run --rm qode-linux:latest tar -cC /usr/local/qt5/ . | tar -xC ~
     
 # jobs:
 # - job: windows_build

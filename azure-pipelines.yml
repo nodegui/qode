@@ -32,10 +32,10 @@ jobs:
     - script: |
         git submodule sync --recursive
         git submodule update --init --recursive
-        docker build -t qode-linux .
-        docker run --rm qode-linux:latest tar -cC /usr/local/qt5/ . | tar -xC ~
-        ls ~
-    
+        docker build -t qode-linux -f ./deploy/linux/Dockerfile .
+        mkdir -p ~/artifacts/qt 
+        docker run --rm qode-linux:latest tar -cC /usr/local/qt5/ . | tar -xC ~/artifacts/qt
+        docker run --rm qode-linux:latest cat /root/qode/out/Release/qode > ~/artifacts/qode
 # jobs:
 # - job: windows_build
 #   displayName: 'Build for Windows'

@@ -1,5 +1,7 @@
 trigger:
-  - releases/*
+  tags:
+    include:
+    - v*
 
 jobs:
   - job: macos_build
@@ -17,8 +19,69 @@ jobs:
       - task: NodeTool@0
         inputs:
           versionSpec: 12.x
-      - script: curl -O $(qt5_brew_formula) && brew install ./qt.rb
-      - script: QT_INSTALL_DIR=$(qt5_install_dir) node build.js
+      - script: |
+          mkdir -p ~/artifacts/qt/lib
+          # dummy example
+          # echo "hello mac" > ~/artifacts/qode.txt
+          # echo "molo mac" > ~/artifacts/qt/yolo.txt
+          # build and copy 
+          curl -O $(qt5_brew_formula) && brew install ./qt.rb
+          TARGET_ARCH=$(TARGET_ARCH) HOST_ARCH=$(TARGET_ARCH) QT_INSTALL_DIR=$(qt5_install_dir) node build.js
+          cp -rf $(qt_install_dir)/lib/QtCore.framework $(qt_install_dir)/lib/QtGui.framework $(qt_install_dir)/lib/QtWidgets.framework ~/artifacts/qt/lib/
+          cp -rf $(qt_install_dir)/includes ~/artifacts/qt/
+          cp -rf $(qt_install_dir)/plugins ~/artifacts/qt/
+          cp -rf $(qt_install_dir)/bin ~/artifacts/qt/
+          cp ./out/Release/qode ~/artifacts/
+          # compress and send to artifcats directory
+          tar -czvf mac-$(TARGET_ARCH).tar.gz ~/artifacts
+          cp -rf mac-$(TARGET_ARCH).tar.gz $BUILD_ARTIFACTSTAGINGDIRECTORY/
+
+      - task: GithubRelease@0 
+        displayName: 'Create GitHub Release'      
+        inputs:
+          gitHubConnection: qodeRelease
+          repositoryName: master-atul/qode
+          action: edit
+          tagSource: manual
+          tag: $(Build.SourceBranchName)
+          assetUploadMode: replace
+          assets: |
+              $(Build.ArtifactStagingDirectory)/*.gz
+
+  - job: linux_build
+    displayName: 'Build for Linux'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    strategy:
+      matrix:
+        x64:
+          TARGET_ARCH: x64
+    steps:
+    - script: |
+        mkdir -p ~/artifacts/qt 
+        # dummy example
+        # echo "hello linux" > ~/artifacts/qode.txt
+        # echo "molo linux" > ~/artifacts/qt/yolo.txt
+        # build and copy 
+        git submodule sync --recursive
+        git submodule update --init --recursive
+        docker build -t qode-linux -f ./deploy/linux/Dockerfile .
+        docker run --rm qode-linux:latest tar -cC /usr/local/qt5/ . | tar -xC ~/artifacts/qt
+        docker run --rm qode-linux:latest cat /root/qode/out/Release/qode > ~/artifacts/qode
+        # compress and send to artifcats directory
+        tar -czvf linux-$(TARGET_ARCH).tar.gz ~/artifacts
+        cp -rf linux-$(TARGET_ARCH).tar.gz $BUILD_ARTIFACTSTAGINGDIRECTORY/
+    - task: GithubRelease@0 
+      displayName: 'Create GitHub Release'      
+      inputs:
+        gitHubConnection: qodeRelease
+        repositoryName: master-atul/qode
+        action: edit
+        tagSource: manual
+        assetUploadMode: replace
+        tag: $(Build.SourceBranchName)
+        assets: |
+            $(Build.ArtifactStagingDirectory)/*.gz
 # jobs:
 # - job: windows_build
 #   displayName: 'Build for Windows'

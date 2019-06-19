@@ -1,0 +1,4 @@
+.git
+out/*
+*.swp
+.vscode

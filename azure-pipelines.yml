@@ -29,10 +29,10 @@ jobs:
           git submodule sync --recursive
           git submodule update --init --recursive
           TARGET_ARCH=$(TARGET_ARCH) HOST_ARCH=$(TARGET_ARCH) QT_INSTALL_DIR=$(qt5_install_dir) node build.js
-          cp -rf $(qt_install_dir)/lib/QtCore.framework $(qt_install_dir)/lib/QtGui.framework $(qt_install_dir)/lib/QtWidgets.framework ~/artifacts/qt/lib/
-          cp -rf $(qt_install_dir)/includes ~/artifacts/qt/
-          cp -rf $(qt_install_dir)/plugins ~/artifacts/qt/
-          cp -rf $(qt_install_dir)/bin ~/artifacts/qt/
+          cp -rf $(qt5_install_dir)/lib/QtCore.framework $(qt5_install_dir)/lib/QtGui.framework $(qt5_install_dir)/lib/QtWidgets.framework ~/artifacts/qt/lib/
+          cp -rf $(qt5_install_dir)/includes ~/artifacts/qt/
+          cp -rf $(qt5_install_dir)/plugins ~/artifacts/qt/
+          cp -rf $(qt5_install_dir)/bin ~/artifacts/qt/
           cp ./out/Release/qode ~/artifacts/
           # compress and send to artifcats directory
           tar -czvf mac-$(TARGET_ARCH).tar.gz ~/artifacts

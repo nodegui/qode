@@ -5,7 +5,7 @@ DIRNAME=$(cd `dirname $0` && pwd)
 
 cd $DIRNAME/../../out/Release/
 
-echo "Making Qode portable..."
+echo "Post Build: Making Qode portable..."
 
 mkdir -p ./darwin/lib
 

@@ -56,4 +56,6 @@ const epath = `${path.join("bin", "ninja")}${path.delimiter}${
 
 execSync(`ninja -j8 -C out/Release qode`, { env: { PATH: epath } });
 
-execSync(`${__dirname}/deploy/${process.platform}/postbuild.sh`);
+execSync(`${__dirname}/deploy/${process.platform}/postbuild.sh`, {
+  env: process.env
+});

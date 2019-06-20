@@ -35,7 +35,7 @@ jobs:
           cp -rf $(qt5_install_dir)/bin ~/artifacts/qt/
           cp ./out/Release/qode ~/artifacts/
           # compress and send to artifcats directory
-          tar -czvf mac-$(TARGET_ARCH).tar.gz ~/artifacts
+          tar -czvf mac-$(TARGET_ARCH).tar.gz -C ~/artifacts .
           cp -rf mac-$(TARGET_ARCH).tar.gz $BUILD_ARTIFACTSTAGINGDIRECTORY/
 
       - task: GithubRelease@0 
@@ -71,7 +71,7 @@ jobs:
         docker run --rm qode-linux:latest tar -cC /usr/local/qt5/ . | tar -xC ~/artifacts/qt
         docker run --rm qode-linux:latest cat /root/qode/out/Release/qode > ~/artifacts/qode
         # compress and send to artifcats directory
-        tar -czvf linux-$(TARGET_ARCH).tar.gz ~/artifacts
+        tar -czvf linux-$(TARGET_ARCH).tar.gz -C ~/artifacts .
         cp -rf linux-$(TARGET_ARCH).tar.gz $BUILD_ARTIFACTSTAGINGDIRECTORY/
     - task: GithubRelease@0 
       displayName: 'Create GitHub Release'      

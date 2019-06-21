@@ -17,11 +17,29 @@ it is designed to be used together with `@nodegui/nodegui` the NodeGUI library
   subsystem, so unlike Node.js there is no console attached and REPL won't
   work.
 
-## For linux
+
+## For Windows
+==============
+
+1. Use Powershell in windows (possibly with git bash or similar installed)
 
 ### Cloning this repo:
 
-- Do a git clone this repo
+- Do a git clone for this repo
+
+### Install Visual Studio Community 2017 
+
+Download the Visual studio Installer and install Visual Studio Community 2017. Make sure to choose "Desktop development with C++ " workload and install it.
+
+### Installing QT:
+- Download qt from: https://www.qt.io (5.x version)
+
+## For linux 
+============
+
+### Cloning this repo:
+
+- Do a git clone for this repo
 
 ### Install GTK headers and patchelf:
 

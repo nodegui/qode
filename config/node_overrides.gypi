@@ -31,7 +31,7 @@
                 # Force loading all objects of node, otherwise some built-in modules
                 # won't load.
                 'sources': [
-                    './node.def',
+                    '../deps/node.def',
                 ],
                 'defines': [
                     # We want to export Node's symbols but do not wish to change its

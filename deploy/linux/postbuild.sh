@@ -4,17 +4,20 @@ set -e
 DIRNAME=$(cd `dirname $0` && pwd)
 cd $DIRNAME/../../out/Release/
 
-echo "Making Qode portable"
+echo "Post Build: Making Qode portable..."
+
+mkdir -p ./linux/lib
+
+cp -rf $QT_INSTALL_DIR/lib/libQt5Core.so* ./linux/lib/
+cp -rf $QT_INSTALL_DIR/lib/libQt5Gui.so* ./linux/lib/
+cp -rf $QT_INSTALL_DIR/lib/libQt5Widgets.so* ./linux/lib/
+
+cp ./qode ./linux/qode
+
+cd ./linux
 
 strip qode
 
-mkdir -p lib
-# cp -rf /usr/local/opt/qt/lib/QtWidgets.framework ./lib/QtWidgets.framework
-# cp -rf /usr/local/opt/qt/lib/QtGui.framework ./lib/QtGui.framework
-# cp -rf /usr/local/opt/qt/lib/QtCore.framework ./lib/QtCore.framework
+patchelf --set-rpath "\$ORIGIN/lib" qode
 
-mkdir -p linux
-
-mv ./qode ./linux/qode
-mv ./lib ./linux/lib
-
+echo "Qode is ready!"

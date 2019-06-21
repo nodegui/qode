@@ -19,6 +19,7 @@ const checkEnvExists = (envVarName, defaultValue) => {
     console.warn(
       `Env variable: ${envVarName} not specified, using default: ${defaultValue}`
     );
+    process.env[envVarName]=defaultValue;
     return defaultValue;
   }
   console.log(`Env variable: ${envVarName}, value: ${value}`);

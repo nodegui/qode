@@ -23,9 +23,9 @@ it is designed to be used together with `@nodegui/nodegui` the NodeGUI library
 
 - Do a git clone this repo
 
-### Install GTK headers:
+### Install GTK headers and patchelf:
 
-- sudo apt install libgtk-3-dev
+- sudo apt install libgtk-3-dev patchelf
 
 ### Installing QT:
 
@@ -36,6 +36,10 @@ it is designed to be used together with `@nodegui/nodegui` the NodeGUI library
 - Make sure you note down the install path. Also make sure there are no spaces in the path.
 - From the list to choose components: - Check Desktop gcc 64bit - Qt Creator (Optional)
 - Choose LGPL license and install.
+
+**or**
+
+- You can even build from source. Just download qt-everywhere source code of the version of the QT you want to build and do a standard make build.
 
 ### Building Qode:
 
@@ -109,4 +113,3 @@ QT_INSTALL_DIR=<path_to_qt_install_dir>/5.12.4/gcc_64 node build.js`
 
 The MIT license.
 
-[yackage]: https://github.com/yue/yackage

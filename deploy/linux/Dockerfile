@@ -2,7 +2,7 @@ FROM nodegui/docker-qt5-linux:5.13.0
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 RUN apt-get update
-RUN apt-get install -y libgtk-3-dev curl
+RUN apt-get install -y libgtk-3-dev curl patchelf
 # INSTALL NODEJS
 # ==============
 RUN mkdir -p /usr/local/nvm

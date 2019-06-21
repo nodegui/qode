@@ -33,7 +33,7 @@ jobs:
           cp -rf $(qt5_install_dir)/includes ~/artifacts/qt/
           cp -rf $(qt5_install_dir)/plugins ~/artifacts/qt/
           cp -rf $(qt5_install_dir)/bin ~/artifacts/qt/
-          cp ./out/Release/qode ~/artifacts/
+          cp -rf ./out/Release/darwin ~/artifacts/
           # compress and send to artifcats directory
           tar -czvf mac-$(TARGET_ARCH).tar.gz -C ~/artifacts .
           cp -rf mac-$(TARGET_ARCH).tar.gz $BUILD_ARTIFACTSTAGINGDIRECTORY/
@@ -69,7 +69,7 @@ jobs:
         git submodule update --init --recursive
         docker build -t qode-linux -f ./deploy/linux/Dockerfile .
         docker run --rm qode-linux:latest tar -cC /usr/local/qt5/ . | tar -xC ~/artifacts/qt
-        docker run --rm qode-linux:latest cat /root/qode/out/Release/qode > ~/artifacts/qode
+        docker run --rm qode-linux:latest tar -cC /root/qode/out/Release/linux . | tar -xC ~/artifacts/
         # compress and send to artifcats directory
         tar -czvf linux-$(TARGET_ARCH).tar.gz -C ~/artifacts .
         cp -rf linux-$(TARGET_ARCH).tar.gz $BUILD_ARTIFACTSTAGINGDIRECTORY/

@@ -8,7 +8,7 @@
 #include <memory>
 #include <unordered_map>
 
-#include "src/integraion/node_integration.h"
+#include "src/integration/node_integration.h"
 
 namespace qode {
 

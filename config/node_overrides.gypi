@@ -31,7 +31,7 @@
                 # Force loading all objects of node, otherwise some built-in modules
                 # won't load.
                 'sources': [
-                    '../deps/node.def',
+                    # '../deps/node.def',
                 ],
                 'defines': [
                     # We want to export Node's symbols but do not wish to change its
@@ -58,8 +58,8 @@
                     },
                 },
                 'msvs_disabled_warnings': [
-                    4251,
-                    4244,
+                    # 4251,
+                    # 4244,
                 ],
                 'xcode_settings': {
                     'WARNING_CFLAGS': [

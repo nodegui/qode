@@ -34,6 +34,10 @@ Download the Visual studio Installer and install Visual Studio Community 2017. M
 ### Installing QT:
 - Download qt from: https://www.qt.io (5.x version)
 
+### Building Qode:
+
+- `cmd /C "set QT_INSTALL_DIR=C:\path\to\qt\5.13.0\msvc2017_64 && node build.js" `
+
 ## For linux 
 ============
 

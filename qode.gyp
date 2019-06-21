@@ -49,7 +49,7 @@
                 ['OS=="win"', {
                     'sources': [
                         'src/qode.rc',
-                        'deps/node.def',
+                        # 'deps/node.def',
                     ],
                     'msvs_settings': {
                         'VCManifestTool': {
@@ -66,8 +66,8 @@
                         },
                     },
                     'msvs_disabled_warnings': [
-                        4251,
-                        4244,
+                        # 4251,
+                        # 4244,
                     ],
                 }],
                 ['OS in "linux freebsd"', {

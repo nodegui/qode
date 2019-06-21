@@ -26,6 +26,16 @@ const checkEnvExists = (envVarName, defaultValue) => {
   return value;
 };
 
+const runPostBuild = ()=>{
+  let command = '';
+  switch(process.platform){
+    case "win32": command = `${__dirname}/deploy/win32/postbuild.bat`; break;
+    case "linux": command = `${__dirname}/deploy/linux/postbuild.sh`; break;
+    case "darwin": command = `${__dirname}/deploy/darwin/postbuild.sh`; break;
+  }
+  execSync(command, { env: process.env});
+}
+
 //==================================
 //    BUILD PROCESS
 //==================================
@@ -43,7 +53,11 @@ if (!process.env.IS_DOCKER) {
   execSync("git submodule update --init --recursive", { stdio: null });
 }
 // Generate some dynamic gyp files.
-execSync(`python configure --dest-cpu=${target_arch}`, { cwd: "node" });
+if(process.platform === 'win32'){
+  execSync(`python configure --openssl-no-asm --dest-cpu=${target_arch}`, { cwd: "node" });
+}else {
+  execSync(`python configure --dest-cpu=${target_arch}`, { cwd: "node" });
+}
 
 // Update the build configuration.
 execSync(
@@ -57,6 +71,6 @@ const epath = `${path.join("bin", "ninja")}${path.delimiter}${
 
 execSync(`ninja -j8 -C out/Release qode`, { env: { PATH: epath } });
 
-execSync(`${__dirname}/deploy/${process.platform}/postbuild.sh`, {
-  env: process.env
-});
+runPostBuild();
+
+

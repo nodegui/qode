@@ -18,6 +18,7 @@
         'v8_optimized_debug': 0,
         'v8_typed_array_max_size_in_heap': 0,
         'node_report': 'false',
+        # 'v8_use_snapshot': 0
     },
     'target_defaults': {
         'includes': [

@@ -9,7 +9,11 @@
 #include "src/qode.h"
 
 #if defined(WIN32)
-int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+INT WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+    PSTR lpCmdLine, INT nCmdShow)
+{
+// int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR pCmdLine, int) {
+  
   // Convert argv to UTF8.
   int argc = 0;
   wchar_t** wargv = ::CommandLineToArgvW(::GetCommandLineW(), &argc);

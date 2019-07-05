@@ -25,7 +25,7 @@ const platform = os.platform();
 const arch = "x64";
 const qodeArchiveName = `qode-v${libVersion}.tar.gz`;
 const localBinaryDir = path.resolve(__dirname, "dist", libVersion);
-const localBinaryPath = path.resolve(localBinaryDir, qodeArchiveName);
+const localArchivePath = path.resolve(localBinaryDir, qodeArchiveName);
 const cacheDirectories = {
   get darwin() {
     return path.resolve(homedir, ".qode", libVersion);
@@ -38,7 +38,7 @@ const cacheDirectories = {
   }
 };
 const cacheDir = cacheDirectories[platform];
-const cacheBinaryPath = path.resolve(cacheDir, qodeArchiveName);
+const cacheArchivePath = path.resolve(cacheDir, qodeArchiveName);
 const downloadLink =
   "https://github.com/master-atul/testing/releases/download/v0.0.2/darwin-x64.tar.gz" ||
   `https://github.com/master-atul/qode/releases/download/v${libVersion}/${platform}-${arch}.tar.gz`;
@@ -46,7 +46,7 @@ const downloadLink =
 //---------------------------
 
 const checkLocalBinary = async () => {
-  return await fs.pathExists(localBinaryPath);
+  return await fs.pathExists(localArchivePath);
 };
 
 const copyArchiveFromCache = async () => {
@@ -60,7 +60,7 @@ const copyArchiveFromCache = async () => {
     console.log(
       `Local Qode ${libVersion} archive doesnt exists... Copying Qode from cache...`
     );
-    await fs.copy(cacheBinaryPath, localBinaryPath);
+    await fs.copy(cacheArchivePath, localArchivePath);
   }
 };
 
@@ -91,7 +91,7 @@ const downloadFile = async (url, targetFilePath, options) => {
 const downloadArchiveFromGithub = async () => {
   const downloadedFilePath = path.resolve(cacheDir, "download.file");
   await downloadFile(downloadLink, downloadedFilePath, { stream: true });
-  fs.rename(downloadedFilePath, cacheBinaryPath);
+  fs.rename(downloadedFilePath, cacheArchivePath);
 };
 
 const main = async () => {

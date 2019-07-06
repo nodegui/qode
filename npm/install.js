@@ -5,6 +5,15 @@ const os = require("os");
 const path = require("path");
 const got = require("got");
 const ProgressBar = require("progress");
+const extract = require("extract-zip");
+const {
+  cacheDirectories,
+  libVersion,
+  qodeArchiveName,
+  localBinaryDir,
+  localArchivePath,
+  localBinaryPath
+} = require("./config");
 
 /*
 1. Check pre installed version of binary
@@ -19,49 +28,34 @@ A local directory to install. First check cache if it exists then copy from ther
 // 1. download  correct version binary from github release
 
 // VARIABLES
-const libVersion = require("./package").version;
-const homedir = require("os").homedir();
 const platform = os.platform();
 const arch = "x64";
-const qodeArchiveName = `qode-v${libVersion}.tar.gz`;
-const localBinaryDir = path.resolve(__dirname, "dist", libVersion);
-const localArchivePath = path.resolve(localBinaryDir, qodeArchiveName);
-const cacheDirectories = {
-  get darwin() {
-    return path.resolve(homedir, ".qode", libVersion);
-  },
-  get linux() {
-    throw new Error("linux cache directory not implemented yet");
-  },
-  get win32() {
-    throw new Error("win32 cache directory not implemented yet");
-  }
-};
+
 const cacheDir = cacheDirectories[platform];
 const cacheArchivePath = path.resolve(cacheDir, qodeArchiveName);
 const downloadLink =
-  "https://github.com/master-atul/testing/releases/download/v0.0.2/darwin-x64.tar.gz" ||
-  `https://github.com/master-atul/qode/releases/download/v${libVersion}/${platform}-${arch}.tar.gz`;
+  "https://github.com/master-atul/testing/releases/download/v0.0.3/darwin-x64.zip" ||
+  `https://github.com/master-atul/qode/releases/download/v${libVersion}/${platform}-${arch}.zip`;
 
 //---------------------------
 
 const checkLocalBinary = async () => {
-  return await fs.pathExists(localArchivePath);
+  return await fs.pathExists(localBinaryPath);
 };
 
 const copyArchiveFromCache = async () => {
-  try {
-    const exists = await checkLocalBinary();
-    if (!exists) {
-      throw "";
-    }
-  } catch (err) {
-    console.log(err);
-    console.log(
-      `Local Qode ${libVersion} archive doesnt exists... Copying Qode from cache...`
-    );
-    await fs.copy(cacheArchivePath, localArchivePath);
-  }
+  console.log(
+    `Local Qode ${libVersion} archive doesnt exists... Copying Qode from cache...`
+  );
+  await fs.copy(cacheArchivePath, localArchivePath);
+};
+
+const extractZip = async (source, targetDir) => {
+  return new Promise((resolve, reject) => {
+    extract(source, { dir: targetDir }, function(err) {
+      err ? reject(err) : resolve(true);
+    });
+  });
 };
 
 const downloadFile = async (url, targetFilePath, options) => {
@@ -94,9 +88,18 @@ const downloadArchiveFromGithub = async () => {
   fs.rename(downloadedFilePath, cacheArchivePath);
 };
 
-const main = async () => {
+const extractBinaries = async () => {
+  console.log("Extracting binaries...");
+  await extractZip(localArchivePath, localBinaryDir);
+};
+
+const setup = async () => {
   await fs.mkdirp(localBinaryDir);
   await fs.mkdirp(cacheDir);
+  const exists = await checkLocalBinary();
+  if (exists) {
+    return;
+  }
   try {
     await copyArchiveFromCache();
   } catch (copyError) {
@@ -113,7 +116,16 @@ const main = async () => {
       process.exit(1);
     }
   }
-  console.log(`Downloaded and setup Qode v${libVersion} successfully`);
+  await extractBinaries();
+};
+
+const main = async () => {
+  try {
+    await setup();
+  } catch (err) {
+    console.error("Error while setting up Qode ", err);
+    process.exit(1);
+  }
 };
 
 main();

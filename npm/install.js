@@ -91,6 +91,7 @@ const downloadArchiveFromGithub = async () => {
 const extractBinaries = async () => {
   console.log("Extracting binaries...");
   await extractZip(localArchivePath, localBinaryDir);
+  await fs.chmod(localBinaryPath, fs.constants.S_IXUSR);
 };
 
 const setup = async () => {

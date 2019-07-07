@@ -1,6 +1,6 @@
 {
-  "name": "@nodegui/qode",
-  "version": "0.0.3",
+  "name": "@nodegui/test",
+  "version": "0.0.4",
   "description": "A lightly modified version of NodeJS designed to work with nodegui. Qode merges Qt's event loop with that of NodeJS's event loop for helping Qt and Javascript stay friends.",
   "main": "index.js",
   "bin": {

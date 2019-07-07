@@ -3,7 +3,7 @@ const path = require("path");
 
 const package = require("./package");
 const platform = os.platform();
-const libVersion = package.version;
+const libVersion = "0.0.3"; //package.version;
 
 const executableNames = {
   get darwin() {

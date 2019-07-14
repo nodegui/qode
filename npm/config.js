@@ -23,7 +23,7 @@ const cacheDirectories = {
     return path.resolve(homedir, ".qode", libVersion);
   },
   get linux() {
-    throw new Error("linux cache directory not implemented yet");
+    return path.resolve(homedir, ".qode", libVersion);
   },
   get win32() {
     throw new Error("win32 cache directory not implemented yet");

@@ -34,7 +34,7 @@ const arch = "x64";
 const cacheDir = cacheDirectories[platform];
 const cacheArchivePath = path.resolve(cacheDir, qodeArchiveName);
 const downloadLink =
-  "https://github.com/master-atul/testing/releases/download/v0.0.3/darwin-x64.zip" ||
+  // "https://github.com/master-atul/testing/releases/download/v0.0.3/darwin-x64.zip" ||
   `https://github.com/master-atul/qode/releases/download/v${libVersion}/${platform}-${arch}.zip`;
 
 //---------------------------

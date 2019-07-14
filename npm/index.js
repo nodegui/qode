@@ -1,5 +1,6 @@
 const fs = require("fs-extra");
-const { localBinaryPath } = require("./config");
+const path = require("path");
+const { localBinaryPath, libVersion } = require("./config");
 
 // return executable path of installed qode version
 function getQodePath() {
@@ -12,4 +13,7 @@ function getQodePath() {
   }
 }
 
-module.exports = getQodePath();
+module.exports ={
+  qodePath: getQodePath(),
+  include:  path.resolve(__dirname,"dist",libVersion)
+};

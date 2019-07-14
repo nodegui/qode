@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-var qode = require("./index");
+var { qodePath } = require("./index");
 
 var proc = require("child_process");
 
-var child = proc.spawn(qode, process.argv.slice(2), {
+var child = proc.spawn(qodePath, process.argv.slice(2), {
   stdio: "inherit",
   windowsHide: false
 });

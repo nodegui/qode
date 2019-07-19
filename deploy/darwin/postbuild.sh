@@ -24,13 +24,6 @@ cp -R "$QT_INSTALL_DIR/plugins/platforms" "./darwin/plugins/platforms"
 cp -R "$QT_INSTALL_DIR/plugins/platformthemes" "./darwin/plugins/platformthemes"
 cp -R "$QT_INSTALL_DIR/plugins/styles" "./darwin/plugins/styles"
 
-# echo "Symlinking"
-# mkdir -p ./darwin/include
-# cd ./darwin/include
-# ln -s  ../lib/QtCore.framework/Versions/5/Headers QtCore
-# ln -s  ../lib/QtGui.framework/Versions/5/Headers QtGui
-# ln -s  ../lib/QtWidgets.framework/Versions/5/Headers QtWidgets
-# cd ../../
 
 cp ./qode ./darwin/qode
 cd ./darwin

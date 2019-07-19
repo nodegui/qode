@@ -13,7 +13,7 @@ function getQodePath() {
   }
 }
 
-module.exports ={
+module.exports = {
   qodePath: getQodePath(),
-  include:  path.resolve(__dirname,"dist",libVersion)
+  qtHome: path.resolve(__dirname, "dist", libVersion)
 };

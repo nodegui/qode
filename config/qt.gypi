@@ -15,15 +15,19 @@
                 },
                 'include_dirs': [
                     # install qt via homebrew only
-                    '<(qt_home_dir)/include',
-                    '<(qt_home_dir)/include/QtCore',
-                    '<(qt_home_dir)/include/QtGui',
-                    '<(qt_home_dir)/include/QtWidgets',
+                    # '<(qt_home_dir)/include',
+                    # '<(qt_home_dir)/include/QtCore',
+                    # '<(qt_home_dir)/include/QtGui',
+                    # '<(qt_home_dir)/include/QtWidgets',
+                    '<(qt_home_dir)/lib/QtCore.framework/Versions/5/Headers',
+                    '<(qt_home_dir)/lib/QtGui.framework/Versions/5/Headers',
+                    '<(qt_home_dir)/lib/QtWidgets.framework/Versions/5/Headers',
+                    '../deploy/darwin/include',
                 ],
                 'libraries': [
-                    '<(qt_home_dir)/lib/QtCore.framework/QtCore',
-                    '<(qt_home_dir)/lib/QtGui.framework/QtGui',
-                    '<(qt_home_dir)/lib/QtWidgets.framework/QtWidgets',
+                    '<(qt_home_dir)/lib/QtCore.framework/Versions/5/QtCore',
+                    '<(qt_home_dir)/lib/QtGui.framework/Versions/5/QtGui',
+                    '<(qt_home_dir)/lib/QtWidgets.framework/Versions/5/QtWidgets',
                 ],
             }],
             ['OS=="linux"', {

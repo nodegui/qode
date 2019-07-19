@@ -19,22 +19,46 @@ const checkEnvExists = (envVarName, defaultValue) => {
     console.warn(
       `Env variable: ${envVarName} not specified, using default: ${defaultValue}`
     );
-    process.env[envVarName]=defaultValue;
+    process.env[envVarName] = defaultValue;
     return defaultValue;
   }
   console.log(`Env variable: ${envVarName}, value: ${value}`);
   return value;
 };
 
-const runPostBuild = ()=>{
-  let command = '';
-  switch(process.platform){
-    case "win32": command = `${__dirname}/deploy/win32/postbuild.bat`; break;
-    case "linux": command = `${__dirname}/deploy/linux/postbuild.sh`; break;
-    case "darwin": command = `${__dirname}/deploy/darwin/postbuild.sh`; break;
+const runPreBuild = qtPath => {
+  let command = "";
+  switch (process.platform) {
+    case "win32":
+      command = `${__dirname}/deploy/win32/prebuild.bat`;
+      break;
+    case "linux":
+      command = `${__dirname}/deploy/linux/prebuild.sh`;
+      break;
+    case "darwin":
+      command = `${__dirname}/deploy/darwin/prebuild.sh`;
+      break;
   }
-  execSync(command, { env: process.env});
-}
+  const env = Object.assign({}, process.env, { QT_INSTALL_DIR: qtPath });
+  execSync(command, { env });
+};
+
+const runPostBuild = qtPath => {
+  let command = "";
+  switch (process.platform) {
+    case "win32":
+      command = `${__dirname}/deploy/win32/postbuild.bat`;
+      break;
+    case "linux":
+      command = `${__dirname}/deploy/linux/postbuild.sh`;
+      break;
+    case "darwin":
+      command = `${__dirname}/deploy/darwin/postbuild.sh`;
+      break;
+  }
+  const env = Object.assign({}, process.env, { QT_INSTALL_DIR: qtPath });
+  execSync(command, { env });
+};
 
 //==================================
 //    BUILD PROCESS
@@ -47,15 +71,19 @@ const qt_install_dir = checkEnvExists(
   "/usr/local/Cellar/qt/5.12.3"
 );
 
+runPreBuild(qt_install_dir);
+
 if (!process.env.IS_DOCKER) {
   // Sync submodule.
   execSync("git submodule sync --recursive", { stdio: null });
   execSync("git submodule update --init --recursive", { stdio: null });
 }
 // Generate some dynamic gyp files.
-if(process.platform === 'win32'){
-  execSync(`python configure --openssl-no-asm --dest-cpu=${target_arch}`, { cwd: "node" });
-}else {
+if (process.platform === "win32") {
+  execSync(`python configure --openssl-no-asm --dest-cpu=${target_arch}`, {
+    cwd: "node"
+  });
+} else {
   execSync(`python configure --dest-cpu=${target_arch}`, { cwd: "node" });
 }
 
@@ -71,6 +99,4 @@ const epath = `${path.join("bin", "ninja")}${path.delimiter}${
 
 execSync(`ninja -j8 -C out/Release qode`, { env: { PATH: epath } });
 
-runPostBuild();
-
-
+runPostBuild(qt_install_dir);

@@ -23,7 +23,10 @@ cp -R "$QT_INSTALL_DIR/plugins/imageformats" "./darwin/plugins/imageformats"
 cp -R "$QT_INSTALL_DIR/plugins/platforms" "./darwin/plugins/platforms"
 cp -R "$QT_INSTALL_DIR/plugins/platformthemes" "./darwin/plugins/platformthemes"
 cp -R "$QT_INSTALL_DIR/plugins/styles" "./darwin/plugins/styles"
-
+echo "Copying binaries"
+mkdir -p ./darwin/bin
+cp "$QT_INSTALL_DIR/bin/moc" "./darwin/bin/moc"
+cp "$QT_INSTALL_DIR/bin/macdeployqt" "./darwin/bin/macdeployqt"
 
 cp ./qode ./darwin/qode
 cd ./darwin

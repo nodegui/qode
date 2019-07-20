@@ -1,1 +1,2 @@
-echo "Nothing to do yet"
+@ECHO OFF
+ECHO "Nothing to do on postbuild step for windows"

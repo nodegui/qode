@@ -30,7 +30,7 @@ const runPreBuild = qtPath => {
   let command = "";
   switch (process.platform) {
     case "win32":
-      command = `${__dirname}/deploy/win32/prebuild.bat`;
+      command = `"${__dirname}\\deploy\\win32\\prebuild.bat"`;
       break;
     case "linux":
       command = `${__dirname}/deploy/linux/prebuild.sh`;
@@ -47,7 +47,7 @@ const runPostBuild = qtPath => {
   let command = "";
   switch (process.platform) {
     case "win32":
-      command = `${__dirname}/deploy/win32/postbuild.bat`;
+      command = `${__dirname}\\deploy\\win32\\postbuild.bat`;
       break;
     case "linux":
       command = `${__dirname}/deploy/linux/postbuild.sh`;

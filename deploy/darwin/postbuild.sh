@@ -3,7 +3,7 @@ set -e
 
 DIRNAME=$(cd `dirname $0` && pwd)
 
-cd $DIRNAME/../../out/Release/
+cd $DIRNAME/../../node/out/Release/
 
 echo "Post Build: Making Qode portable..."
 

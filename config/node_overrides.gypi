@@ -5,8 +5,8 @@
     ],
     'variables': {
         # overrides node's config.gypi.
-        'component%': 'static_library',
-        'library%': 'static_library',
+        'component': 'static_library',
+        'library': 'static_library',
         'OPENSSL_PRODUCT': 'libopenssl.a',
         'node_target_type': 'static_library',
         'node_install_npm': 'false',

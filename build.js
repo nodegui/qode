@@ -73,30 +73,44 @@ const qt_install_dir = checkEnvExists(
 
 runPreBuild(qt_install_dir);
 
-if (!process.env.IS_DOCKER) {
-  // Sync submodule.
-  execSync("git submodule sync --recursive", { stdio: null });
-  execSync("git submodule update --init --recursive", { stdio: null });
-}
+// if (!process.env.IS_DOCKER) {
+//   // Sync submodule.
+//   execSync("git submodule sync --recursive", { stdio: null });
+//   execSync("git submodule update --init --recursive", { stdio: null });
+// }
 // Generate some dynamic gyp files.
 if (process.platform === "win32") {
-  execSync(`python configure --openssl-no-asm --dest-cpu=${target_arch}`, {
-    cwd: "node"
-  });
+  execSync(
+    `python configure --openssl-no-asm --dest-cpu=${target_arch}  --with-intl=full-icu --download=all`,
+    {
+      cwd: "node"
+    }
+  );
 } else {
-  execSync(`python configure --dest-cpu=${target_arch}`, { cwd: "node" });
+  execSync(
+    `python configure --dest-cpu=${target_arch} --with-intl=full-icu --download=all`,
+    {
+      cwd: "node"
+    }
+  );
 }
 
 // Update the build configuration.
 execSync(
-  `python node/tools/gyp/gyp_main.py qode.gyp -f ninja -Dhost_arch=${host_arch} -Dtarget_arch=${target_arch} -Dqt_home_dir=${qt_install_dir} -Iconfig/node_overrides.gypi --depth .`
+  `python tools/gyp/gyp_main.py ../qode.gyp -f ninja -Dhost_arch=${host_arch} -Dtarget_arch=${target_arch} -Dqt_home_dir=${qt_install_dir} -I../config/node_overrides.gypi --depth .`,
+  {
+    cwd: "node"
+  }
 );
 
 // Build.
-const epath = `${path.join("bin", "ninja")}${path.delimiter}${
+const epath = `${path.join("..", "bin", "ninja")}${path.delimiter}${
   process.env.PATH
 }`;
 
-execSync(`ninja -j8 -C out/Release qode`, { env: { PATH: epath } });
+execSync(`ninja -j8 -C out/Release qode`, {
+  cwd: "node",
+  env: { PATH: epath }
+});
 
 runPostBuild(qt_install_dir);

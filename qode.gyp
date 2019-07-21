@@ -61,13 +61,18 @@
                             # Using 5.01 would make Windows turn on compatibility mode for
                             # certain win32 APIs, which would return wrong results.
                             'MinimumRequiredVersion': '5.02',
-                            # A win32 GUI program.
-                            'SubSystem': '2',
+                            # A win32 GUI program use 2 and for CUI use 1.
+                            'SubSystem': '1',
                         },
                     },
                     'msvs_disabled_warnings': [
                         # 4251,
                         # 4244,
+                    ],
+                    'libraries': [
+                        'Dbghelp.lib',
+                        'winmm.lib',
+                        'Ws2_32.lib',
                     ],
                 }],
                 ['OS in "linux freebsd"', {

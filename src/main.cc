@@ -1,37 +1,36 @@
 // Copyright 2017 Atul R. All rights reserved.
-
-#if defined(WIN32)
-#include <windows.h>
-#endif
-
-#include <stdio.h>
-
 #include "src/qode.h"
+#include "node.h"
+#include <cstdio>
 
-#if defined(WIN32)
-INT WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
-    PSTR lpCmdLine, INT nCmdShow)
-{
-// int WINAPI wWinMain(HINSTANCE, HINSTANCE, PWSTR pCmdLine, int) {
-  
-  // Convert argv to UTF8.
-  int argc = 0;
-  wchar_t** wargv = ::CommandLineToArgvW(::GetCommandLineW(), &argc);
-  char** argv = new char*[argc];
+#ifdef _WIN32
+#include <windows.h>
+#include <VersionHelpers.h>
+#include <WinError.h>
+
+int wmain(int argc, wchar_t* wargv[]) {
+  if (!IsWindows7OrGreater()) {
+    fprintf(stderr, "This application is only supported on Windows 7, "
+                    "Windows Server 2008 R2, or higher.");
+    exit(ERROR_EXE_MACHINE_TYPE_MISMATCH);
+  }
+
+  // Convert argv to UTF8
+  char** argv = new char*[argc + 1];
   for (int i = 0; i < argc; i++) {
     // Compute the size of the required buffer
     DWORD size = WideCharToMultiByte(CP_UTF8,
                                      0,
                                      wargv[i],
                                      -1,
-                                     NULL,
+                                     nullptr,
                                      0,
-                                     NULL,
-                                     NULL);
+                                     nullptr,
+                                     nullptr);
     if (size == 0) {
       // This should never happen.
       fprintf(stderr, "Could not convert arguments to utf8.");
-      return 1;
+      exit(1);
     }
     // Do the actual conversion
     argv[i] = new char[size];
@@ -41,18 +40,20 @@ INT WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
                                        -1,
                                        argv[i],
                                        size,
-                                       NULL,
-                                       NULL);
+                                       nullptr,
+                                       nullptr);
     if (result == 0) {
       // This should never happen.
       fprintf(stderr, "Could not convert arguments to utf8.");
-      return 1;
+      exit(1);
     }
   }
-
-#else  // !defined(WIN32)
-int main(int argc, char* argv[]) {
-#endif
-
+  argv[argc] = nullptr;
+  // Now that conversion is done, we can finally start.
   return qode::Start(argc, argv);
 }
+#else  // !defined(WIN32)
+int main(int argc, char* argv[]) {
+  return qode::Start(argc, argv);
+}
+#endif

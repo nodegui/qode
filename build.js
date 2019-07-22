@@ -73,11 +73,11 @@ const qt_install_dir = checkEnvExists(
 
 runPreBuild(qt_install_dir);
 
-// if (!process.env.IS_DOCKER) {
-//   // Sync submodule.
-//   execSync("git submodule sync --recursive", { stdio: null });
-//   execSync("git submodule update --init --recursive", { stdio: null });
-// }
+if (process.env.SYNC_GIT_SUBMODULE) {
+  // Sync submodule.
+  execSync("git submodule sync --recursive", { stdio: null });
+  execSync("git submodule update --init --recursive", { stdio: null });
+}
 // Generate some dynamic gyp files.
 execSync(
   `python configure --dest-cpu=${target_arch}`,

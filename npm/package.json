@@ -13,6 +13,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "env-paths": "^2.2.0",
     "extract-zip": "^1.6.7",
     "fs-extra": "^8.1.0",
     "got": "^9.6.0",

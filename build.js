@@ -81,14 +81,14 @@ runPreBuild(qt_install_dir);
 // Generate some dynamic gyp files.
 if (process.platform === "win32") {
   execSync(
-    `python configure --openssl-no-asm --dest-cpu=${target_arch}  --with-intl=full-icu --download=all`,
+    `python configure --openssl-no-asm --dest-cpu=${target_arch}`,
     {
       cwd: "node"
     }
   );
 } else {
   execSync(
-    `python configure --dest-cpu=${target_arch} --with-intl=full-icu --download=all`,
+    `python configure --dest-cpu=${target_arch}`,
     {
       cwd: "node"
     }

@@ -4,6 +4,7 @@ set -e
 DIRNAME=$(cd `dirname $0` && pwd)
 
 cd $DIRNAME/../../node/out/Release/
+rm -rf ./darwin
 
 echo "Post Build: Making Qode portable..."
 

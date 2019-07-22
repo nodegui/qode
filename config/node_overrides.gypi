@@ -18,6 +18,10 @@
         'v8_optimized_debug': 0,
         'v8_typed_array_max_size_in_heap': 0,
         'node_report': 'false',
+        'icu_src_derb': [
+            '../../deps/icu-small/source/tools/genrb/derb.c',
+            '../../deps/icu-small/source/tools/genrb/derb.cpp'
+        ],
         # 'v8_use_snapshot': 0
     },
     'target_defaults': {

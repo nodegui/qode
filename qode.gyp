@@ -49,7 +49,6 @@
                 ['OS=="win"', {
                     'sources': [
                         'src/qode.rc',
-                        # 'deps/node.def',
                     ],
                     'msvs_settings': {
                         'VCManifestTool': {

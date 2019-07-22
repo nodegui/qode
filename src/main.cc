@@ -1,4 +1,6 @@
 // Copyright 2017 Atul R. All rights reserved.
+// Copied from node_main.cc of node source code
+
 #include "src/qode.h"
 #include "node.h"
 #include <cstdio>

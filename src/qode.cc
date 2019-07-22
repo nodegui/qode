@@ -6,7 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-std::string qodeVersion = "1.0.0-alpha";
+std::string qodeVersion = "1.1.0";
 
 namespace qode {
   QApplication* qtAppInstance = nullptr;

@@ -22,8 +22,14 @@
             '../../deps/icu-small/source/tools/genrb/derb.c',
             '../../deps/icu-small/source/tools/genrb/derb.cpp'
         ],
-        # 'v8_use_snapshot': 0
     },
+    'conditions': [
+        ['OS=="win"', {
+            'variables': {
+              'openssl_no_asm': 1 #compile without asm benefits for win
+            }
+        }]
+    ],
     'target_defaults': {
         'includes': [
             './filename_rules.gypi',

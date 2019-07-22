@@ -131,6 +131,11 @@ For Linux:
 QT_INSTALL_DIR=<path_to_qt_install_dir>/5.12.4/gcc_64 node build.js`
 ```
 
+For Windows:
+```bash
+   cmd /C "set QT_INSTALL_DIR=<path_to_qt_dir>\5.13.0\msvc2017_64 && node build.js"
+```
+
 ## License
 
 The MIT license.

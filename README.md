@@ -98,6 +98,8 @@ Download the Visual studio Installer and install Visual Studio Community 2017. M
 And make sure you have installed gtk3 headers also for time being.
 Make sure you add LD_LIBRARY_PATH to the path to qt and then run the built executable
 
+4. Yoga crashes when using with Qode. Make sure that node version you are using to compile nodegui is binary compatible with node version of Qode. or make sure you compile addons with Qode instead of Node.
+
 ## Usage
 
 The prebuilt binaries can be found in the Releases page, modules installed by
@@ -133,7 +135,7 @@ QT_INSTALL_DIR=<path_to_qt_install_dir>/5.12.4/gcc_64 node build.js`
 
 For Windows:
 ```bash
-   cmd /C "set QT_INSTALL_DIR=<path_to_qt_dir>\5.13.0\msvc2017_64 && node build.js"
+   cmd /C "set QT_INSTALL_DIR=<path_to_qt_dir>\5.13.0\msvc2017_64&& node build.js"
 ```
 
 ## License

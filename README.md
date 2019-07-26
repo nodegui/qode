@@ -1,6 +1,6 @@
-# qode
+# Qode
 
-qode is a fork of Node.js that replaces its event loop with Qt's event loop,
+Qode is essentially a lightly modified fork of Node.js that merges Node's event loop with Qt's event loop,
 it is designed to be used together with `@nodegui/nodegui` the NodeGUI library
 
 ## Changes to Node.js
@@ -12,62 +12,74 @@ it is designed to be used together with `@nodegui/nodegui` the NodeGUI library
 - There are new `process.versions.qode` property added - This mentions the qode version.
 - There are new `process.versions.qt(runtime)` property added - This mentions the version of qt shared library you are using on runtime.
 - There are new `process.versions.qt(compiled)` property added - This mentions the version of qt used while compiling qode. Ideally both runtime and compile time versions should be same but binary compatible versions could work too.
-- The `process.stdin` is not supposed to work.
-- On Windows the executable uses `WINDOWS` subsystem instead of `CONSOLE`
-  subsystem, so unlike Node.js there is no console attached and REPL won't
-  work.
+- Make sure to use a binary compatible version of nodejs when using alongside qode. For example is qode has node version of 12.x then use Node version 12.x when developing apps with qode.
 
+Currently only 64bit OS's are supported.
 
-## For Windows
-==============
+## Steps for Windows
 
-1. Use Powershell in windows (possibly with git bash or similar installed)
+====================
 
-### Cloning this repo:
+Use Powershell in windows (possibly with git bash or similar installed)
 
-- Do a git clone for this repo
+1. Do a git clone for this repo
 
-### Install Visual Studio Community 2017 
+2. Install Visual Studio Community 2017. Download the Visual studio Installer and install Visual Studio Community 2017. Make sure to choose "Desktop development with C++ " workload and install it. PS: Visual Studio 2019 will not work since NodeJS build toolchain doesnt support it aswell.
 
-Download the Visual studio Installer and install Visual Studio Community 2017. Make sure to choose "Desktop development with C++ " workload and install it.
+3. Installing QT. Download qt from: https://www.qt.io (5.x version)
 
-### Installing QT:
-- Download qt from: https://www.qt.io (5.x version)
+4. Building Qode. Run `cmd /C "set QT_INSTALL_DIR=C:\path\to\qt\5.13.0\msvc2017_64 && node build.js"`
 
-### Building Qode:
+## Steps for Linux
 
-- `cmd /C "set QT_INSTALL_DIR=C:\path\to\qt\5.13.0\msvc2017_64 && node build.js" `
+==================
 
-## For linux 
-============
+1. Do a git clone for this repo
 
-### Cloning this repo:
+2. Install GTK headers and patchelf:
 
-- Do a git clone for this repo
+```
+sudo apt install libgtk-3-dev patchelf
+```
 
-### Install GTK headers and patchelf:
+3. Installing QT.
 
-- sudo apt install libgtk-3-dev patchelf
+   - Download qt from: https://www.qt.io/offline-installers (Preferably 5.x version)
+   - chmod a+x qt-opensource-linux-x64-5.12.4.run
+   - ./qt-opensource-linux-x64-5.12.4.run
+   - Click Next -> I accept checkbox and then Skip.
+   - Make sure you note down the install path. Also make sure there are no spaces in the path.
+   - From the list to choose components: - Check Desktop gcc 64bit and Qt Creator (Optional)
+   - Choose LGPL license and install.
 
-### Installing QT:
+   **or**
 
-- Download qt from: https://www.qt.io/offline-installers (Preferably 5.12.x version)
-- chmod a+x qt-opensource-linux-x64-5.12.4.run
-- ./qt-opensource-linux-x64-5.12.4.run
-- Click Next -> I accept checkbox and then Skip.
-- Make sure you note down the install path. Also make sure there are no spaces in the path.
-- From the list to choose components: - Check Desktop gcc 64bit - Qt Creator (Optional)
-- Choose LGPL license and install.
+   - You can even build from source. Just download qt-everywhere source code of the version of the QT you want to build and do a standard make build.
 
-**or**
+4. Building Qode. Run `QT_INSTALL_DIR=<path_to_qt_install_dir>/5.12.4/gcc_64 node build.js`
 
-- You can even build from source. Just download qt-everywhere source code of the version of the QT you want to build and do a standard make build.
+## Steps for MacOS
 
-### Building Qode:
+==================
 
-- `QT_INSTALL_DIR=<path_to_qt_install_dir>/5.12.4/gcc_64 node build.js`
+1. Do a git clone for this repo
 
-### Common errors:
+2. Installing QT.
+
+   - Download qt from: https://www.qt.io/offline-installers (Preferably 5.x version)
+   - Install from the downloaded dmg.
+   - Click Next -> I accept checkbox and then Skip.
+   - Make sure you note down the install path. Also make sure there are no spaces in the path.
+   - From the list to choose components: - Check Desktop gcc 64bit and Qt Creator (Optional)
+   - Choose LGPL license and install.
+
+   **or**
+
+   - You can even build from source. Just download qt-everywhere source code of the version of the QT you want to build and do a standard make build.
+
+3. Building Qode. Run `QT_INSTALL_DIR=/path/to/qt/5.13.0 node build.js`
+
+### Common build errors:
 
 1. if you get an error similar to:
 
@@ -102,10 +114,8 @@ Make sure you add LD_LIBRARY_PATH to the path to qt and then run the built execu
 
 ## Usage
 
-The prebuilt binaries can be found in the Releases page, modules installed by
-`npm` can be used directly in qode.
-
-To package your Node.js project with qode, you should use [yackage][yackage].
+The prebuilt binaries can be found in the Releases page, modules installed by `npm` can be used directly in qode.
+Qode can also be installed via npm.
 
 Note that it is strong recommended to install the official Node.js with the
 same version of qode, otherwise native modules installed by `npm` may not work
@@ -117,28 +127,14 @@ correctly in qode.
 QT_INSTALL_DIR=<path_to_qt_install_directory> TARGET_ARCH=[x64|ia32] HOST_ARCH=[x64|ia32] node ./build.js
 ```
 
-TARGET_ARCH, HOST_ARCH and QT_INSTALL_DIR are optional
+or
 
-example:
-
-For mac:
-
-```bash
-QT_INSTALL_DIR=/usr/local/Cellar/qt/5.12.1 node build.js
+```
+`cmd /C "set QT_INSTALL_DIR=<path_to_qt_install_directory> && set TARGET_ARCH=[x64|ia32] && set HOST_ARCH=[x64|ia32] && node build.js"`
 ```
 
-For Linux:
-
-```bash
-QT_INSTALL_DIR=<path_to_qt_install_dir>/5.12.4/gcc_64 node build.js`
-```
-
-For Windows:
-```bash
-   cmd /C "set QT_INSTALL_DIR=<path_to_qt_dir>\5.13.0\msvc2017_64&& node build.js"
-```
+_PS: I havent tested ia32 builds_
 
 ## License
 
 The MIT license.
-

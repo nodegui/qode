@@ -52,7 +52,7 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Qode"
             VALUE "ProductName", "qode"
-            VALUE "FileDescription", "qode: Qt+Node for building fast and efficient GUI"
+            VALUE "FileDescription", "Qode: Node + Qt"
             VALUE "FileVersion", NODE_EXE_VERSION
             VALUE "ProductVersion", NODE_EXE_VERSION
             VALUE "OriginalFilename", "qode.exe"

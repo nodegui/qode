@@ -3,6 +3,13 @@
 Qode is essentially a lightly modified fork of Node.js that merges Node's event loop with Qt's event loop,
 it is designed to be used together with `@nodegui/nodegui` the NodeGUI library
 
+<img alt="logo" src="https://github.com/master-atul/nodegui/raw/master/extras/logo/nodegui.png" height="200" />
+
+### Note:
+
+Qode is published as a NPM module as `@nodegui/qode`.
+For more details on the npm module visit: `npm/README.md`
+
 ## Changes to Node.js
 
 - The event loop is replaced with QT's GUI message loop.

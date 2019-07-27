@@ -7,35 +7,20 @@ const got = require("got");
 const ProgressBar = require("progress");
 const extract = require("extract-zip");
 const {
-  cacheDirectories,
   libVersion,
   qodeArchiveName,
   localBinaryDir,
   localArchivePath,
-  localBinaryPath
+  localBinaryPath,
+  cacheDir
 } = require("./config");
-
-/*
-1. Check pre installed version of binary
-2. Provide a way to skip binary download ?
-3. if preinstalled version of binary equals version of this package. Then skip and use that binary
-4. if not equal then download binary from github and cache it in a common directory.
-
-A cache directory to store binaries
-A local directory to install. First check cache if it exists then copy from there. otherwise download to cache and copy from there.
-*/
-
-// 1. download  correct version binary from github release
 
 // VARIABLES
 const platform = os.platform();
 const arch = "x64";
 
-const cacheDir = cacheDirectories[platform];
 const cacheArchivePath = path.resolve(cacheDir, qodeArchiveName);
-const downloadLink =
-  `https://github.com/master-atul/testing/releases/download/v${libVersion}/${platform}-${arch}.zip` ||
-  `https://github.com/master-atul/qode/releases/download/v${libVersion}/${platform}-${arch}.zip`;
+const downloadLink = `https://github.com/master-atul/nodegui/releases/download/v${libVersion}/${platform}-${arch}.zip`;
 
 //---------------------------
 
@@ -91,7 +76,7 @@ const downloadArchiveFromGithub = async () => {
 const extractBinaries = async () => {
   console.log("Extracting binaries...");
   await extractZip(localArchivePath, localBinaryDir);
-  if(process.platform !== 'win32'){
+  if (process.platform !== "win32") {
     await fs.chmod(localBinaryPath, fs.constants.S_IXUSR);
   }
 };

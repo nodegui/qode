@@ -1,9 +1,10 @@
 const os = require("os");
 const path = require("path");
+const envPaths = require("env-paths");
 
 const package = require("./package");
 const platform = os.platform();
-const libVersion = "0.0.3"; //package.version;
+const libVersion = package.version;
 
 const executableNames = {
   get darwin() {
@@ -17,28 +18,17 @@ const executableNames = {
   }
 };
 
-const homedir = os.homedir();
-const cacheDirectories = {
-  get darwin() {
-    return path.resolve(homedir, ".qode", libVersion);
-  },
-  get linux() {
-    return path.resolve(homedir, ".qode", libVersion);
-  },
-  get win32() {
-    return path.resolve(homedir, ".qode", libVersion);
-  }
-};
-
+const appDirectories = envPaths("qode");
 const qodeArchiveName = `qode-v${libVersion}.zip`;
 const localBinaryDir = path.resolve(__dirname, "dist", libVersion);
 const localArchivePath = path.resolve(localBinaryDir, qodeArchiveName);
 const localBinaryPath = path.resolve(localBinaryDir, executableNames[platform]);
+const cacheDir = appDirectories.cache;
 
 module.exports = {
   executableNames,
-  cacheDirectories,
   libVersion,
+  cacheDir,
   qodeArchiveName,
   localBinaryDir,
   localArchivePath,

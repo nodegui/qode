@@ -20,7 +20,7 @@ const platform = os.platform();
 const arch = "x64";
 
 const cacheArchivePath = path.resolve(cacheDir, qodeArchiveName);
-const downloadLink = `https://github.com/master-atul/nodegui/releases/download/v${libVersion}/${platform}-${arch}.zip`;
+const downloadLink = `https://github.com/nodegui/qode/releases/download/v${libVersion}/${platform}-${arch}.zip`;
 
 //---------------------------
 

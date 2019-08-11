@@ -142,6 +142,8 @@ or
 
 _PS: I havent tested ia32 builds_
 
+The output of the build will be present at qode/node/out/Release/<platform> (platform is darwin, win32 or linux)
+
 ## License
 
 The MIT license.
@@ -151,3 +153,10 @@ The MIT license.
 The idea of Qode is derived from [yode][yode] and [electron][https://github.com/electron/electron/]. Infact Qode is a heavily modified fork of [yode][yode]. I thank [Cheng Zhao](https://github.com/zcbenz) for yode and many of the ideas behind integration of GUI based libraries with NodeJS.
 
 [yode]: https://github.com/yue/yode
+
+## Checklist before publishing
+
+- Make sure to build on all platforms.
+- Make sure to update Qode version in qode.cc
+- Create github release
+- publish on npm

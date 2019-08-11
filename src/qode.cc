@@ -5,6 +5,7 @@
 #include "node/src/env-inl.h"
 #include <string.h>
 #include <stdlib.h>
+#include <iostream>
 
 std::string qodeVersion = "1.0.0";
 
@@ -56,11 +57,13 @@ namespace qode {
       g_node_integration->UvRunOnce();
       g_first_runloop = false;
     }
-    qtAppInstance->exec();
+    int exitCode = qtAppInstance->exec();
+    std::cout << "Qt exited with "<< exitCode;
+    exit(exitCode);
     // No need to keep uv loop alive.
-    g_node_integration->ReleaseHandleRef();
+    // g_node_integration->ReleaseHandleRef();
     // Enter uv loop to handle unfinished uv tasks.
-    return uv_run(env->event_loop(), UV_RUN_DEFAULT);
+    // return uv_run(env->event_loop(), UV_RUN_DEFAULT);
   }
 
 

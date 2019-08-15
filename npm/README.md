@@ -1,6 +1,6 @@
 # Qode
 
-<img alt="logo" src="https://github.com/master-atul/nodegui/raw/master/extras/logo/nodegui.png" height="200" />
+<img alt="logo" src="https://github.com/nodegui/nodegui/raw/master/extras/logo/nodegui.png" height="200" />
 
 Qode is a lightly modified fork of Node.js that merges Node's event loop with Qt's event loop.
 It is designed to be used together with `@nodegui/nodegui`.
@@ -10,7 +10,7 @@ Qode can be used as a _drop in_ replacement of NodeJS and hence you could consid
 
 This npm module downloads the prebuilt qode for the current Operating System.
 
-_Build Instructions for qode can be found here:_ https://github.com/master-atul/qode
+_Build Instructions for qode can be found here:_ https://github.com/nodegui/qode
 
 # Installation
 

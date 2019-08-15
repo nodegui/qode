@@ -35,7 +35,7 @@ Use Powershell in windows (possibly with git bash or similar installed)
 
 3. Installing QT. Download qt from: https://www.qt.io (5.x version)
 
-4. Building Qode. Run `cmd /C "set QT_INSTALL_DIR=C:\path\to\qt\5.13.0\msvc2017_64 && node build.js"`
+4. Building Qode. Run `cmd /C "set QT_INSTALL_DIR=C:\path\to\qt\5.13.0\msvc2017_64&& node build.js"`
 
 ## Steps for Linux
 

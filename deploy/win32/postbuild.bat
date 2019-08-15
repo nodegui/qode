@@ -34,5 +34,13 @@ copy /y %QT_INSTALL_DIR%\bin\Qt5Core.dll .\win\Qt5Core.dll
 copy /y %QT_INSTALL_DIR%\bin\Qt5Gui.dll .\win\Qt5Gui.dll
 copy /y %QT_INSTALL_DIR%\bin\Qt5Widgets.dll .\win\Qt5Widgets.dll
 
+md .\win\plugins
+
+xcopy /y /E %QT_INSTALL_DIR%\plugins\iconengines .\win\iconengines\
+xcopy /y /E %QT_INSTALL_DIR%\plugins\imageformats .\win\imageformats\
+xcopy /y /E %QT_INSTALL_DIR%\plugins\platforms .\win\platforms\
+xcopy /y /E %QT_INSTALL_DIR%\plugins\platformthemes .\win\platformthemes\
+xcopy /y /E %QT_INSTALL_DIR%\plugins\styles .\win\styles\
+
 
 echo "Qode is ready!"

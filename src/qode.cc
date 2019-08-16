@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <iostream>
 
-std::string qodeVersion = "1.0.1";
+std::string qodeVersion = "1.0.2";
 
 namespace qode
 {

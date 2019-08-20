@@ -1,7 +1,4 @@
 {
-    "includes": [
-        './config/qt.gypi'
-    ],
     'targets': [
         {
             'target_name': 'qode',
@@ -13,6 +10,9 @@
                 'src/integration/node_integration_linux.cc',
                 'src/integration/node_integration_mac.mm',
                 'src/integration/node_integration_win.cc',
+            ],
+            "includes": [
+                './config/qt.gypi'
             ],
             'include_dirs': [
                 '.',

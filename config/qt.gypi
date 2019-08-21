@@ -15,6 +15,7 @@
                 '<(qt_home_dir)/lib/QtCore.framework/Versions/5/Headers',
                 '<(qt_home_dir)/lib/QtGui.framework/Versions/5/Headers',
                 '<(qt_home_dir)/lib/QtWidgets.framework/Versions/5/Headers',
+                '../deploy/darwin/include'
             ],
             'libraries': [
                 '<(qt_home_dir)/lib/QtCore.framework/Versions/5/QtCore',

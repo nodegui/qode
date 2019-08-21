@@ -10,6 +10,7 @@
                 'src/integration/node_integration_linux.cc',
                 'src/integration/node_integration_mac.mm',
                 'src/integration/node_integration_win.cc',
+                'src/helpers/qode_helpers.cc'
             ],
             "includes": [
                 './config/qt.gypi'

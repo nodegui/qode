@@ -144,6 +144,18 @@ _PS: I havent tested ia32 builds_
 
 The output of the build will be present at qode/node/out/Release/<platform> (platform is darwin, win32 or linux)
 
+## Configurations (Available from qode v1.0.3)
+
+Additional configurations can be done via a qode.json file in the same directory as that of the qode binary.
+
+`qode.json`
+
+```javascript
+{
+  distPath: "./dist/index.js"; // This will try to load the index.js inside dist folder when qode.exe is run. Internally it just adds NODE_OPTIONS="--require ./dist/index.js"
+}
+```
+
 ## License
 
 The MIT license.

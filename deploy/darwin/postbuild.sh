@@ -31,12 +31,17 @@ cp "$QT_INSTALL_DIR/bin/macdeployqt" "./darwin/bin/macdeployqt"
 
 cp ./qode ./darwin/qode
 cd ./darwin
-
+echo "Fixing linked library paths"
 install_name_tool -change  "$QT_INSTALL_DIR/lib/QtWidgets.framework/Versions/5/QtWidgets" "@rpath/QtWidgets.framework/Versions/5/QtWidgets" qode
 install_name_tool -change  "$QT_INSTALL_DIR/lib/QtCore.framework/Versions/5/QtCore" "@rpath/QtCore.framework/Versions/5/QtCore" qode
 install_name_tool -change  "$QT_INSTALL_DIR/lib/QtGui.framework/Versions/5/QtGui" "@rpath/QtGui.framework/Versions/5/QtGui" qode
 
 install_name_tool -add_rpath "@loader_path/lib" qode
 install_name_tool -add_rpath "$QT_INSTALL_DIR/lib/" qode
+install_name_tool -add_rpath "@executable_path/../Frameworks" qode
+
+echo "Fixing linked library paths for binaries"
+echo "[Paths]" > ./bin/qt.conf
+echo "Prefix = \"../\"" >> ./bin/qt.conf
 
 echo "Qode is ready!"

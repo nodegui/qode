@@ -22,7 +22,10 @@ const appDirectories = envPaths("qode");
 const qodeArchiveName = `qode-v${libVersion}.zip`;
 const localBinaryDir = path.resolve(__dirname, "dist", libVersion);
 const localArchivePath = path.resolve(localBinaryDir, qodeArchiveName);
-const localBinaryPath = path.resolve(localBinaryDir, executableNames[platform]);
+const localBinaryPath =
+  platform === "win32"
+    ? path.resolve(localBinaryDir, "bin", executableNames[platform])
+    : path.resolve(localBinaryDir, executableNames[platform]);
 const cacheDir = appDirectories.cache;
 
 module.exports = {

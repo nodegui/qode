@@ -28,19 +28,31 @@ copy /y %QT_INSTALL_DIR%\include\QtWidgets .\win\include\QtWidgets\
 copy /y %QT_INSTALL_DIR%\include\QtCore .\win\include\QtCore\
 copy /y %QT_INSTALL_DIR%\include\QtGui .\win\include\QtGui\
 
-copy .\qode.exe .\win\qode.exe
-
-copy /y %QT_INSTALL_DIR%\bin\Qt5Core.dll .\win\Qt5Core.dll
-copy /y %QT_INSTALL_DIR%\bin\Qt5Gui.dll .\win\Qt5Gui.dll
-copy /y %QT_INSTALL_DIR%\bin\Qt5Widgets.dll .\win\Qt5Widgets.dll
-
 md .\win\plugins
 
-xcopy /y /E %QT_INSTALL_DIR%\plugins\iconengines .\win\iconengines\
-xcopy /y /E %QT_INSTALL_DIR%\plugins\imageformats .\win\imageformats\
-xcopy /y /E %QT_INSTALL_DIR%\plugins\platforms .\win\platforms\
-xcopy /y /E %QT_INSTALL_DIR%\plugins\platformthemes .\win\platformthemes\
-xcopy /y /E %QT_INSTALL_DIR%\plugins\styles .\win\styles\
+xcopy /y /E %QT_INSTALL_DIR%\plugins\iconengines .\win\plugins\iconengines\
+xcopy /y /E %QT_INSTALL_DIR%\plugins\imageformats .\win\plugins\imageformats\
+xcopy /y /E %QT_INSTALL_DIR%\plugins\platforms .\win\plugins\platforms\
+xcopy /y /E %QT_INSTALL_DIR%\plugins\platformthemes .\win\plugins\platformthemes\
+xcopy /y /E %QT_INSTALL_DIR%\plugins\styles .\win\plugins\styles\
 
+md .\win\bin
+
+copy .\qode.exe .\win\bin\qode.exe
+
+copy /y %QT_INSTALL_DIR%\bin\Qt5Core.dll .\win\bin\Qt5Core.dll
+copy /y %QT_INSTALL_DIR%\bin\Qt5Gui.dll .\win\bin\Qt5Gui.dll
+copy /y %QT_INSTALL_DIR%\bin\Qt5Widgets.dll .\win\bin\Qt5Widgets.dll
+copy /y %QT_INSTALL_DIR%\bin\Qt5Svg.dll .\win\bin\Qt5Svg.dll
+copy /y %QT_INSTALL_DIR%\bin\libEGL.dll .\win\bin\libEGL.dll
+copy /y %QT_INSTALL_DIR%\bin\libGLESv2.dll .\win\bin\libGLESv2.dll
+
+copy /y %QT_INSTALL_DIR%\bin\windeployqt.exe .\win\bin\windeployqt.exe
+copy /y %QT_INSTALL_DIR%\bin\moc.exe .\win\bin\moc.exe
+copy /y %QT_INSTALL_DIR%\bin\qmake.exe .\win\bin\qmake.exe
+
+echo "Creating qt.conf for qt binaries"
+@echo [Paths] > .\win\bin\qt.conf
+@echo Prefix=.. >> .\win\bin\qt.conf
 
 echo "Qode is ready!"

@@ -23,36 +23,35 @@ bool g_first_runloop = true;
 inline v8::Local<v8::String> ToV8String(node::Environment *env, const std::string str)
 {
   return v8::String::NewFromUtf8(
-    env->isolate(), 
-    str.c_str(), 
-    v8::NewStringType::kNormal, 
-    static_cast<int>(str.length())
-  ).ToLocalChecked();
+             env->isolate(),
+             str.c_str(),
+             v8::NewStringType::kNormal,
+             static_cast<int>(str.length()))
+      .ToLocalChecked();
 }
-
 
 bool InitWrapper(node::Environment *env)
 {
   v8::HandleScope handle_scope(env->isolate());
   v8::Local<v8::Value> versions = env->process_object()->Get(
-    env->context(), 
-    ToV8String(env, "versions")
-  ).ToLocalChecked();
+                                                           env->context(),
+                                                           ToV8String(env, "versions"))
+                                      .ToLocalChecked();
   versions.As<v8::Object>()->Set(
-    env->context(),
-    ToV8String(env, "qode"),
-    ToV8String(env, qodeVersion)
-  ).ToChecked();
+                               env->context(),
+                               ToV8String(env, "qode"),
+                               ToV8String(env, qodeVersion))
+      .ToChecked();
   versions.As<v8::Object>()->Set(
-   env->context(),
-   ToV8String(env, "qt(compiled)"),
-   ToV8String(env, QT_VERSION_STR)
-  ).ToChecked();
+                               env->context(),
+                               ToV8String(env, "qt(compiled)"),
+                               ToV8String(env, QT_VERSION_STR))
+      .ToChecked();
   versions.As<v8::Object>()->Set(
-   env->context(),
-   ToV8String(env, "qt(runtime)"),
-   ToV8String(env, qVersion())
-  ).ToChecked();
+                               env->context(),
+                               ToV8String(env, "qt(runtime)"),
+                               ToV8String(env, qVersion()))
+      .ToChecked();
   return true;
 }
 
@@ -87,8 +86,11 @@ int Start(int argc, char *argv[])
   node::InjectQode(&InitWrapper, &RunLoopWrapper);
   // Always enable GC this app is almost always running on desktop.
   v8::V8::SetFlagsFromString("--expose_gc", 11);
+
   QJsonDocument qodeConfig = QodeHelpers::readConfig();
   QodeHelpers::setStartFile(qodeConfig);
+  QodeHelpers::setConsoleVisibility(qodeConfig);
+  QodeHelpers::addLibraryPaths(qodeConfig);
 
   int code = node::Start(qode_argc, qode_argv);
   // Clean up node integration and quit.

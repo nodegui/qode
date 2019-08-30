@@ -152,7 +152,9 @@ Additional configurations can be done via a qode.json file in the same directory
 
 ```javascript
 {
-  distPath: "./dist/index.js"; // This will try to load the index.js inside dist folder when qode.exe is run. Internally it just adds NODE_OPTIONS="--require ./dist/index.js"
+  libraryPaths: [], //Specify extra library paths to load dlls from
+  hideConsole: false, //If true it will hide the console window as soon as application is launched.
+  distPath: "./dist/index.js" // This will try to load the index.js inside dist folder when qode.exe is run. Internally it just adds NODE_OPTIONS="--require ./dist/index.js"
 }
 ```
 

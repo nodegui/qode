@@ -87,6 +87,7 @@
                     'ldflags': [
                         # '-Wl,--whole-archive,<(obj_dir)/node/libnode.a',
                         '-Wl,--no-whole-archive',
+                        "-Wl,-rpath,'$$ORIGIN/lib'"
                     ],
                 }],
             ],

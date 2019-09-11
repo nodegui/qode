@@ -8,7 +8,7 @@
 #include <iostream>
 #include "helpers/qode_helpers.h"
 
-std::string qodeVersion = "1.1.0";
+std::string qodeVersion = "1.0.5";
 
 namespace qode {
 

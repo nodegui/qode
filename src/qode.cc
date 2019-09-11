@@ -23,35 +23,42 @@ bool g_first_runloop = true;
 inline v8::Local<v8::String> ToV8String(node::Environment *env, const std::string str)
 {
   return v8::String::NewFromUtf8(
-             env->isolate(),
-             str.c_str(),
-             v8::NewStringType::kNormal,
-             static_cast<int>(str.length()))
-      .ToLocalChecked();
+    env->isolate(),
+    str.c_str(),
+    v8::NewStringType::kNormal,
+    static_cast<int>(str.length()))
+  .ToLocalChecked();
+}
+
+// Force running uv loop.
+void ActivateUvLoop(const v8::FunctionCallbackInfo<v8::Value>& args) {
+  g_node_integration->CallNextTick();
 }
 
 bool InitWrapper(node::Environment *env)
 {
   v8::HandleScope handle_scope(env->isolate());
   v8::Local<v8::Value> versions = env->process_object()->Get(
-                                                           env->context(),
-                                                           ToV8String(env, "versions"))
-                                      .ToLocalChecked();
+    env->context(),
+    ToV8String(env, "versions"))
+  .ToLocalChecked();
   versions.As<v8::Object>()->Set(
-                               env->context(),
-                               ToV8String(env, "qode"),
-                               ToV8String(env, qodeVersion))
-      .ToChecked();
+    env->context(),
+    ToV8String(env, "qode"),
+    ToV8String(env, qodeVersion))
+  .ToChecked();
   versions.As<v8::Object>()->Set(
-                               env->context(),
-                               ToV8String(env, "qt(compiled)"),
-                               ToV8String(env, QT_VERSION_STR))
-      .ToChecked();
+    env->context(),
+    ToV8String(env, "qt(compiled)"),
+    ToV8String(env, QT_VERSION_STR))
+  .ToChecked();
   versions.As<v8::Object>()->Set(
-                               env->context(),
-                               ToV8String(env, "qt(runtime)"),
-                               ToV8String(env, qVersion()))
-      .ToChecked();
+    env->context(),
+    ToV8String(env, "qt(runtime)"),
+    ToV8String(env, qVersion())
+  ).ToChecked();
+  
+  env->SetMethod(env->process_object(), "activateUvLoop", &ActivateUvLoop);
   return true;
 }
 

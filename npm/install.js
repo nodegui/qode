@@ -70,7 +70,7 @@ const downloadFile = async (url, targetFilePath, options) => {
 const downloadArchiveFromGithub = async () => {
   const downloadedFilePath = path.resolve(cacheDir, "download.file");
   await downloadFile(downloadLink, downloadedFilePath, { stream: true });
-  fs.rename(downloadedFilePath, cacheArchivePath);
+  await fs.rename(downloadedFilePath, cacheArchivePath);
 };
 
 const extractBinaries = async () => {

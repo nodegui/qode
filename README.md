@@ -164,7 +164,7 @@ The MIT license.
 
 ## Thanks
 
-The idea of Qode is derived from [yode][yode] and [electron][https://github.com/electron/electron/]. Infact Qode is a heavily modified fork of [yode][yode]. I thank [Cheng Zhao](https://github.com/zcbenz) for yode and many of the ideas behind integration of GUI based libraries with NodeJS.
+The idea of Qode is derived from [yode][yode] and [electron](https://github.com/electron/electron/). Infact Qode is a heavily modified fork of [yode][yode]. I thank [Cheng Zhao](https://github.com/zcbenz) for yode and many of the ideas behind integration of GUI based libraries with NodeJS.
 
 [yode]: https://github.com/yue/yode
 

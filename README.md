@@ -158,6 +158,10 @@ Additional configurations can be done via a qode.json file in the same directory
 }
 ```
 
+## Troubleshooting
+
+- If you face `python cant open file 'configure'` - This means the git submodules have not been synced. So either manually sync your git submodules or set the environment variable SYNC_GIT_SUBMODULE=true before running build. See https://github.com/nodegui/qode/issues/7
+
 ## License
 
 The MIT license.

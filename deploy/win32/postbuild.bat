@@ -18,15 +18,18 @@ echo %QT_INSTALL_DIR%
 copy  %QT_INSTALL_DIR%\lib\Qt5Core.lib .\win\lib\Qt5Core.lib
 copy  %QT_INSTALL_DIR%\lib\Qt5Gui.lib .\win\lib\Qt5Gui.lib
 copy  %QT_INSTALL_DIR%\lib\Qt5Widgets.lib .\win\lib\Qt5Widgets.lib
+copy  %QT_INSTALL_DIR%\lib\Qt5Svg.lib .\win\lib\Qt5Svg.lib
 
 md .\win\include
 md .\win\include\QtWidgets
 md .\win\include\QtCore
 md .\win\include\QtGui
+md .\win\include\QtSvg
 
 copy /y %QT_INSTALL_DIR%\include\QtWidgets .\win\include\QtWidgets\
 copy /y %QT_INSTALL_DIR%\include\QtCore .\win\include\QtCore\
 copy /y %QT_INSTALL_DIR%\include\QtGui .\win\include\QtGui\
+copy /y %QT_INSTALL_DIR%\include\QtSvg .\win\include\QtSvg\
 
 md .\win\plugins
 

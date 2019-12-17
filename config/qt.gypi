@@ -15,12 +15,14 @@
                 '<(qt_home_dir)/lib/QtCore.framework/Versions/5/Headers',
                 '<(qt_home_dir)/lib/QtGui.framework/Versions/5/Headers',
                 '<(qt_home_dir)/lib/QtWidgets.framework/Versions/5/Headers',
+                '<(qt_home_dir)/lib/QtSvg.framework/Versions/5/Headers',
                 '../deploy/darwin/include'
             ],
             'libraries': [
                 '<(qt_home_dir)/lib/QtCore.framework/Versions/5/QtCore',
                 '<(qt_home_dir)/lib/QtGui.framework/Versions/5/QtGui',
                 '<(qt_home_dir)/lib/QtWidgets.framework/Versions/5/QtWidgets',
+                '<(qt_home_dir)/lib/QtSvg.framework/Versions/5/QtSvg',
             ],
         }],
         ['OS=="linux"', {
@@ -29,11 +31,13 @@
                 '<(qt_home_dir)/include/QtCore',
                 '<(qt_home_dir)/include/QtGui',
                 '<(qt_home_dir)/include/QtWidgets',
+                '<(qt_home_dir)/include/QtSvg',
             ],
             'libraries': [
                 '<(qt_home_dir)/lib/libQt5Core.so',
                 '<(qt_home_dir)/lib/libQt5Gui.so',
                 '<(qt_home_dir)/lib/libQt5Widgets.so',
+                '<(qt_home_dir)/lib/libQt5Svg.so'
             ],
             'cflags':[
                 '-fPIC'
@@ -54,11 +58,13 @@
                 '<(qt_home_dir)/include/QtCore',
                 '<(qt_home_dir)/include/QtGui',
                 '<(qt_home_dir)/include/QtWidgets',
+                '<(qt_home_dir)/include/QtSvg',
             ],
             'libraries': [
                 '<(qt_home_dir)/lib/Qt5Core.lib',
                 '<(qt_home_dir)/lib/Qt5Gui.lib',
                 '<(qt_home_dir)/lib/Qt5Widgets.lib',
+                '<(qt_home_dir)/lib/Qt5Svg.lib',
             ],
         }],
     ],

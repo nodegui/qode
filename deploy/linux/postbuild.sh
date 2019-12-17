@@ -26,6 +26,7 @@ mkdir -p ./linux/include
 cp -a $QT_INSTALL_DIR/include/QtWidgets ./linux/include/QtWidgets
 cp -a $QT_INSTALL_DIR/include/QtCore ./linux/include/QtCore
 cp -a $QT_INSTALL_DIR/include/QtGui ./linux/include/QtGui
+cp -a $QT_INSTALL_DIR/include/QtSvg ./linux/include/QtSvg
 
 echo "Copying plugins"
 mkdir -p ./linux/plugins

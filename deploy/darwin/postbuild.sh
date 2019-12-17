@@ -17,6 +17,7 @@ cp -R "$QT_INSTALL_DIR/lib/QtGui.framework" "./darwin/lib/QtGui.framework"
 cp -R "$QT_INSTALL_DIR/lib/QtCore.framework" "./darwin/lib/QtCore.framework"
 cp -R "$QT_INSTALL_DIR/lib/QtDBus.framework" "./darwin/lib/QtDBus.framework"
 cp -R "$QT_INSTALL_DIR/lib/QtPrintSupport.framework" "./darwin/lib/QtPrintSupport.framework"
+cp -R "$QT_INSTALL_DIR/lib/QtSvg.framework" "./darwin/lib/QtSvg.framework"
 echo "Copying plugins"
 mkdir -p ./darwin/plugins
 cp -R "$QT_INSTALL_DIR/plugins/iconengines" "./darwin/plugins/iconengines"
@@ -35,6 +36,7 @@ echo "Fixing linked library paths"
 install_name_tool -change  "$QT_INSTALL_DIR/lib/QtWidgets.framework/Versions/5/QtWidgets" "@rpath/QtWidgets.framework/Versions/5/QtWidgets" qode
 install_name_tool -change  "$QT_INSTALL_DIR/lib/QtCore.framework/Versions/5/QtCore" "@rpath/QtCore.framework/Versions/5/QtCore" qode
 install_name_tool -change  "$QT_INSTALL_DIR/lib/QtGui.framework/Versions/5/QtGui" "@rpath/QtGui.framework/Versions/5/QtGui" qode
+install_name_tool -change  "$QT_INSTALL_DIR/lib/QtSvg.framework/Versions/5/QtSvg" "@rpath/QtSvg.framework/Versions/5/QtSvg" qode
 
 install_name_tool -add_rpath "@loader_path/lib" qode
 install_name_tool -add_rpath "$QT_INSTALL_DIR/lib/" qode

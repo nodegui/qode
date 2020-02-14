@@ -6,7 +6,7 @@
 #include <string.h>
 
 #include <iostream>
-
+#include "node/src/qode_shared.h"
 #include "helpers/qode_helpers.h"
 #include "node/src/env-inl.h"
 #include "src/integration/node_integration.h"
@@ -15,13 +15,8 @@ std::string qodeVersion = "1.0.6";
 
 namespace qode {
 
-QApplication *qtAppInstance = nullptr;
-static int qode_argc = 0;
-static char **qode_argv = nullptr;
 // The global instance of NodeIntegration.
 std::unique_ptr<NodeIntegration> g_node_integration;
-// Has we run message loop before.
-bool g_first_runloop = true;
 
 inline v8::Local<v8::String> ToV8String(node::Environment *env,
                                         const std::string str) {
@@ -59,41 +54,31 @@ bool InitWrapper(node::Environment *env) {
   return true;
 }
 
-bool RunLoopWrapper(node::Environment *env) {
-  // Run uv loop for once before entering GUI message loop.
-  if (g_first_runloop) {
-    g_node_integration->UvRunOnce();
-    g_first_runloop = false;
-  }
-  int exitCode = qtAppInstance->exec();
-  std::cout << "Qt exited with " << exitCode;
-  exit(exitCode);
-  // No need to keep uv loop alive.
-  // g_node_integration->ReleaseHandleRef();
-  // Enter uv loop to handle unfinished uv tasks.
-  // return uv_run(env->event_loop(), UV_RUN_DEFAULT);
+bool RunLoopWrapper() {
+  g_node_integration->UvRunOnce();
+  return false;
 }
 
 int Start(int argc, char *argv[]) {
-  qode_argc = argc;
-  qode_argv = argv;
-
-  qtAppInstance = new QApplication(qode_argc, qode_argv);
-  qtAppInstance->processEvents();  // Just run it once.
+  qode::qode_argc = argc;
+  qode::qode_argv = argv;
   // Prepare node integration.
   g_node_integration.reset(NodeIntegration::Create());
   g_node_integration->Init();
   // Set run loop and init function on node.
-  node::InjectQode(&InitWrapper, &RunLoopWrapper);
+  qode::InjectQodeInit(&InitWrapper);
+  qode::InjectQodeRunLoop(&RunLoopWrapper);
+
   // Always enable GC this app is almost always running on desktop.
-  v8::V8::SetFlagsFromString("--expose_gc", 11);
+  std::string qodeFlags = "--expose_gc";
+  v8::V8::SetFlagsFromString(qodeFlags.c_str(), qodeFlags.length());
 
-  QJsonDocument qodeConfig = QodeHelpers::readConfig();
-  QodeHelpers::setStartFile(qodeConfig);
-  QodeHelpers::setConsoleVisibility(qodeConfig);
-  QodeHelpers::addLibraryPaths(qodeConfig);
+  // QJsonDocument qodeConfig = QodeHelpers::readConfig();
+  // QodeHelpers::setStartFile(qodeConfig);
+  // QodeHelpers::setConsoleVisibility(qodeConfig);
+  // QodeHelpers::addLibraryPaths(qodeConfig);
 
-  int code = node::Start(qode_argc, qode_argv);
+  int code = node::Start(qode::qode_argc, qode::qode_argv);
   // Clean up node integration and quit.
   g_node_integration.reset();
   return code;

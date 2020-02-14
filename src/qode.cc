@@ -1,17 +1,13 @@
 // Copyright 2017 Atul R. All rights reserved.
 
-#include "qode.h"
-
-#include <stdlib.h>
 #include <string.h>
 
-#include <iostream>
+#include "qode.h"
 #include "node/src/qode_shared.h"
-#include "helpers/qode_helpers.h"
 #include "node/src/env-inl.h"
 #include "src/integration/node_integration.h"
 
-std::string qodeVersion = "1.0.6";
+std::string qodeVersion = "2.0.0";
 
 namespace qode {
 
@@ -41,14 +37,6 @@ bool InitWrapper(node::Environment *env) {
       ->Set(env->context(), ToV8String(env, "qode"),
             ToV8String(env, qodeVersion))
       .ToChecked();
-  versions.As<v8::Object>()
-      ->Set(env->context(), ToV8String(env, "qt(compiled)"),
-            ToV8String(env, QT_VERSION_STR))
-      .ToChecked();
-  versions.As<v8::Object>()
-      ->Set(env->context(), ToV8String(env, "qt(runtime)"),
-            ToV8String(env, qVersion()))
-      .ToChecked();
 
   env->SetMethod(env->process_object(), "activateUvLoop", &ActivateUvLoop);
   return true;
@@ -73,11 +61,7 @@ int Start(int argc, char *argv[]) {
   std::string qodeFlags = "--expose_gc";
   v8::V8::SetFlagsFromString(qodeFlags.c_str(), qodeFlags.length());
 
-  // QJsonDocument qodeConfig = QodeHelpers::readConfig();
-  // QodeHelpers::setStartFile(qodeConfig);
-  // QodeHelpers::setConsoleVisibility(qodeConfig);
-  // QodeHelpers::addLibraryPaths(qodeConfig);
-
+  // Start node js
   int code = node::Start(qode::qode_argc, qode::qode_argv);
   // Clean up node integration and quit.
   g_node_integration.reset();

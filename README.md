@@ -21,6 +21,7 @@ It is designed to be used together with `@nodegui/nodegui`. Qode achieves this b
 
 Qode is published as a NPM module as `@nodegui/qode`.
 For more details on the npm module visit: `npm/README.md`
+The changes to node are visible in the `qode-v12.x` branches in `https://github.com/nodegui/node`
 
 ## Changes to Node.js
 

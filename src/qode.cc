@@ -55,7 +55,7 @@ int Start(int argc, char *argv[]) {
   g_node_integration->Init();
   // Set run loop and init function on node.
   qode::InjectQodeInit(&InitWrapper);
-  qode::InjectQodeRunLoop(&RunLoopWrapper);
+  // qode::InjectQodeRunLoop(&RunLoopWrapper);
 
   // Always enable GC this app is almost always running on desktop.
   std::string qodeFlags = "--expose_gc";

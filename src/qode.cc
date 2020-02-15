@@ -42,7 +42,7 @@ bool InitWrapper(node::Environment *env) {
   return true;
 }
 
-bool RunLoopWrapper() {
+bool RunUvLoopOnceWrapper() {
   g_node_integration->UvRunOnce();
   return false;
 }
@@ -55,7 +55,8 @@ int Start(int argc, char *argv[]) {
   g_node_integration->Init();
   // Set run loop and init function on node.
   qode::InjectQodeInit(&InitWrapper);
-  // qode::InjectQodeRunLoop(&RunLoopWrapper);
+  qode::InjectQodeRunUvLoopOnce(&RunUvLoopOnceWrapper);
+  // qode::InjectQodeRunLoop(&RunUvLoopOnceWrapper);
 
   // Always enable GC this app is almost always running on desktop.
   std::string qodeFlags = "--expose_gc";

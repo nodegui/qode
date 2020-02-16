@@ -66,7 +66,7 @@ int Start(int argc, char *argv[]) {
   qodeNodeIntegration->Init();
 
   JSON::json qodeConfig = qodeHelper::readConfig();
-  startFile = qodeConfig.value("startFile","");
+  startFile = qodeConfig.value("distPath","");
   // Set run loop and init function on node.
   qode::InjectQodeInit(&InitWrapper);
   qode::InjectQodeRunUvLoopOnce(&RunUvLoopOnceWrapper);

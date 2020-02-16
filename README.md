@@ -112,7 +112,7 @@ _PS: I havent tested ia32 builds_
 
 The output of the build will be present at node/out/Release/qode 
 
-<!-- ## Configurations (Available from qode v1.0.3)
+## Configurations (Available from qode v1.0.3)
 
 Additional configurations can be done via a qode.json file in the same directory as that of the qode binary.
 
@@ -120,11 +120,9 @@ Additional configurations can be done via a qode.json file in the same directory
 
 ```javascript
 {
-  libraryPaths: [], //Specify extra library paths to load dlls from
-  hideConsole: false, //If true it will hide the console window as soon as application is launched.
-  distPath: "./dist/index.js" // This will try to load the index.js inside dist folder when qode.exe is run. Internally it just adds NODE_OPTIONS="--require ./dist/index.js"
+  distPath: "./dist/index.js" // This will try to load the index.js inside dist folder when qode.exe is run.
 }
-``` -->
+```
 
 ## Troubleshooting
 

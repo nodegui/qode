@@ -49,12 +49,6 @@ NodeIntegrationLinux::NodeIntegrationLinux() : epoll_(epoll_create(1)) {
 NodeIntegrationLinux::~NodeIntegrationLinux() {
 }
 
-std::string NodeIntegrationLinux::getExecutablePath() {
-   char rawPathName[PATH_MAX];
-   realpath(PROC_SELF_EXE, rawPathName);
-   return  std::string(rawPathName);
-}
-
 
 void NodeIntegrationLinux::PollEvents() {
   int timeout = uv_backend_timeout(uv_loop_);

@@ -11,8 +11,6 @@
 #include <sys/sysctl.h>
 #include <sys/time.h>
 #include <sys/types.h>
-#include <limits.h>
-#include <mach-o/dyld.h>
 
 namespace qode {
 
@@ -52,18 +50,6 @@ void NodeIntegrationMac::PostTask(const std::function<void()>& task) {
     callback();
   });
 }
-
-std::string NodeIntegrationMac::getExecutablePath() {
-   char rawPathName[MAXPATHLEN];
-   char realPathName[MAXPATHLEN];
-   uint32_t rawPathSize = (uint32_t)sizeof(rawPathName);
-
-   if(!_NSGetExecutablePath(rawPathName, &rawPathSize)) {
-     realpath(rawPathName, realPathName);
-   }
-   return  std::string(realPathName);
-}
-
 
 // static
 void NodeIntegrationMac::OnWatcherQueueChanged(uv_loop_t* loop) {

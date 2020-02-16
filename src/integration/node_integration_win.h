@@ -17,8 +17,6 @@ class NodeIntegrationWin : public NodeIntegration {
   NodeIntegrationWin();
   ~NodeIntegrationWin() override;
 
-  std::string getExecutablePath() override;
-
  private:
   void PollEvents() override;
   void PostTask(const std::function<void()>& task) override;

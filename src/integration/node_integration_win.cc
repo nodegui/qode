@@ -44,12 +44,6 @@ NodeIntegrationWin::~NodeIntegrationWin() {
 }
 
 
-std::string NodeIntegrationWin::getExecutablePath() {
-   wchar_t rawPathName[MAX_PATH];
-   GetModuleFileNameW(NULL, rawPathName, MAX_PATH);
-   return std::string(rawPathName);
-}
-
 void NodeIntegrationWin::PollEvents() {
   DWORD bytes, timeout;
   ULONG_PTR key;

@@ -1,18 +1,22 @@
 // Copyright 2017 Atul R. All rights reserved.
-
 #include <string.h>
 
 #include "qode.h"
 #include "node/src/qode_shared.h"
+#include "node/src/node_options.h"
 #include "node/src/env-inl.h"
 #include "src/integration/node_integration.h"
+#include "src/helpers/qode_helper.h"
+
 
 std::string qodeVersion = "2.0.0";
 
 namespace qode {
 
 // The global instance of NodeIntegration.
-std::unique_ptr<NodeIntegration> g_node_integration;
+std::unique_ptr<NodeIntegration> qodeNodeIntegration;
+
+std::string startFile;
 
 inline v8::Local<v8::String> ToV8String(node::Environment *env,
                                         const std::string str) {
@@ -24,8 +28,9 @@ inline v8::Local<v8::String> ToV8String(node::Environment *env,
 
 // Force running uv loop.
 void ActivateUvLoop(const v8::FunctionCallbackInfo<v8::Value> &args) {
-  g_node_integration->CallNextTick();
+  qodeNodeIntegration->CallNextTick();
 }
+
 
 bool InitWrapper(node::Environment *env) {
   v8::HandleScope handle_scope(env->isolate());
@@ -39,11 +44,18 @@ bool InitWrapper(node::Environment *env) {
       .ToChecked();
 
   env->SetMethod(env->process_object(), "activateUvLoop", &ActivateUvLoop);
+
+  std::shared_ptr<node::EnvironmentOptions> options = env->options();
+
+ if(qodeHelper::checkIfFileExists(startFile)){
+    options->preload_modules.push_back(startFile);
+ }
+
   return true;
 }
 
 bool RunUvLoopOnceWrapper() {
-  g_node_integration->UvRunOnce();
+  qodeNodeIntegration->UvRunOnce();
   return false;
 }
 
@@ -51,8 +63,11 @@ int Start(int argc, char *argv[]) {
   qode::qode_argc = argc;
   qode::qode_argv = argv;
   // Prepare node integration.
-  g_node_integration.reset(NodeIntegration::Create());
-  g_node_integration->Init();
+  qodeNodeIntegration.reset(NodeIntegration::Create());
+  qodeNodeIntegration->Init();
+
+  std::string executableDir = qodeHelper::getExecutableDir();
+  startFile = qodeHelper::mergePaths(qodeHelper::getExecutableDir(),"../test/index.js");
   // Set run loop and init function on node.
   qode::InjectQodeInit(&InitWrapper);
   qode::InjectQodeRunUvLoopOnce(&RunUvLoopOnceWrapper);
@@ -65,7 +80,7 @@ int Start(int argc, char *argv[]) {
   // Start node js
   int code = node::Start(qode::qode_argc, qode::qode_argv);
   // Clean up node integration and quit.
-  g_node_integration.reset();
+  qodeNodeIntegration.reset();
   return code;
 }
 

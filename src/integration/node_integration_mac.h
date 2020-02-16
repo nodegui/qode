@@ -14,8 +14,6 @@ class NodeIntegrationMac : public NodeIntegration {
   NodeIntegrationMac();
   ~NodeIntegrationMac() override;
   
-  std::string getExecutablePath() override;
-
  private:
   void PollEvents() override;
   void PostTask(const std::function<void()>& task) override;

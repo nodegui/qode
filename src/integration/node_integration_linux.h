@@ -14,6 +14,8 @@ class NodeIntegrationLinux : public NodeIntegration {
   NodeIntegrationLinux();
   ~NodeIntegrationLinux() override;
 
+  std::string getExecutablePath() override;
+
  private:
   void PollEvents() override;
   void PostTask(const std::function<void()>& task) override;

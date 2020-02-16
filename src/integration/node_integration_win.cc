@@ -2,8 +2,8 @@
 // Copyright 2017 Cheng Zhao. All rights reserved.
 // Use of this source code is governed by the MIT license.
 
+#include <windows.h>
 #include "src/integration/node_integration_win.h"
-
 #include "node/deps/uv/src/uv-common.h"
 
 // http://blogs.msdn.com/oldnewthing/archive/2004/10/25/247180.aspx
@@ -41,6 +41,13 @@ NodeIntegrationWin::NodeIntegrationWin() {
 NodeIntegrationWin::~NodeIntegrationWin() {
   DestroyWindow(message_window_);
   DeleteCriticalSection(&lock_);
+}
+
+
+std::string NodeIntegrationWin::getExecutablePath() {
+   wchar_t rawPathName[MAX_PATH];
+   GetModuleFileNameW(NULL, rawPathName, MAX_PATH);
+   return std::string(rawPathName);
 }
 
 void NodeIntegrationWin::PollEvents() {

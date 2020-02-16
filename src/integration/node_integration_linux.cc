@@ -7,6 +7,14 @@
 #include <gtk/gtk.h>
 #include <sys/epoll.h>
 
+#if !defined(PROC_SELF_EXE)
+#if defined(__sun)
+#define PROC_SELF_EXE "/proc/self/path/a.out"
+#else
+#define PROC_SELF_EXE "/proc/self/exe"
+#endif
+#endif
+
 namespace qode {
 
 namespace {
@@ -40,6 +48,13 @@ NodeIntegrationLinux::NodeIntegrationLinux() : epoll_(epoll_create(1)) {
 
 NodeIntegrationLinux::~NodeIntegrationLinux() {
 }
+
+std::string NodeIntegrationLinux::getExecutablePath() {
+   char rawPathName[PATH_MAX];
+   realpath(WAI_PROC_SELF_EXE, rawPathName);
+   return  std::string(rawPathName);
+}
+
 
 void NodeIntegrationLinux::PollEvents() {
   int timeout = uv_backend_timeout(uv_loop_);

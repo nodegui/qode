@@ -22,6 +22,8 @@ namespace qode {
 class NodeIntegration {
  public:
   static NodeIntegration* Create();
+  
+  virtual std::string getExecutablePath() = 0;
 
   virtual ~NodeIntegration();
 

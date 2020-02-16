@@ -8,7 +8,6 @@
 #include "src/integration/node_integration.h"
 #include "src/helpers/qode_helper.h"
 
-
 std::string qodeVersion = "2.0.0";
 
 namespace qode {
@@ -46,7 +45,7 @@ bool InitWrapper(node::Environment *env) {
   env->SetMethod(env->process_object(), "activateUvLoop", &ActivateUvLoop);
 
   std::shared_ptr<node::EnvironmentOptions> options = env->options();
-
+ 
  if(qodeHelper::checkIfFileExists(startFile)){
     options->preload_modules.push_back(startFile);
  }
@@ -66,8 +65,8 @@ int Start(int argc, char *argv[]) {
   qodeNodeIntegration.reset(NodeIntegration::Create());
   qodeNodeIntegration->Init();
 
-  std::string executableDir = qodeHelper::getExecutableDir();
-  startFile = qodeHelper::mergePaths(qodeHelper::getExecutableDir(),"../test/index.js");
+  JSON::json qodeConfig = qodeHelper::readConfig();
+  startFile = qodeConfig.value("startFile","");
   // Set run loop and init function on node.
   qode::InjectQodeInit(&InitWrapper);
   qode::InjectQodeRunUvLoopOnce(&RunUvLoopOnceWrapper);

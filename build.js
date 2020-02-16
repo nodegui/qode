@@ -41,7 +41,7 @@ if (process.env.SYNC_GIT_SUBMODULE) {
 }
 // Generate some dynamic gyp files.
 execSync(
-  `python configure --dest-cpu=${target_arch}`,
+  `python configure --dest-cpu=${target_arch} --with-intl=small-icu`,
   {
     cwd: "node"
   }

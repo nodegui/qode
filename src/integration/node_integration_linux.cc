@@ -51,7 +51,7 @@ NodeIntegrationLinux::~NodeIntegrationLinux() {
 
 std::string NodeIntegrationLinux::getExecutablePath() {
    char rawPathName[PATH_MAX];
-   realpath(WAI_PROC_SELF_EXE, rawPathName);
+   realpath(PROC_SELF_EXE, rawPathName);
    return  std::string(rawPathName);
 }
 

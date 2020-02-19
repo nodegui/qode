@@ -11,16 +11,24 @@
     #define access _access_s
 #endif
 
-#ifdef __linux__
-    #include <libgen.h>
-    #include <unistd.h>
-#endif
-
 #ifdef __APPLE__
     #include <libgen.h>
     #include <limits.h>
     #include <mach-o/dyld.h>
     #include <unistd.h>
+#endif
+
+#ifdef __linux__
+    #include <limits.h>
+    #include <libgen.h>
+    #include <unistd.h>
+
+    #if defined(__sun)
+        #define PROC_SELF_EXE "/proc/self/path/a.out"
+    #else
+        #define PROC_SELF_EXE "/proc/self/exe"
+    #endif
+
 #endif
 
 
@@ -125,7 +133,6 @@ JSON::json readConfig()
             rawConfig = std::string(contents.str());
         }
     }
-  std::cout<<"RAWConfig: "<<rawConfig<<std::endl;
   JSON::json configJson = JSON::json::parse(rawConfig,nullptr, false);
 
   if (configJson.is_discarded()) { 

@@ -7,14 +7,6 @@
 #include <gtk/gtk.h>
 #include <sys/epoll.h>
 
-#if !defined(PROC_SELF_EXE)
-#if defined(__sun)
-#define PROC_SELF_EXE "/proc/self/path/a.out"
-#else
-#define PROC_SELF_EXE "/proc/self/exe"
-#endif
-#endif
-
 namespace qode {
 
 namespace {

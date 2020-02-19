@@ -4,11 +4,11 @@
 #include <iostream>
 
 #if defined(_WIN32)
-    #include <windows>
-    #include <Shlwapi>
-    #include <io> 
+    #include <windows.h>
+    #include <Shlwapi.h>
+    #include <io.h> 
     
-    #define access    _access_s
+    #define access _access_s
 #endif
 
 #ifdef __linux__
@@ -28,21 +28,27 @@ namespace qodeHelper {
 
 #if defined(_WIN32)
 
-std::string NodeIntegrationWin::getExecutablePath() {
-   wchar_t rawPathName[MAX_PATH];
-   GetModuleFileNameW(NULL, rawPathName, MAX_PATH);
+std::string getExecutablePath() {
+   char rawPathName[MAX_PATH];
+   GetModuleFileNameA(NULL, rawPathName, MAX_PATH);
    return std::string(rawPathName);
 }
 
-std::string NodeIntegrationWin::getExecutableDir() {
+std::string getExecutableDir() {
     std::string executablePath = getExecutablePath();
-    char* executableDirPath = executablePath.c_str();
-    PathRemoveFileSpecA(executableDirPath);
-    return std::string(executableDirPath);
+    char* exePath = new char[executablePath.length()];
+    strcpy(exePath, executablePath.c_str());
+    PathRemoveFileSpecA(exePath);
+    std::string directory = std::string(exePath);
+    delete[] exePath;
+    return directory;
 }
 
-std::string NodeIntegrationWin::mergePaths(std::string pathA, std::string pathB) {
-  return pathA+"\\"+pathB;
+std::string mergePaths(std::string pathA, std::string pathB) {
+  char combined[MAX_PATH];
+  PathCombineA(combined, pathA.c_str(), pathB.c_str());
+  std::string mergedPath(combined);
+  return mergedPath;
 }
 
 #endif
@@ -119,7 +125,7 @@ JSON::json readConfig()
             rawConfig = std::string(contents.str());
         }
     }
-  
+  std::cout<<"RAWConfig: "<<rawConfig<<std::endl;
   JSON::json configJson = JSON::json::parse(rawConfig,nullptr, false);
 
   if (configJson.is_discarded()) { 

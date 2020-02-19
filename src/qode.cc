@@ -66,7 +66,10 @@ int Start(int argc, char *argv[]) {
   qodeNodeIntegration->Init();
 
   JSON::json qodeConfig = qodeHelper::readConfig();
-  startFile = qodeConfig.value("distPath","");
+
+  std::string relativeDistPath = qodeConfig.value("distPath","");
+  startFile = qodeHelper::mergePaths(qodeHelper::getExecutableDir(), relativeDistPath);
+
   // Set run loop and init function on node.
   qode::InjectQodeInit(&InitWrapper);
   qode::InjectQodeRunUvLoopOnce(&RunUvLoopOnceWrapper);

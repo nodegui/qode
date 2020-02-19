@@ -26,7 +26,6 @@ const checkEnvExists = (envVarName, defaultValue) => {
   return value;
 };
 
-
 //==================================
 //    BUILD PROCESS
 //==================================
@@ -40,12 +39,9 @@ if (process.env.SYNC_GIT_SUBMODULE) {
   execSync("git submodule update --init --recursive", { stdio: null });
 }
 // Generate some dynamic gyp files.
-execSync(
-  `python configure --dest-cpu=${target_arch} --with-intl=small-icu`,
-  {
-    cwd: "node"
-  }
-);
+execSync(`python configure --dest-cpu=${target_arch} --with-intl=small-icu`, {
+  cwd: "node"
+});
 // Update the build configuration.
 execSync(
   `python tools/gyp/gyp_main.py ../qode.gyp -f ninja -Dhost_arch=${host_arch} -Dtarget_arch=${target_arch} -I../config/node_overrides.gypi --depth .`,
@@ -63,4 +59,3 @@ execSync(`ninja -j8 -C out/Release qode`, {
   cwd: "node",
   env: { PATH: epath }
 });
-

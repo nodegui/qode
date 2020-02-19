@@ -76,6 +76,7 @@
                         'Dbghelp.lib',
                         'winmm.lib',
                         'Ws2_32.lib',
+                        'Shlwapi.lib'
                     ],
                 }],
                 ['OS in "linux freebsd"', {

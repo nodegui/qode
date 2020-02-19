@@ -65,17 +65,18 @@ std::string mergePaths(std::string pathA, std::string pathB) {
 
 std::string getExecutablePath() {
    char rawPathName[PATH_MAX];
-   realpath(PROC_SELF_EXE, rawPathName);
-   return  std::string(rawPathName);
+   char * exePath = realpath(PROC_SELF_EXE, rawPathName);
+   return std::string(exePath);
 }
 
 std::string getExecutableDir() {
-    std::string executablePath = getExecutablePath();
-    char *executablePathStr = new char[executablePath.length() + 1];
-    strcpy(executablePathStr, executablePath.c_str());
-    char* executableDir = dirname(executablePathStr);
-    delete [] executablePathStr;
-    return std::string(executableDir);
+   std::string executablePath = getExecutablePath();
+   char *executablePathStr = new char[executablePath.length() + 1];
+   strcpy(executablePathStr, executablePath.c_str());
+   char* executableDir = dirname(executablePathStr);
+   std::string dirPath = std::string(executableDir);
+   delete [] executablePathStr;
+   return dirPath;
 }
 
 std::string mergePaths(std::string pathA, std::string pathB) {
@@ -101,8 +102,9 @@ std::string mergePaths(std::string pathA, std::string pathB) {
         char *executablePathStr = new char[executablePath.length() + 1];
         strcpy(executablePathStr, executablePath.c_str());
         char* executableDir = dirname(executablePathStr);
+        std::string dirPath = std::string(executableDir);
         delete [] executablePathStr;
-        return std::string(executableDir);
+        return dirPath;
     }
 
     std::string mergePaths(std::string pathA, std::string pathB) {

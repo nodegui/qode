@@ -15,7 +15,7 @@ namespace qode {
 // The global instance of NodeIntegration.
 std::unique_ptr<NodeIntegration> qodeNodeIntegration;
 
-std::string startFile;
+std::string startFile = "";
 
 inline v8::Local<v8::String> ToV8String(node::Environment *env,
                                         const std::string str) {
@@ -46,7 +46,7 @@ bool InitWrapper(node::Environment *env) {
 
   std::shared_ptr<node::EnvironmentOptions> options = env->options();
  
- if(qodeHelper::checkIfFileExists(startFile)){
+ if(startFile.length()!=0 && qodeHelper::checkIfFileExists(startFile)){
     options->preload_modules.push_back(startFile);
  }
 
@@ -68,8 +68,10 @@ int Start(int argc, char *argv[]) {
   JSON::json qodeConfig = qodeHelper::readConfig();
 
   std::string relativeDistPath = qodeConfig.value("distPath","");
-  startFile = qodeHelper::mergePaths(qodeHelper::getExecutableDir(), relativeDistPath);
-
+  
+  if(relativeDistPath.length() != 0){
+    startFile = qodeHelper::mergePaths(qodeHelper::getExecutableDir(), relativeDistPath);
+  }
   // Set run loop and init function on node.
   qode::InjectQodeInit(&InitWrapper);
   qode::InjectQodeRunUvLoopOnce(&RunUvLoopOnceWrapper);

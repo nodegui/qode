@@ -17,7 +17,7 @@ const executableNames = {
 };
 
 const qodePath = path.resolve(extractDir, executableNames[platform]);
-const downloadArchiveName = `qode-${platform}-${arch}-${libVersion}.tar.gz`;
+const downloadArchiveName = `qode-${platform}-${arch}-v${libVersion}.tar.gz`;
 const downloadLink = `https://github.com/nodegui/qode/releases/download/v${libVersion}/${downloadArchiveName}`;
 
 module.exports = {

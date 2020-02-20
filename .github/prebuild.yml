@@ -27,6 +27,6 @@ jobs:
             node/out/Release/qode.exe
             node/out/Release/qode.exp
             node/out/Release/qode.lib
-          tag_name: ${{ github.event.release.tag_name || github.event.client_payload.tag }}
+          tag_name: ${{ github.event.release.tag_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

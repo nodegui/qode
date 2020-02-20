@@ -24,7 +24,7 @@ async function download(link, outPath, skipIfExist = true) {
   if (skipIfExist) {
     if (await fsExist(outPath)) {
       return console.warn(
-        `Archive already exists at ${outPath}. Skipping download....`
+        `Cached archive already exists at ${outPath}. Skipping download....`
       );
     }
   }

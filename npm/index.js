@@ -1,18 +1,9 @@
-const fs = require("fs-extra");
-const { localBinaryPath, localBinaryDir } = require("./config");
-
-// return executable path of installed qode version
-function getQodePath() {
-  if (fs.existsSync(localBinaryPath)) {
-    return localBinaryPath;
-  } else {
-    throw new Error(
-      "Qode failed to install correctly, please delete node_modules/qode and try installing again"
-    );
-  }
-}
+const { download } = require("./src/downloader");
+const { extract } = require("./src/extractor");
+const { setupQode } = require("./src/setup");
 
 module.exports = {
-  qodePath: getQodePath(),
-  qtHome: localBinaryDir
+  download,
+  extract,
+  setupQode
 };

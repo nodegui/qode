@@ -1,6 +1,7 @@
 on:
-  release:
-    types: [published, created]
+  push:
+    branches:
+      - master
 jobs:
   build:
     strategy:
@@ -9,6 +10,7 @@ jobs:
         os: [ubuntu-18.04, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: ilammy/setup-nasm@v1
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}

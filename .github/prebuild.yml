@@ -1,0 +1,33 @@
+on:
+  release:
+    types: [published, created]
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-18.04, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - uses: actions/setup-node@master
+        with:
+          node-version: "13.x"
+      - name: Build Qode binary
+        run: node build.js
+        env:
+          SYNC_GIT_SUBMODULE: 1
+      - name: Release
+        uses: softprops/action-gh-release@master
+        with:
+          files: |
+            node/out/Release/qode
+            node/out/Release/qode.exe
+            node/out/Release/qode.exp
+            node/out/Release/qode.lib
+
+          tag_name: ${{ github.event.release.tag_name || github.event.client_payload.tag }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

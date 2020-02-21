@@ -9,12 +9,16 @@ jobs:
         os: [ubuntu-18.04, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: ilammy/setup-nasm@v1
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
       - uses: actions/setup-node@master
         with:
           node-version: "13.x"
+      - name: Ubuntu dependencies
+        if: contains(matrix.os, 'ubuntu') 
+        run: sudo apt-get install libgtk-3-dev
       - name: Build Qode binary
         run: node build.js
         env:

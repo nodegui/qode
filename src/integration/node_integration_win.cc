@@ -3,7 +3,6 @@
 // Use of this source code is governed by the MIT license.
 
 #include "src/integration/node_integration_win.h"
-
 #include "node/deps/uv/src/uv-common.h"
 
 // http://blogs.msdn.com/oldnewthing/archive/2004/10/25/247180.aspx
@@ -42,6 +41,7 @@ NodeIntegrationWin::~NodeIntegrationWin() {
   DestroyWindow(message_window_);
   DeleteCriticalSection(&lock_);
 }
+
 
 void NodeIntegrationWin::PollEvents() {
   DWORD bytes, timeout;

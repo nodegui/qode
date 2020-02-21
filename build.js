@@ -26,52 +26,12 @@ const checkEnvExists = (envVarName, defaultValue) => {
   return value;
 };
 
-const runPreBuild = qtPath => {
-  let command = "";
-  switch (process.platform) {
-    case "win32":
-      command = `"${__dirname}\\deploy\\win32\\prebuild.bat"`;
-      break;
-    case "linux":
-      command = `${__dirname}/deploy/linux/prebuild.sh`;
-      break;
-    case "darwin":
-      command = `${__dirname}/deploy/darwin/prebuild.sh`;
-      break;
-  }
-  const env = Object.assign({}, process.env, { QT_INSTALL_DIR: qtPath });
-  execSync(command, { env });
-};
-
-const runPostBuild = qtPath => {
-  let command = "";
-  switch (process.platform) {
-    case "win32":
-      command = `${__dirname}\\deploy\\win32\\postbuild.bat`;
-      break;
-    case "linux":
-      command = `${__dirname}/deploy/linux/postbuild.sh`;
-      break;
-    case "darwin":
-      command = `${__dirname}/deploy/darwin/postbuild.sh`;
-      break;
-  }
-  const env = Object.assign({}, process.env, { QT_INSTALL_DIR: qtPath });
-  execSync(command, { env });
-};
-
 //==================================
 //    BUILD PROCESS
 //==================================
 // Specify target_arch.
 const target_arch = checkEnvExists("TARGET_ARCH", "x64");
 const host_arch = checkEnvExists("HOST_ARCH", "x64");
-const qt_install_dir = checkEnvExists(
-  "QT_INSTALL_DIR",
-  "/usr/local/Cellar/qt/5.12.3"
-);
-
-runPreBuild(qt_install_dir);
 
 if (process.env.SYNC_GIT_SUBMODULE) {
   // Sync submodule.
@@ -79,15 +39,12 @@ if (process.env.SYNC_GIT_SUBMODULE) {
   execSync("git submodule update --init --recursive", { stdio: null });
 }
 // Generate some dynamic gyp files.
-execSync(
-  `python configure --dest-cpu=${target_arch}`,
-  {
-    cwd: "node"
-  }
-);
+execSync(`python configure --dest-cpu=${target_arch} --with-intl=small-icu`, {
+  cwd: "node"
+});
 // Update the build configuration.
 execSync(
-  `python tools/gyp/gyp_main.py ../qode.gyp -f ninja -Dhost_arch=${host_arch} -Dtarget_arch=${target_arch} -Dqt_home_dir=${qt_install_dir} -I../config/node_overrides.gypi --depth .`,
+  `python tools/gyp/gyp_main.py ../qode.gyp -f ninja -Dhost_arch=${host_arch} -Dtarget_arch=${target_arch} -I../config/node_overrides.gypi --depth .`,
   {
     cwd: "node"
   }
@@ -102,5 +59,3 @@ execSync(`ninja -j8 -C out/Release qode`, {
   cwd: "node",
   env: { PATH: epath }
 });
-
-runPostBuild(qt_install_dir);

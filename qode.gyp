@@ -10,10 +10,7 @@
                 'src/integration/node_integration_linux.cc',
                 'src/integration/node_integration_mac.mm',
                 'src/integration/node_integration_win.cc',
-                'src/helpers/qode_helpers.cc'
-            ],
-            "includes": [
-                './config/qt.gypi'
+                'src/helpers/qode_helper.cc',
             ],
             'include_dirs': [
                 '.',
@@ -32,6 +29,9 @@
                 'node/tools/icu/icu-generic.gyp:icui18n',
                 'node/tools/icu/icu-generic.gyp:icuuc',
             ],
+            "cflags": [
+                "-std=c++14"
+            ],
             'conditions': [
                 ['OS=="mac"', {
                     'xcode_settings': {
@@ -44,6 +44,9 @@
                         # won't load.
                         'OTHER_LDFLAGS': [
                             '-Wl,-force_load,<(PRODUCT_DIR)/libnode.a',
+                        ],
+                        'OTHER_CFLAGS': [
+                            "-std=c++14"
                         ],
                     },
                 }],
@@ -73,6 +76,7 @@
                         'Dbghelp.lib',
                         'winmm.lib',
                         'Ws2_32.lib',
+                        'Shlwapi.lib'
                     ],
                 }],
                 ['OS in "linux freebsd"', {

@@ -1,13 +1,16 @@
 {
   "name": "@nodegui/qode",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "Qode is a lightly modified fork of Node.js that merges Node's event loop with Qt's event loop. It is designed to be used together with `@nodegui/nodegui`",
   "main": "index.js",
   "files": [
     "install.js",
+    "cli.js",
     "index.js",
-    "config.js",
-    "cli.js"
+    "src/config.js",
+    "src/downloader.js",
+    "src/extractor.js",
+    "src/setup.js"
   ],
   "bin": {
     "qode": "cli.js"
@@ -20,9 +23,9 @@
   "private": false,
   "dependencies": {
     "env-paths": "^2.2.0",
-    "extract-zip": "^1.6.7",
-    "fs-extra": "^8.1.0",
-    "got": "^9.6.0",
-    "progress": "^2.0.3"
+    "make-dir": "^3.0.2",
+    "node-fetch": "^2.6.0",
+    "progress": "^2.0.3",
+    "tar": "^6.0.1"
   }
 }

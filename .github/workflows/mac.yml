@@ -1,0 +1,35 @@
+on:
+  release:
+    types: [created]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/setup-node@master
+        with:
+           node-version: "13.x"  
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Build Qode binary
+        run: node build.js
+        env:
+          SYNC_GIT_SUBMODULE: 1
+
+      - name: Compress files
+        uses: master-atul/tar-action@v0.0.1
+        with:
+          command: c
+          cwd: ./node/out/Release
+          files: |
+            ./qode
+          outPath: qode-darwin-x64-${{github.event.release.tag_name}}.tar.gz
+      
+      - name: Release
+        uses: softprops/action-gh-release@master
+        with:
+          files: qode-*.tar.gz
+          tag_name: ${{ github.event.release.tag_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

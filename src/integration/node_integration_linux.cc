@@ -41,6 +41,7 @@ NodeIntegrationLinux::NodeIntegrationLinux() : epoll_(epoll_create(1)) {
 NodeIntegrationLinux::~NodeIntegrationLinux() {
 }
 
+
 void NodeIntegrationLinux::PollEvents() {
   int timeout = uv_backend_timeout(uv_loop_);
 

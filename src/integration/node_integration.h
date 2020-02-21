@@ -22,6 +22,7 @@ namespace qode {
 class NodeIntegration {
  public:
   static NodeIntegration* Create();
+  
 
   virtual ~NodeIntegration();
 

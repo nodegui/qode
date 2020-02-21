@@ -1,25 +1,33 @@
 # Qode
 
-Qode is a lightly modified fork of Node.js that merges Node's event loop with Qt's event loop.
-It is designed to be used together with `@nodegui/nodegui`.
+Qode is a lightly modified fork of Node.js that allows Node's event loop to be merged with Qt's or any other Gui event loop.
+It is designed to be used together with `@nodegui/nodegui`. Qode achieves this by allowing message loop injection via a NodeJS addon.
 
 <img alt="logo" src="https://github.com/nodegui/nodegui/raw/master/extras/logo/nodegui.png" height="200" />
+
+
+## Changes in v2.0
+
+> In version 2.0, Qode no longer depends on Qt as a dependency.
+>
+> This makes it easier to upgrade Qt and also allows devs to use their own version of Qt. Technically this means its possible to integrate with another Gui system (not Qt) aswell.
+>
+> Another benefit is that it helps in avoiding issues with 3rd party plugin development because of qt version mismatch.
+>
+> Now, Qode essentially becomes nodejs + `<some code changes to allow message loop injection via an addon>`
+
 
 ### Note:
 
 Qode is published as a NPM module as `@nodegui/qode`.
 For more details on the npm module visit: `npm/README.md`
+The changes to node are visible in the `qode-v12.x` branches in `https://github.com/nodegui/node`
 
 ## Changes to Node.js
 
-- The event loop is replaced with QT's GUI message loop.
-- The process will quit when **BOTH** the QT message loop and Node.js event
-  loop have quit. So if there are still Node.js requests pending, the process
-  will wait until all of them have finished.
-- There are new `process.versions.qode` property added - This mentions the qode version.
-- There are new `process.versions.qt(runtime)` property added - This mentions the version of qt shared library you are using on runtime.
-- There are new `process.versions.qt(compiled)` property added - This mentions the version of qt used while compiling qode. Ideally both runtime and compile time versions should be same but binary compatible versions could work too.
-- Make sure to use a binary compatible version of nodejs when using alongside qode. For example is qode has node version of 12.x then use Node version 12.x when developing apps with qode.
+- The event loop remains the same as that of NodeJs until a new Gui message loop is injected via the qode api. See below for details on the api.
+- When a Gui message loop is injected, qode will use it as the primary event loop and will process NodeJs requests on the main thread as an when it arrives by listening to the libuv's events.
+- Note: Make sure to use a binary compatible version of nodejs when using alongside qode. For example is qode has node version of 12.x then use Node version 12.x when developing apps with qode.
 
 Currently only 64bit OS's are supported.
 
@@ -31,11 +39,9 @@ Use Powershell in windows (possibly with git bash or similar installed)
 
 1. Do a git clone for this repo
 
-2. Install Visual Studio Community 2017. Download the Visual studio Installer and install Visual Studio Community 2017. Make sure to choose "Desktop development with C++ " workload and install it. PS: Visual Studio 2019 will not work since NodeJS build toolchain doesnt support it aswell.
+2. Install Visual Studio Community 2017. Download the Visual studio Installer and install Visual Studio Community 2017/2019. Make sure to choose "Desktop development with C++ " workload and install it.
 
-3. Installing QT. Download qt from: https://www.qt.io (5.x version)
-
-4. Building Qode. Run `cmd /C "set QT_INSTALL_DIR=C:\path\to\qt\5.13.0\msvc2017_64&& node build.js"`
+3. Building Qode. Run `node build.js`
 
 ## Steps for Linux
 
@@ -49,21 +55,7 @@ Use Powershell in windows (possibly with git bash or similar installed)
 sudo apt install libgtk-3-dev patchelf
 ```
 
-3. Installing QT.
-
-   - Download qt from: https://www.qt.io/offline-installers (Preferably 5.x version)
-   - chmod a+x qt-opensource-linux-x64-5.12.4.run
-   - ./qt-opensource-linux-x64-5.12.4.run
-   - Click Next -> I accept checkbox and then Skip.
-   - Make sure you note down the install path. Also make sure there are no spaces in the path.
-   - From the list to choose components: - Check Desktop gcc 64bit and Qt Creator (Optional)
-   - Choose LGPL license and install.
-
-   **or**
-
-   - You can even build from source. Just download qt-everywhere source code of the version of the QT you want to build and do a standard make build.
-
-4. Building Qode. Run `QT_INSTALL_DIR=<path_to_qt_install_dir>/5.12.4/gcc_64 node build.js`
+3. Building Qode. Run `node build.js`
 
 ## Steps for MacOS
 
@@ -71,34 +63,11 @@ sudo apt install libgtk-3-dev patchelf
 
 1. Do a git clone for this repo
 
-2. Installing QT.
-
-   - Download qt from: https://www.qt.io/offline-installers (Preferably 5.x version)
-   - Install from the downloaded dmg.
-   - Click Next -> I accept checkbox and then Skip.
-   - Make sure you note down the install path. Also make sure there are no spaces in the path.
-   - From the list to choose components: - Check Desktop gcc 64bit and Qt Creator (Optional)
-   - Choose LGPL license and install.
-
-   **or**
-
-   - You can even build from source. Just download qt-everywhere source code of the version of the QT you want to build and do a standard make build.
-
-3. Building Qode. Run `QT_INSTALL_DIR=/path/to/qt/5.13.0 node build.js`
+2. Building Qode. Run `node build.js`
 
 ### Common build errors:
 
 1. if you get an error similar to:
-
-   ```
-   ../../src/qode.h:5:10: fatal error: QApplication: No such file or directory
-   #include <QApplication>
-           ^~~~~~~~~~~~~~
-   ```
-
-   Make sure you have installed QT5 and have specified the correct path in QT_INSTALL_DIR as mentioned above
-
-2. if you get an error similar to:
 
    ```
     fatal error: gtk/gtk.h: No such file or directory
@@ -107,15 +76,14 @@ sudo apt install libgtk-3-dev patchelf
 
    Make sure you have installed gtk headers as mentioned above.
 
-3. If you get an error similar to:
-   ./qode: error while loading shared libraries: libQt5Core.so.5: cannot open shared object file: No such file or directory.
+2. If you get an error similar to:
+   ./qode: error while loading shared libraries: cannot open shared object file: No such file or directory.
 
    Check the shared libraries used by qode by running `ldd ./qode`. Then you can provide the path where qode could find the libraries like this:
 
-   `LD_LIBRARY_PATH=<path_to_qt5_installation>/5.12.4/gcc_64/lib/:$LD_LIBRARY_PATH ./qode`
+   `LD_LIBRARY_PATH=<path_to_lib>:$LD_LIBRARY_PATH ./qode`
 
 And make sure you have installed gtk3 headers also for time being.
-Make sure you add LD_LIBRARY_PATH to the path to qt and then run the built executable
 
 4. Yoga crashes when using with Qode. Make sure that node version you are using to compile nodegui is binary compatible with node version of Qode. or make sure you compile addons with Qode instead of Node.
 
@@ -131,18 +99,18 @@ correctly in qode.
 ## Build
 
 ```bash
-QT_INSTALL_DIR=<path_to_qt_install_directory> TARGET_ARCH=[x64|ia32] HOST_ARCH=[x64|ia32] node ./build.js
+TARGET_ARCH=[x64|ia32] HOST_ARCH=[x64|ia32] node ./build.js
 ```
 
 or
 
 ```
-`cmd /C "set QT_INSTALL_DIR=<path_to_qt_install_directory> && set TARGET_ARCH=[x64|ia32] && set HOST_ARCH=[x64|ia32] && node build.js"`
+`cmd /C "set TARGET_ARCH=[x64|ia32] && set HOST_ARCH=[x64|ia32] && node build.js"`
 ```
 
 _PS: I havent tested ia32 builds_
 
-The output of the build will be present at qode/node/out/Release/<platform> (platform is darwin, win32 or linux)
+The output of the build will be present at node/out/Release/qode 
 
 ## Configurations (Available from qode v1.0.3)
 
@@ -152,15 +120,31 @@ Additional configurations can be done via a qode.json file in the same directory
 
 ```javascript
 {
-  libraryPaths: [], //Specify extra library paths to load dlls from
-  hideConsole: false, //If true it will hide the console window as soon as application is launched.
-  distPath: "./dist/index.js" // This will try to load the index.js inside dist folder when qode.exe is run. Internally it just adds NODE_OPTIONS="--require ./dist/index.js"
+  distPath: "./dist/index.js" // This will try to load the index.js inside dist folder when qode.exe is run.
 }
 ```
 
 ## Troubleshooting
 
 - If you face `python cant open file 'configure'` - This means the git submodules have not been synced. So either manually sync your git submodules or set the environment variable SYNC_GIT_SUBMODULE=true before running build. See https://github.com/nodegui/qode/issues/7
+
+## Message Loop injection api
+
+The NodeGui core addon uses the following api exposed by qode binary to inject Qt's event loop into nodejs
+
+https://github.com/nodegui/node/blob/43e31129fc27f738b171dca3d744a0e4245dcc6d/src/qode_shared.h#L12
+
+```c++
+namespace qode {
+    extern int qode_argc;
+    extern char **qode_argv;
+    typedef bool (*QodeInjectedRunLoopFunc)();
+    extern QodeInjectedRunLoopFunc qode_run_uv_loop_once;
+    extern QodeInjectedRunLoopFunc qode_run_gui_loop;
+    extern void InjectQodeRunLoop(QodeInjectedRunLoopFunc runLoop);
+    extern void InjectQodeRunUvLoopOnce(QodeInjectedRunLoopFunc runUvLoopOnce);
+}  // namespace qode
+```
 
 ## License
 

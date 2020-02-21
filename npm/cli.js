@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var { qodePath } = require("./index");
+var { qodePath } = require("./src/config");
 
 var proc = require("child_process");
 

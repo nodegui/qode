@@ -13,7 +13,7 @@ class NodeIntegrationMac : public NodeIntegration {
  public:
   NodeIntegrationMac();
   ~NodeIntegrationMac() override;
-
+  
  private:
   void PollEvents() override;
   void PostTask(const std::function<void()>& task) override;

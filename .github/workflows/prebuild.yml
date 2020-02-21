@@ -9,6 +9,9 @@ jobs:
         os: [ubuntu-18.04, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
+      - uses: actions/setup-node@master
+        with:
+           node-version: "13.x" 
       - name: "Setup NASM for windows"
         uses: ilammy/setup-nasm@v1
         if: contains(matrix.os, 'windows')
@@ -17,6 +20,9 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: '2.x' 
+      - name: Install Windows build tools
+        if: contains(matrix.os, 'windows')
+        run: npm install --global --production windows-build-tools
       - name: Ubuntu dependencies
         if: contains(matrix.os, 'ubuntu') 
         run: sudo apt-get install libgtk-3-dev
@@ -26,10 +32,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
-      - uses: actions/setup-node@master
-        with:
-          node-version: "13.x"
-      
+
       - name: Build Qode binary
         run: node build.js
         env:

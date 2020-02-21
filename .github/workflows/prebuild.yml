@@ -9,20 +9,30 @@ jobs:
         os: [ubuntu-18.04, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: ilammy/setup-nasm@v1
+      - name: "Setup NASM for windows"
+        uses: ilammy/setup-nasm@v1
+        if: contains(matrix.os, 'windows')
+      - name: Install Python2 for windows
+        if: contains(matrix.os, 'windows')
+        uses: actions/setup-python@v1
+        with:
+          python-version: '2.x' 
+      - name: Ubuntu dependencies
+        if: contains(matrix.os, 'ubuntu') 
+        run: sudo apt-get install libgtk-3-dev
+
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
       - uses: actions/setup-node@master
         with:
           node-version: "13.x"
-      - name: Ubuntu dependencies
-        if: contains(matrix.os, 'ubuntu') 
-        run: sudo apt-get install libgtk-3-dev
+      
       - name: Build Qode binary
         run: node build.js
         env:
           SYNC_GIT_SUBMODULE: 1
+      
       - name: Consolidate Windows release assets
         if: contains(matrix.os, 'windows')
         run: mkdir -p node/out/Release/qode-release && cp -rf node/out/Release/qode.exe node/out/Release/qode.exp node/out/Release/qode.lib node/out/Release/qode-release/

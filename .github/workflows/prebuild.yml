@@ -19,10 +19,7 @@ jobs:
         if: contains(matrix.os, 'windows')
         uses: actions/setup-python@v1
         with:
-          python-version: '2.x' 
-      - name: Install Windows build tools
-        if: contains(matrix.os, 'windows')
-        run: npm install --global --production windows-build-tools
+          python-version: '2.x'
       - name: Ubuntu dependencies
         if: contains(matrix.os, 'ubuntu') 
         run: sudo apt-get install libgtk-3-dev

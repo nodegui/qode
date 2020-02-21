@@ -20,7 +20,9 @@ jobs:
       - name: Ubuntu dependencies
         if: contains(matrix.os, 'ubuntu') 
         run: sudo apt-get install libgtk-3-dev
-
+      - name: check python version
+        run: python --version
+     
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}

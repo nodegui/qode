@@ -20,10 +20,10 @@ jobs:
         env:
           SYNC_GIT_SUBMODULE: 1
       - name: Consolidate Windows release assets
-        if: contains(matrix.os, "windows")
+        if: contains(matrix.os, 'windows')
         run: mkdir -p node/out/Release/qode-release && cp -rf node/out/Release/qode.exe node/out/Release/qode.exp node/out/Release/qode.lib node/out/Release/qode-release/
       - name: Consolidate Unix release 
-        if: contains(matrix.os, "windows") != true
+        if: contains(matrix.os, 'windows') != true
         run: mkdir -p node/out/Release/qode-release && cp -rf node/out/Release/qode node/out/Release/qode-release/
       - name: Release
         uses: fnkr/github-action-ghr@v1

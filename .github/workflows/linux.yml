@@ -21,7 +21,7 @@ jobs:
           SYNC_GIT_SUBMODULE: 1
       
       - name: Compress files
-        uses: master-atul/tar-action@v0.0.1
+        uses: master-atul/tar-action@v1.0.2
         with:
           command: c
           cwd: ./node/out/Release

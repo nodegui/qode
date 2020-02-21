@@ -23,10 +23,6 @@ jobs:
         run: node build.js
         env:
           SYNC_GIT_SUBMODULE: 1
-      
-      - name: Consolidate Windows release assets
-        run: mkdir -p node/out/Release/qode-release && cp -rf node/out/Release/qode.exe node/out/Release/qode.exp node/out/Release/qode.lib node/out/Release/qode-release/
-    
           
       - name: Compress files
         uses: master-atul/tar-action@v0.0.1

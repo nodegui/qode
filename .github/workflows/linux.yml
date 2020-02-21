@@ -24,8 +24,9 @@ jobs:
         uses: master-atul/tar-action@v0.0.1
         with:
           command: c
+          cwd: ./node/out/Release
           files: |
-            ./node/out/Release/qode
+            ./qode
           outPath: qode-linux-x64-${{github.event.release.tag_name}}.tar.gz
       
       - name: Release

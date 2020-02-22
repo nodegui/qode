@@ -128,7 +128,7 @@ void NodeIntegration::OnCallNextTick(uv_async_t* handle) {
   v8::Context::Scope context_scope(env->context());
   node::InternalCallbackScope scope(
       env,
-      v8::Local<v8::Object>(),
+      v8::Object::New(isolate),
       {0, 0},
       node::InternalCallbackScope::Flags::kNoFlags);
 }

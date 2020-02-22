@@ -135,14 +135,13 @@ The NodeGui core addon uses the following api exposed by qode binary to inject Q
 https://github.com/nodegui/node/blob/43e31129fc27f738b171dca3d744a0e4245dcc6d/src/qode_shared.h#L12
 
 ```c++
+#pragma once
+// From Qode headers
 namespace qode {
     extern int qode_argc;
     extern char **qode_argv;
-    typedef bool (*QodeInjectedRunLoopFunc)();
-    extern QodeInjectedRunLoopFunc qode_run_uv_loop_once;
-    extern QodeInjectedRunLoopFunc qode_run_gui_loop;
-    extern void InjectQodeRunLoop(QodeInjectedRunLoopFunc runLoop);
-    extern void InjectQodeRunUvLoopOnce(QodeInjectedRunLoopFunc runUvLoopOnce);
+    typedef int (*QodeCustomRunLoopFunc)();
+    extern void InjectCustomRunLoop(QodeCustomRunLoopFunc customRunLoop);
 }  // namespace qode
 ```
 

@@ -64,6 +64,7 @@ void NodeIntegration::UvRunOnce() {
   // Deal with uv events.
   uv_run(uv_loop_, UV_RUN_NOWAIT);
 
+  isolate->RunMicrotasks(); //TODO: fix me
   // Tell the worker thread to continue polling.
   uv_sem_post(&embed_sem_);
 }

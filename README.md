@@ -161,3 +161,10 @@ The idea of Qode is derived from [yode][yode] and [electron](https://github.com/
 - Make sure to update Qode version in qode.cc
 - Create github release
 - publish on npm
+
+## Qode - Node version table
+
+| Qode        | Node           | 
+| ------------- |:-------------:| 
+| v2.1.0      | v14.2.0 | 
+

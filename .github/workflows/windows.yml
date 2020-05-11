@@ -7,7 +7,11 @@ jobs:
     steps:
       - uses: actions/setup-node@master
         with:
-           node-version: "13.x" 
+           node-version: "14.x" 
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
       - name: "Setup NASM for windows"
         uses: ilammy/setup-nasm@v1
       - name: Install Python2 for windows

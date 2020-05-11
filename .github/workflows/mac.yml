@@ -7,7 +7,11 @@ jobs:
     steps:
       - uses: actions/setup-node@master
         with:
-           node-version: "13.x"  
+           node-version: "14.x"  
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}

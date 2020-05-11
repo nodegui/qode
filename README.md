@@ -17,6 +17,7 @@ It is designed to be used together with `@nodegui/nodegui`. Qode achieves this b
 > Now, Qode essentially becomes nodejs + `<some code changes to allow message loop injection via an addon>`
 
 
+
 ### Note:
 
 Qode is published as a NPM module as `@nodegui/qode`.

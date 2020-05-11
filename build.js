@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const path = require("path");
-const os = require('os');
+const os = require("os");
 
 //==================================
 //    HELPER UTILITIES

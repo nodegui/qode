@@ -7,18 +7,14 @@ jobs:
     steps:
       - uses: actions/setup-node@master
         with:
-           node-version: "14.x" 
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v1
+          node-version: "14.x"
+      - name: Set up Python 2.x
+        uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 2.7
       - name: "Setup NASM for windows"
         uses: ilammy/setup-nasm@v1
-      - name: Install Python2 for windows
-        uses: actions/setup-python@v1
-        with:
-          python-version: '2.x'
-     
+
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.ref }}
@@ -27,7 +23,7 @@ jobs:
         run: node build.js
         env:
           SYNC_GIT_SUBMODULE: 1
-          
+
       - name: Compress files
         uses: master-atul/tar-action@v1.0.2
         id: compress
@@ -39,7 +35,7 @@ jobs:
             ./qode.lib
             ./qode.exp
           outPath: qode-win32-x64-${{github.event.release.tag_name}}.tar.gz
-      
+
       - uses: actions/upload-artifact@v1
         with:
           name: qode-win32-x64-${{github.event.release.tag_name}}.tar.gz

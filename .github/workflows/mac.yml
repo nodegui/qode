@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/setup-node@master
         with:
-           node-version: "14.x"  
+          node-version: "14.x"
       - name: Set up Python 3.8
         uses: actions/setup-python@v1
         with:
@@ -34,7 +34,7 @@ jobs:
         with:
           name: qode-darwin-x64-${{github.event.release.tag_name}}.tar.gz
           path: qode-darwin-x64-${{github.event.release.tag_name}}.tar.gz
-      
+
       - name: Release
         uses: softprops/action-gh-release@master
         with:

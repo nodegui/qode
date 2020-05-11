@@ -8,7 +8,7 @@
 #include "src/integration/node_integration.h"
 #include "src/helpers/qode_helper.h"
 
-std::string qodeVersion = "2.0.4";
+std::string qodeVersion = "2.1.0";
 
 namespace qode {
 

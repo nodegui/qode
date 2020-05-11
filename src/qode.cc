@@ -32,6 +32,9 @@ void ActivateUvLoop(const v8::FunctionCallbackInfo<v8::Value> &args) {
 
 
 bool InitWrapper(node::Environment *env) {
+   // Set MicrotasksPolicy to Auto otherwise microtasks won't run.
+  env->isolate()->SetMicrotasksPolicy(v8::MicrotasksPolicy::kAuto);
+  
   v8::HandleScope handle_scope(env->isolate());
   v8::Local<v8::Value> versions =
       env->process_object()

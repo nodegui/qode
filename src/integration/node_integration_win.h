@@ -32,7 +32,6 @@ class NodeIntegrationWin : public NodeIntegration {
   int task_id_ = 0;
   std::unordered_map<UINT_PTR, std::function<void()>> tasks_;
 
-  DISALLOW_COPY_AND_ASSIGN(NodeIntegrationWin);
 };
 
 }  // namespace qode

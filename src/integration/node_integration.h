@@ -57,6 +57,9 @@ class NodeIntegration {
   uv_loop_t* uv_loop_;
 
  private:
+  NodeIntegration(const NodeIntegration&) = delete;
+  NodeIntegration& operator=(const NodeIntegration&) = delete;
+
   // Thread to poll uv events.
   static void EmbedThreadRunner(void* arg);
 
@@ -78,7 +81,6 @@ class NodeIntegration {
   // Semaphore to wait for main loop in the embed thread.
   uv_sem_t embed_sem_;
 
-  DISALLOW_COPY_AND_ASSIGN(NodeIntegration);
 };
 
 }  // namespace qode

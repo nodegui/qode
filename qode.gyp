@@ -66,6 +66,8 @@
                             'MinimumRequiredVersion': '5.02',
                             # A win32 GUI program use 2 and for CUI use 1.
                             'SubSystem': '1',
+                            # Defined in node target, required for building x86.
+                            'ImageHasSafeExceptionHandlers': 'false',
                         },
                     },
                     'msvs_disabled_warnings': [

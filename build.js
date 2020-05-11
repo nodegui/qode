@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const path = require("path");
+const os = require('os');
 
 //==================================
 //    HELPER UTILITIES
@@ -55,7 +56,7 @@ const epath = `${path.join("..", "bin", "ninja")}${path.delimiter}${
   process.env.PATH
 }`;
 
-execSync(`ninja -j8 -C out/Release qode`, {
+execSync(`ninja -j${os.cpus().length} -C out/Release qode`, {
   cwd: "node",
   env: { PATH: epath }
 });

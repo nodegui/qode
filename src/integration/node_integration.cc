@@ -64,7 +64,6 @@ void NodeIntegration::UvRunOnce() {
   // Deal with uv events.
   uv_run(uv_loop_, UV_RUN_NOWAIT);
 
-  isolate->RunMicrotasks(); //TODO: fix me
   // Tell the worker thread to continue polling.
   uv_sem_post(&embed_sem_);
 }
@@ -131,7 +130,7 @@ void NodeIntegration::OnCallNextTick(uv_async_t* handle) {
       env,
       v8::Object::New(isolate),
       {0, 0},
-      node::InternalCallbackScope::Flags::kNoFlags);
+      node::InternalCallbackScope::kNoFlags);
 }
 
 }  // namespace qode

@@ -5,7 +5,6 @@ It is designed to be used together with `@nodegui/nodegui`. Qode achieves this b
 
 <img alt="logo" src="https://github.com/nodegui/nodegui/raw/master/extras/logo/nodegui.png" height="200" />
 
-
 ## Changes in v2.0
 
 > In version 2.0, Qode no longer depends on Qt as a dependency.
@@ -15,8 +14,6 @@ It is designed to be used together with `@nodegui/nodegui`. Qode achieves this b
 > Another benefit is that it helps in avoiding issues with 3rd party plugin development because of qt version mismatch.
 >
 > Now, Qode essentially becomes nodejs + `<some code changes to allow message loop injection via an addon>`
-
-
 
 ### Note:
 
@@ -66,6 +63,13 @@ sudo apt install libgtk-3-dev patchelf
 
 2. Building Qode. Run `node build.js`
 
+> If you want to build for Apple Silicon Macs
+> Make sure you have python 3.8.10 installed
+>
+> ```
+> SYNC_GIT_SUBMODULE=true HOST_ARCH=arm64 TARGET_ARCH=arm64 node build.js
+> ```
+
 ### Common build errors:
 
 1. if you get an error similar to:
@@ -111,7 +115,7 @@ or
 
 _PS: I havent tested ia32 builds_
 
-The output of the build will be present at node/out/Release/qode 
+The output of the build will be present at node/out/Release/qode
 
 ## Configurations (Available from qode v1.0.3)
 
@@ -121,7 +125,7 @@ Additional configurations can be done via a qode.json file in the same directory
 
 ```javascript
 {
-  distPath: "./dist/index.js" // This will try to load the index.js inside dist folder when qode.exe is run.
+  distPath: "./dist/index.js"; // This will try to load the index.js inside dist folder when qode.exe is run.
 }
 ```
 
@@ -146,6 +150,18 @@ namespace qode {
 }  // namespace qode
 ```
 
+## Building for M1 Mac
+
+In order to build for M1 mac
+
+Make sure you have python 3.8.10 installed
+
+and then do:
+
+```
+SYNC_GIT_SUBMODULE=true HOST_ARCH=arm64 TARGET_ARCH=arm64 node build.js
+```
+
 ## License
 
 The MIT license.
@@ -165,7 +181,6 @@ The idea of Qode is derived from [yode][yode] and [electron](https://github.com/
 
 ## Qode - Node version table
 
-| Qode        | Node           | 
-| ------------- |:-------------:| 
-| v2.1.0      | v14.2.0 | 
-
+| Qode   |  Node   |
+| ------ | :-----: |
+| v2.1.0 | v14.2.0 |

@@ -184,3 +184,4 @@ The idea of Qode is derived from [yode][yode] and [electron](https://github.com/
 | Qode   |  Node   |
 | ------ | :-----: |
 | v2.1.0 | v14.2.0 |
+| v2.1.1 | v14.17.0|

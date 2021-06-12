@@ -64,6 +64,7 @@ sudo apt install libgtk-3-dev patchelf
 2. Building Qode. Run `node build.js`
 
 > If you want to build for Apple Silicon Macs
+> Make sure you have python 3.8.10 installed
 >
 > ```
 > SYNC_GIT_SUBMODULE=true HOST_ARCH=arm64 TARGET_ARCH=arm64 node build.js
@@ -152,7 +153,10 @@ namespace qode {
 ## Building for M1 Mac
 
 In order to build for M1 mac
-do:
+
+Make sure you have python 3.8.10 installed
+
+and then do:
 
 ```
 SYNC_GIT_SUBMODULE=true HOST_ARCH=arm64 TARGET_ARCH=arm64 node build.js

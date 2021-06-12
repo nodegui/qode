@@ -21,7 +21,7 @@
   "dependencies": {
     "env-paths": "^2.2.0",
     "make-dir": "^3.0.2",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "progress": "^2.0.3",
     "tar": "^6.0.1"
   }

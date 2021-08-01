@@ -59,7 +59,7 @@ void NodeIntegration::UvRunOnce() {
   v8::Context::Scope context_scope(env->context());
 
   // Perform microtask checkpoint after running JavaScript.
-  v8::MicrotasksScope micro_scope(isolate, v8::MicrotasksScope::kRunMicrotasks);
+  v8::MicrotasksScope::PerformCheckpoint(isolate);
 
   // Deal with uv events.
   uv_run(uv_loop_, UV_RUN_NOWAIT);
@@ -124,13 +124,10 @@ void NodeIntegration::OnCallNextTick(uv_async_t* handle) {
   node::Environment* env = node::Environment::GetCurrent(isolate);
   CHECK(env);
 
-  // The InternalCallbackScope can handle everything for us.
+  // The CallbackScope can handle everything for us.
   v8::Context::Scope context_scope(env->context());
-  node::InternalCallbackScope scope(
-      env,
-      v8::Object::New(isolate),
-      {0, 0},
-      node::InternalCallbackScope::kNoFlags);
+  node::CallbackScope scope(env->isolate(), v8::Object::New(env->isolate()),
+                            {0, 0});
 }
 
 }  // namespace qode

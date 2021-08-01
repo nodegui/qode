@@ -4,12 +4,12 @@
             'target_name': 'qode',
             'type': 'executable',
             'sources': [
+                'node/src/qode_shared.cc',
+                'node/src/node_code_cache_stub.cc',
+                'node/src/node_snapshot_stub.cc',
                 'src/main.cc',
                 'src/qode.cc',
                 'src/integration/node_integration.cc',
-                'src/integration/node_integration_linux.cc',
-                'src/integration/node_integration_mac.mm',
-                'src/integration/node_integration_win.cc',
                 'src/helpers/qode_helper.cc',
             ],
             'include_dirs': [
@@ -26,6 +26,7 @@
             'dependencies': [
                 'node/node.gyp:libnode',
                 'node/tools/v8_gypfiles/v8.gyp:v8',
+                'node/tools/v8_gypfiles/v8.gyp:v8_libplatform',
                 'node/tools/icu/icu-generic.gyp:icui18n',
                 'node/tools/icu/icu-generic.gyp:icuuc',
             ],
@@ -34,6 +35,14 @@
             ],
             'conditions': [
                 ['OS=="mac"', {
+                    'sources': [
+                        'src/integration/node_integration_mac.mm',
+                    ],
+                    'link_settings': {
+                        'libraries': [
+                        '$(SDKROOT)/System/Library/Frameworks/AppKit.framework',
+                        ],
+                    },
                     'xcode_settings': {
                         # Generates symbols and strip the binary.
                         'DEBUG_INFORMATION_FORMAT': 'dwarf-with-dsym',
@@ -43,16 +52,14 @@
                         # Force loading all objects of node, otherwise some built-in modules
                         # won't load.
                         'OTHER_LDFLAGS': [
-                            '-Wl,-force_load,<(PRODUCT_DIR)/libnode.a',
-                        ],
-                        'OTHER_CFLAGS': [
-                            "-std=c++14"
+                        '-Wl,-force_load,<(PRODUCT_DIR)/libnode.a',
                         ],
                     },
                 }],
                 ['OS=="win"', {
                     'sources': [
                         'src/qode.rc',
+                        'src/integration/node_integration_win.cc',                    
                     ],
                     'msvs_settings': {
                         'VCManifestTool': {
@@ -68,11 +75,15 @@
                             'SubSystem': '1',
                             # Defined in node target, required for building x86.
                             'ImageHasSafeExceptionHandlers': 'false',
+                            # Disable incremental linking, for smaller program.
+                            'LinkIncremental': 1,
                         },
                     },
                     'msvs_disabled_warnings': [
+                        # 4003,
                         # 4251,
                         # 4244,
+                        # 4996
                     ],
                     'libraries': [
                         'Dbghelp.lib',
@@ -82,6 +93,9 @@
                     ],
                 }],
                 ['OS in "linux freebsd"', {
+                    'sources': [
+                        'src/integration/node_integration_linux.cc',
+                    ],
                     'libraries': [
                         '<!@(pkg-config gtk+-3.0 --libs)',
                     ],

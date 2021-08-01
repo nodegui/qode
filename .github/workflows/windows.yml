@@ -7,11 +7,11 @@ jobs:
     steps:
       - uses: actions/setup-node@master
         with:
-          node-version: "14.x"
-      - name: Set up Python 2.x
+          node-version: "16.x"
+      - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 2.7
+          python-version: 3.8
       - name: "Setup NASM for windows"
         uses: ilammy/setup-nasm@v1
 

@@ -1,6 +1,7 @@
 on:
-  release:
-    types: [created]
+  push:
+     branches:
+        - fix-build
 jobs:
   build:
     runs-on: windows-2016
@@ -34,17 +35,17 @@ jobs:
             ./qode.exe
             ./qode.lib
             ./qode.exp
-          outPath: qode-win32-x64-${{github.event.release.tag_name}}.tar.gz
+          outPath: qode-win32-x64-test.tar.gz
 
       - uses: actions/upload-artifact@v1
         with:
-          name: qode-win32-x64-${{github.event.release.tag_name}}.tar.gz
-          path: qode-win32-x64-${{github.event.release.tag_name}}.tar.gz
+          name: qode-win32-x64-test.tar.gz
+          path: qode-win32-x64-test.tar.gz
 
-      - name: Release
-        uses: softprops/action-gh-release@master
-        with:
-          files: qode-win32-x64-${{github.event.release.tag_name}}.tar.gz
-          tag_name: ${{ github.event.release.tag_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Release
+      #   uses: softprops/action-gh-release@master
+      #   with:
+      #     files: qode-win32-x64-test.tar.gz
+      #     tag_name: ${{ github.event.release.tag_name }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

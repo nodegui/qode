@@ -55,16 +55,25 @@ if (process.platform === 'win32') {
   process.env.GYP_MSVS_OVERRIDE_PATH = vs.installationPath
 }
 
+function archConvert(arch = "arm64"){
+  if(arch === "arm64"){
+    return "arm64";
+  }
+  return "x86_64";
+}
+
 // Required for cross compilation on macOS.
 if (host_arch !== target_arch && process.platform === 'darwin') {
   process.env.GYP_CROSSCOMPILE = '1'
-  Object.assign(process.env, {
-    CC: `cc -arch ${target_arch}`,
-    CXX: `c++ -arch ${target_arch}`,
-    CC_target: `cc -arch ${target_arch}`,
-    CXX_target: `c++ -arch ${target_arch}`,
-    CC_host: 'cc -arch x86_64',
-    CXX_host: 'c++ -arch x86_64',
+  const compileTargetArch = archConvert(target_arch);
+  const compileHostArch = archConvert(host_arch);
+   Object.assign(process.env, {
+    CC: `cc -arch ${compileTargetArch}`,
+    CXX: `c++ -arch ${compileTargetArch}`,
+    CC_target: `cc -arch ${compileTargetArch}`,
+    CXX_target: `c++ -arch ${compileTargetArch}`,
+    CC_host: `cc -arch ${compileHostArch}`,
+    CXX_host: `c++ -arch ${compileHostArch}`,
   })
 }
 

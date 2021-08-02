@@ -1,7 +1,7 @@
 on:
   push:
      branches:
-        - fix-build
+        - fix-build2
 jobs:
   build:
     runs-on: ubuntu-18.04

@@ -1,5 +1,6 @@
 *.swp
 /out
+/out2
 .vscode
 *.vcproj
 arch.gypi

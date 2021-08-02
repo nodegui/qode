@@ -1,7 +1,7 @@
 on:
   push:
      branches:
-        - fix-build2
+        - fix-build
 jobs:
   build:
     runs-on: macos-latest

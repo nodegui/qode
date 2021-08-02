@@ -13,6 +13,7 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: 3.8
+
       - name: Ubuntu dependencies
         run: sudo apt-get install libgtk-3-dev g++ build-essential ninja-build
 
@@ -29,7 +30,7 @@ jobs:
         uses: a7ul/tar-action@v1.0.2
         with:
           command: c
-          cwd: ./node/out/Release
+          cwd: ./out/Release
           files: |
             ./qode
           outPath: qode-linux-x64-test.tar.gz

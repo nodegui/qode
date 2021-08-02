@@ -7,7 +7,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix: 
-        arch: ['x64', 'arm64']
+        arch: ['x64']
 
     steps:
       - uses: actions/setup-node@master
@@ -33,7 +33,7 @@ jobs:
         uses: a7ul/tar-action@v1.0.2
         with:
           command: c
-          cwd: ./node/out/Release
+          cwd: ./out/Release
           files: |
             ./qode
           outPath: qode-darwin-${{ matrix.arch }}-test.tar.gz

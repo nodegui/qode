@@ -15,6 +15,9 @@ jobs:
           python-version: 3.8
       - name: "Setup NASM for windows"
         uses: ilammy/setup-nasm@v1
+        
+      - name: "Install deps"
+        run: choco install ninja
 
       - uses: actions/checkout@v2
         with:
@@ -30,7 +33,7 @@ jobs:
         id: compress
         with:
           command: c
-          cwd: ./node/out/Release
+          cwd: ./out/Release
           files: |
             ./qode.exe
             ./qode.lib

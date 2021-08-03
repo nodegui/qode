@@ -18,7 +18,7 @@ jobs:
           python-version: 3.8
 
       - name: Ubuntu dependencies
-        run: sudo apt-get install libgtk-3-dev g++ build-essential ninja-build
+        run: sudo apt-get install libgtk-3-dev g++ build-essential ninja-build gcc-aarch64-linux-gnu g++-aarch64-linux-gnu build-essential autoconf libtool cmake pkg-config git python-dev swig3.0 libpcre3-dev nodejs-dev
 
       - uses: actions/checkout@v2
         with:

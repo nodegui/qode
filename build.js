@@ -63,7 +63,7 @@ function archConvert(arch = "arm64"){
 }
 
 // Required for cross compilation on macOS.
-if (host_arch !== target_arch && ['darwin', 'linux'].includes(process.platform)) {
+if (host_arch !== target_arch && ['darwin'].includes(process.platform)) {
   process.env.GYP_CROSSCOMPILE = '1'
   const compileTargetArch = archConvert(target_arch);
   const compileHostArch = archConvert(host_arch);
@@ -74,6 +74,21 @@ if (host_arch !== target_arch && ['darwin', 'linux'].includes(process.platform))
     CXX_target: `c++ -arch ${compileTargetArch}`,
     CC_host: `cc -arch ${compileHostArch}`,
     CXX_host: `c++ -arch ${compileHostArch}`,
+  })
+}
+
+// Required for cross compilation on linux.
+if (host_arch !== target_arch && ['linux'].includes(process.platform)) {
+  process.env.GYP_CROSSCOMPILE = '1'
+  const compileTargetArch = archConvert(target_arch);
+  const compileHostArch = archConvert(host_arch);
+   Object.assign(process.env, {
+    CC: `aarch64-linux-gnu-gcc`,
+    CXX: `aarch64-linux-gnu-g++`,
+    CC_target: `aarch64-linux-gnu-gcc`,
+    CXX_target: `aarch64-linux-gnu-g++`,
+    CC_host: `gcc`,
+    CXX_host: `g++`,
   })
 }
 

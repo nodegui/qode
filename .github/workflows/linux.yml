@@ -1,10 +1,13 @@
 on:
   push:
      branches:
-        - fix-build2
+        - fix-build
 jobs:
   build:
     runs-on: ubuntu-18.04
+    strategy:
+      matrix: 
+        arch: ['x64', 'arm64']
     steps:
       - uses: actions/setup-node@master
         with:
@@ -22,7 +25,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Build Qode binary
-        run: node build.js
+        run: TARGET_ARCH=${{ matrix.arch }} node build.js
         env:
           SYNC_GIT_SUBMODULE: 1
 
@@ -33,17 +36,17 @@ jobs:
           cwd: ./out/Release
           files: |
             ./qode
-          outPath: qode-linux-x64-test.tar.gz
+          outPath: qode-linux-${{ matrix.arch }}-test.tar.gz
 
       - uses: actions/upload-artifact@v1
         with:
-          name: qode-linux-x64-test.tar.gz
-          path: qode-linux-x64-test.tar.gz
+          name: qode-linux-${{ matrix.arch }}-test.tar.gz
+          path: qode-linux-${{ matrix.arch }}-test.tar.gz
 
       # - name: Release
       #   uses: softprops/action-gh-release@master
       #   with:
-      #     files: qode-linux-x64-test.tar.gz
+      #     files: qode-linux-${{ matrix.arch }}-test.tar.gz
       #     tag_name: ${{ github.event.release.tag_name }}
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

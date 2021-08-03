@@ -63,7 +63,7 @@ function archConvert(arch = "arm64"){
 }
 
 // Required for cross compilation on macOS.
-if (host_arch !== target_arch && process.platform === 'darwin') {
+if (host_arch !== target_arch && ['darwin', 'linux'].includes(process.platform)) {
   process.env.GYP_CROSSCOMPILE = '1'
   const compileTargetArch = archConvert(target_arch);
   const compileHostArch = archConvert(host_arch);

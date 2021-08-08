@@ -1,5 +1,15 @@
 # Qode
 
+> 
+> **⚠️ DEPRECATED: Please see: https://github.com/nodegui/qodejs ⚠️**
+> 
+> **This repo has been deprecated in favour of qodejs**
+> 
+> **For end users, nothing changes. qodejs is a complete restructure of qode to make it easier to build**
+> 
+
+<hr/>
+
 Qode is a lightly modified fork of Node.js that allows Node's event loop to be merged with Qt's or any other Gui event loop.
 It is designed to be used together with `@nodegui/nodegui`. Qode achieves this by allowing message loop injection via a NodeJS addon.
 

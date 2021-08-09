@@ -3,8 +3,7 @@
 // Use of this source code is governed by the MIT license.
 
 #include "src/integration/node_integration_linux.h"
-
-#include <gtk/gtk.h>
+#include <glib.h>
 #include <sys/epoll.h>
 
 namespace qode {

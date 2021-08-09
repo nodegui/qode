@@ -97,10 +97,10 @@
                         'src/integration/node_integration_linux.cc',
                     ],
                     'libraries': [
-                        '<!@(pkg-config gtk+-3.0 --libs)',
+                        '<!@(pkg-config glib-2.0 --libs)',
                     ],
                     'include_dirs': [
-                        '<!@(pkg-config gtk+-3.0 --cflags-only-I | sed s/-I//g)',
+                        '<!@(pkg-config glib-2.0 --cflags-only-I | sed s/-I//g)',
                     ],
                     # Force loading all objects of node, otherwise some built-in modules
                     # won't load.

@@ -2,8 +2,8 @@
 
 const path = require("path");
 const os = require("os");
-const cp = require('child_process');
-const fs = require('fs');
+const cp = require("child_process");
+const fs = require("fs");
 const HOST_ARCH = os.arch();
 
 //==================================
@@ -44,51 +44,83 @@ if (process.env.SYNC_GIT_SUBMODULE) {
 }
 
 // Find out where VS is installed.
-if (process.platform === 'win32') {
-  const vswhere = path.join(process.env['ProgramFiles(x86)'], 'Microsoft Visual Studio', 'Installer', 'vswhere.exe')
-  const args = ['-format', 'json']
-  const result = JSON.parse(String(cp.execFileSync(vswhere, args)))
-  if (result.length == 0)
-    throw new Error('Unable to find Visual Studio')
-  const vs = result[0]
-  process.env.GYP_MSVS_VERSION = vs.displayName.match(/(\d+)$/)[1]
-  process.env.GYP_MSVS_OVERRIDE_PATH = vs.installationPath
+if (process.platform === "win32") {
+  const vswhere = path.join(
+    process.env["ProgramFiles(x86)"],
+    "Microsoft Visual Studio",
+    "Installer",
+    "vswhere.exe"
+  );
+  const args = ["-format", "json"];
+  const result = JSON.parse(String(cp.execFileSync(vswhere, args)));
+  if (result.length == 0) throw new Error("Unable to find Visual Studio");
+  const vs = result[0];
+  process.env.GYP_MSVS_VERSION = vs.displayName.match(/(\d+)$/)[1];
+  process.env.GYP_MSVS_OVERRIDE_PATH = vs.installationPath;
 }
 
 // Required for cross compilation on macOS.
-if (host_arch !== target_arch && process.platform === 'darwin') {
-  process.env.GYP_CROSSCOMPILE = '1'
+if (host_arch !== target_arch && ["darwin"].includes(process.platform)) {
+  function archConvert(arch = "arm64") {
+    if (arch === "arm64") {
+      return "arm64";
+    }
+    return "x86_64";
+  }
+  process.env.GYP_CROSSCOMPILE = "1";
+  const compileTargetArch = archConvert(target_arch);
+  const compileHostArch = archConvert(host_arch);
   Object.assign(process.env, {
-    CC: `cc -arch ${target_arch}`,
-    CXX: `c++ -arch ${target_arch}`,
-    CC_target: `cc -arch ${target_arch}`,
-    CXX_target: `c++ -arch ${target_arch}`,
-    CC_host: 'cc -arch x86_64',
-    CXX_host: 'c++ -arch x86_64',
-  })
+    CC: `cc -arch ${compileTargetArch}`,
+    CXX: `c++ -arch ${compileTargetArch}`,
+    CC_target: `cc -arch ${compileTargetArch}`,
+    CXX_target: `c++ -arch ${compileTargetArch}`,
+    CC_host: `cc -arch ${compileHostArch}`,
+    CXX_host: `c++ -arch ${compileHostArch}`,
+  });
 }
 
+// Required for cross compilation on linux.
+if (host_arch !== target_arch && ["linux"].includes(process.platform)) {
+  process.env.GYP_CROSSCOMPILE = "1";
+  Object.assign(process.env, {
+    CC: `aarch64-linux-gnu-gcc`,
+    CXX: `aarch64-linux-gnu-g++`,
+    CC_target: `aarch64-linux-gnu-gcc`,
+    CXX_target: `aarch64-linux-gnu-g++`,
+    CC_host: `gcc`,
+    CXX_host: `g++`,
+  });
+}
 
 // Generate some dynamic gyp files.
-execSync(`python3 configure  --with-intl=small-icu --openssl-no-asm --dest-cpu=${target_arch}`, {
-  cwd: "node"
-});
+execSync(
+  `python3 configure  --with-intl=small-icu --openssl-no-asm --dest-cpu=${target_arch}`,
+  {
+    cwd: "node",
+  }
+);
 // Update the build configuration.
 const config = {
   variables: {
     target_arch,
     host_arch,
-    want_separate_host_toolset: host_arch === target_arch ? 0 : 1
-  }
-}
-if (process.platform === 'darwin') {
+    want_separate_host_toolset: host_arch === target_arch ? 0 : 1,
+  },
+};
+if (process.platform === "darwin") {
   // Set SDK version to the latest installed.
-  const sdks = String(execSync('xcodebuild -showsdks', {stdio: null})).trim()
-  const SDKROOT = sdks.match(/-sdk (macosx\d+\.\d+)/)[1]
-  config.xcode_settings = {SDKROOT}
+  const sdks = String(execSync("xcodebuild -showsdks", { stdio: null })).trim();
+  const SDKROOT = sdks.match(/-sdk (macosx\d+\.\d+)/)[1];
+  config.xcode_settings = { SDKROOT };
 }
-fs.writeFileSync(path.join(__dirname, 'arch.gypi'), JSON.stringify(config, null, '  '))
-execSync('python3 node/tools/gyp/gyp_main.py qode.gyp --no-parallel -f ninja -Iarch.gypi -Icommon.gypi --depth .')
+fs.writeFileSync(
+  path.join(__dirname, "arch.gypi"),
+  JSON.stringify(config, null, "  ")
+);
+execSync(
+  "python3 node/tools/gyp/gyp_main.py qode.gyp --no-parallel -f ninja -Iarch.gypi -Icommon.gypi --depth ."
+);
 
 // Build.
 const epath = `${path.join("..", "bin", "ninja")}${path.delimiter}${
@@ -96,5 +128,5 @@ const epath = `${path.join("..", "bin", "ninja")}${path.delimiter}${
 }`;
 
 execSync(`ninja -j${os.cpus().length} -C out/Release qode`, {
-  env: { PATH: epath }
+  env: { PATH: epath },
 });
